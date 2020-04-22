@@ -1,10 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import Login from './src/screens/Login/login'
 
 export default function App() {
+
   return (
     <View style={styles.container}>
-      <Text>FiiX</Text>
+      <Login />
     </View>
   );
 }
