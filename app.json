@@ -1,0 +1,17 @@
+{
+  "name": "fiix-app",
+  "displayName": "fiix-app",
+  "expo": {
+    "name": "fiix-app",
+    "slug": "fiix-app",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
