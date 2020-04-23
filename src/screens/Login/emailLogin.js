@@ -1,10 +1,27 @@
-import React from 'react';
-import {Text} from 'react-native';
+import React, { useState } from "react";
+import { Text, Button } from "react-native";
+import { userLogin } from "../../Api/api";
 
-function Email(props){
+function Email(props) {
+  const [data, setData] = useState(null);
+
+  const login = async (email, password) => {
+    return userLogin("shareef@gmail.com", "123123")
+      .then(({ data }) => {
+        console.log(data);
+      })
+      .catch(err => {
+        console.log(err)
+      });
+  };
+
   return (
-    <Text>from child</Text>
-  )
+    <>
+      <Text>Press to test</Text>
+      <Text>{data}</Text>
+      <Button title="press to test" onPress={() => login()} />
+    </>
+  );
 }
 
 export default Email;
