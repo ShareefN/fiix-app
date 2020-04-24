@@ -8,10 +8,10 @@ function Splash(props) {
   const [loading, setLoading] = useState("none");
   useEffect(() => {
     setLoading("flex");
-    setTimeout(() => {
-      setLoading('none')
+    // setTimeout(() => {
+      setLoading("none");
       props.navigation.navigate("userLogin");
-    }, 3500);
+    // }, 2500);
   });
 
   return (
@@ -40,4 +40,5 @@ function Splash(props) {
     </View>
   );
 }
+
 export default Splash;

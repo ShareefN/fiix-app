@@ -8,24 +8,30 @@ import {
   Dimensions,
   TouchableOpacity
 } from "react-native";
-import { userLogin } from "../../Api/api";
 import * as Animated from "react-native-animatable";
+import { userRegister } from "../../Api/api";
 
 const { height } = Dimensions.get("window");
 
-function UserLogin(props) {
+function UserRegister(props) {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [number, setNumber] = useState("");
   const [password, setPassword] = useState("");
 
-  const login = () => {
-    return userLogin(email.email, password.password)
-      .then(({ data }) => {
-        console.log(data);
-      })
-      .catch(err => {
-        alert("Invalid email or password");
-        setPassword("");
-      });
+  const register = () => {
+    if (username === "" || email === "" || number === "" || password === "") {
+      alert("Invalid request, please check inputs");
+    } else {
+      return userRegister(
+        username.username,
+        email.email,
+        number.number,
+        password.password
+      )
+        .then(({ data }) => console.log(data))
+        .catch(err => console.log(err));
+    }
   };
 
   return (
@@ -39,12 +45,29 @@ function UserLogin(props) {
       }}
     >
       <TextInput
-        placeholder="EMAIL"
-        autoCorrect={false}
+        placeholder="USERNAME"
         autoCapitalize="none"
+        autoCorrect={false}
+        style={styles.textInput}
+        onChangeText={username => setUsername({ username })}
+        value={username}
+        placeholderTextColor="grey"
+      />
+      <TextInput
+        placeholder="EMAIL"
+        autoCapitalize="none"
+        autoCorrect={false}
         style={styles.textInput}
         onChangeText={email => setEmail({ email })}
         value={email}
+        placeholderTextColor="grey"
+      />
+      <TextInput
+        placeholder="NUMBER"
+        secureTextEntry
+        style={styles.textInput}
+        onChangeText={number => setNumber({ number })}
+        value={number}
         placeholderTextColor="grey"
       />
       <TextInput
@@ -55,14 +78,9 @@ function UserLogin(props) {
         value={password}
         placeholderTextColor="grey"
       />
-      <View style={{ alignItems: "flex-end", marginRight: 30 }}>
-        <TouchableOpacity style={{ padding: 10 }}>
-          <Text>Forgot Password</Text>
-        </TouchableOpacity>
-      </View>
-      <TouchableOpacity style={{ ...styles.button }} onPress={() => login()}>
+      <TouchableOpacity style={{ ...styles.button }} onPress={() => register()}>
         <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
-          SIGN IN
+          Register
         </Text>
       </TouchableOpacity>
       <View
@@ -75,21 +93,9 @@ function UserLogin(props) {
       </View>
       <TouchableOpacity
         style={{ ...styles.registerButton }}
-        onPress={() => props.navigation.navigate("userRegister")}
+        onPress={() => props.navigation.navigate("userLogin")}
       >
-        <Text style={{ fontSize: 20, color: "black" }}>Create Account</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{
-          ...styles.registerButton,
-          marginVertical: 0,
-          borderColor: "grey"
-        }}
-        onPress={() => props.navigation.navigate("contractorLogin")}
-      >
-        <Text style={{ fontSize: 20, color: "black" }}>
-          I'm a FiiX Contractor
-        </Text>
+        <Text style={{ fontSize: 20, color: "black" }}>Back</Text>
       </TouchableOpacity>
       <View
         style={{
@@ -107,7 +113,7 @@ function UserLogin(props) {
   );
 }
 
-export default UserLogin;
+export default UserRegister;
 
 const styles = StyleSheet.create({
   textInput: {

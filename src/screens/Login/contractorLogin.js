@@ -8,17 +8,17 @@ import {
   Dimensions,
   TouchableOpacity
 } from "react-native";
-import { userLogin } from "../../Api/api";
+import { contractorLogin } from "../../Api/api";
 import * as Animated from "react-native-animatable";
 
 const { height } = Dimensions.get("window");
 
-function UserLogin(props) {
+function ContractorLogin(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const login = () => {
-    return userLogin(email.email, password.password)
+    return contractorLogin(email.email, password.password)
       .then(({ data }) => {
         console.log(data);
       })
@@ -40,8 +40,8 @@ function UserLogin(props) {
     >
       <TextInput
         placeholder="EMAIL"
-        autoCorrect={false}
         autoCapitalize="none"
+        autoCorrect={false}
         style={styles.textInput}
         onChangeText={email => setEmail({ email })}
         value={email}
@@ -75,21 +75,9 @@ function UserLogin(props) {
       </View>
       <TouchableOpacity
         style={{ ...styles.registerButton }}
-        onPress={() => props.navigation.navigate("userRegister")}
+        onPress={() => props.navigation.navigate("userLogin")}
       >
-        <Text style={{ fontSize: 20, color: "black" }}>Create Account</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{
-          ...styles.registerButton,
-          marginVertical: 0,
-          borderColor: "grey"
-        }}
-        onPress={() => props.navigation.navigate("contractorLogin")}
-      >
-        <Text style={{ fontSize: 20, color: "black" }}>
-          I'm a FiiX Contractor
-        </Text>
+        <Text style={{ fontSize: 20, color: "black" }}>Back</Text>
       </TouchableOpacity>
       <View
         style={{
@@ -107,7 +95,7 @@ function UserLogin(props) {
   );
 }
 
-export default UserLogin;
+export default ContractorLogin;
 
 const styles = StyleSheet.create({
   textInput: {
