@@ -1,8 +1,15 @@
 import React, { Component } from "react";
-import { SafeAreaView, View } from "react-native";
-import { Image } from "react-native-elements";
-import * as Animatable from "react-native-animatable";
-import Email from "./emailLogin";
+import {
+  View,
+  StyleSheet,
+  Image,
+  Dimensions,
+  Text,
+  TouchableOpacity
+} from "react-native";
+import UserLogin from "./userLogin";
+
+const { width, height } = Dimensions.get("window");
 
 class Login extends Component {
   constructor(props) {
@@ -11,23 +18,48 @@ class Login extends Component {
 
   render() {
     return (
-      <SafeAreaView>
-        <Animatable.View animation="zoomIn" iterationCount={1} style={{alignItems: 'center'}}>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "white",
+          justifyContent: "flex-end"
+        }}
+      >
+        <View style={{ ...StyleSheet.absoluteFill }}>
           <Image
-            source={{
-              uri:
-                "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
-            }}
-            style={{ width: 200, height: 200 }}
+            source={require("../../Assets/contractors.jpg")}
+            style={{ flex: 1, height: null, width: null }}
           />
-        </Animatable.View>
-        <Animatable.Text animation="zoomInUp">
-          Login with email and password
-        </Animatable.Text>
-        {/* <Email /> */}
-      </SafeAreaView>
+        </View>
+        <View style={{ height: height / 3, justifyContent: "center" }}>
+          <TouchableOpacity style={styles.button}>
+            <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+              Login as User
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ ...styles.button, backgroundColor: "black" }}
+          >
+            <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
+              I'm a Contractor
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     );
   }
 }
 
 export default Login;
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: "white",
+    height: 70,
+    marginHorizontal: 20,
+    borderRadius: 35,
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 5
+  }
+});

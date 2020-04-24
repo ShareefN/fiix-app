@@ -1,14 +1,17 @@
-import React, { useEffect } from "react";
-import { View, Text, Dimensions } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, View, Text, Dimensions } from "react-native";
 import * as Animatable from "react-native-animatable";
 
 const WIDTH = Dimensions.get("window").width;
 
 function Splash(props) {
+  const [loading, setLoading] = useState("none");
   useEffect(() => {
+    setLoading("flex");
     setTimeout(() => {
+      setLoading('none')
       props.navigation.navigate("userLogin");
-    }, 2000);
+    }, 3500);
   });
 
   return (
@@ -28,6 +31,11 @@ function Splash(props) {
         }}
       >
         <Text style={{ fontSize: 80, color: "white" }}>FiiX</Text>
+        <ActivityIndicator
+          size="large"
+          color="#fff"
+          style={{ display: loading }}
+        />
       </Animatable.View>
     </View>
   );
