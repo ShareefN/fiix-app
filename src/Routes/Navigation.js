@@ -48,7 +48,7 @@ const MainStackNavigator = createStackNavigator(
       }
     },
     terms: { screen: Terms, navigationOptions: {
-      title: 'Terms',
+      title: 'Terms and Conditions',
       headerBackTitle: null
     } }
   },
