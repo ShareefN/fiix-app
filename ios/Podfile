@@ -43,4 +43,8 @@ target 'fiixapp' do
 
   # react-native-cli autolinking
   use_native_modules!
+  # pod 'RNSecureKeyStore', :path => '../node_modules/react-native-secure-key-store'
+
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
 end

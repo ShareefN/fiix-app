@@ -2,16 +2,17 @@ import React, { useState } from "react";
 import {
   Text,
   TextInput,
-  Image,
   View,
   StyleSheet,
-  Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
+  SafeAreaView
 } from "react-native";
 import * as Animated from "react-native-animatable";
-import { userRegister } from "../../Api/api";
-
-const { height } = Dimensions.get("window");
+import {
+  userRegister,
+  storeUserToken,
+  storeUserCredentials
+} from "../../Api/api";
 
 function UserRegister(props) {
   const [username, setUsername] = useState("");
@@ -29,87 +30,98 @@ function UserRegister(props) {
         number.number,
         password.password
       )
-        .then(({ data }) => console.log(data))
+        .then(({ data }) => {
+          storeUserToken(data.token);
+          storeUserCredentials(data.User.username, data.User.id);
+          props.navigation.navigate("userHome");
+        })
         .catch(err => console.log(err));
     }
   };
 
   return (
-    <Animated.View
-      animation="zoomIn"
-      iterationCount={1}
-      style={{
-        height: height / 3,
-        marginTop: 200,
-        justifyContent: "center"
-      }}
-    >
-      <TextInput
-        placeholder="USERNAME"
-        autoCapitalize="none"
-        autoCorrect={false}
-        style={styles.textInput}
-        onChangeText={username => setUsername({ username })}
-        value={username}
-        placeholderTextColor="grey"
-      />
-      <TextInput
-        placeholder="EMAIL"
-        autoCapitalize="none"
-        autoCorrect={false}
-        style={styles.textInput}
-        onChangeText={email => setEmail({ email })}
-        value={email}
-        placeholderTextColor="grey"
-      />
-      <TextInput
-        placeholder="NUMBER"
-        secureTextEntry
-        style={styles.textInput}
-        onChangeText={number => setNumber({ number })}
-        value={number}
-        placeholderTextColor="grey"
-      />
-      <TextInput
-        placeholder="PASSWORD"
-        secureTextEntry
-        style={styles.textInput}
-        onChangeText={password => setPassword({ password })}
-        value={password}
-        placeholderTextColor="grey"
-      />
-      <TouchableOpacity style={{ ...styles.button }} onPress={() => register()}>
-        <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
-          Register
-        </Text>
-      </TouchableOpacity>
-      <View
+    <SafeAreaView style={{ marginTop: 30 }}>
+      <Animated.View
+        animation="zoomIn"
+        iterationCount={1}
         style={{
-          alignItems: "center",
           justifyContent: "center"
         }}
       >
-        <Text> ──────── OR ────────</Text>
-      </View>
-      <TouchableOpacity
-        style={{ ...styles.registerButton }}
-        onPress={() => props.navigation.navigate("userLogin")}
-      >
-        <Text style={{ fontSize: 20, color: "black" }}>Back</Text>
-      </TouchableOpacity>
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "center"
-        }}
-      >
-        <TouchableOpacity>
-          <Text style={{ fontSize: 15, color: "grey", marginVertical: 25 }}>
-            Terms and Conditions and Privacy Policy
+        <View style={{ marginHorizontal: 25, marginVertical: 10 }}>
+          <Text style={{ fontSize: 25 }}>User Register</Text>
+        </View>
+        <TextInput
+          placeholder="USERNAME"
+          autoCapitalize="none"
+          autoCorrect={false}
+          style={styles.textInput}
+          onChangeText={username => setUsername({ username })}
+          value={username}
+          placeholderTextColor="grey"
+        />
+        <TextInput
+          placeholder="EMAIL"
+          keyboardType="email-address"
+          autoCapitalize="none"
+          autoCorrect={false}
+          style={styles.textInput}
+          onChangeText={email => setEmail({ email })}
+          value={email}
+          placeholderTextColor="grey"
+        />
+        <TextInput
+          placeholder="NUMBER"
+          keyboardType='numeric'
+          style={styles.textInput}
+          onChangeText={number => setNumber({ number })}
+          value={number}
+          placeholderTextColor="grey"
+        />
+        <TextInput
+          placeholder="PASSWORD"
+          secureTextEntry
+          style={styles.textInput}
+          onChangeText={password => setPassword({ password })}
+          value={password}
+          placeholderTextColor="grey"
+        />
+        <TouchableOpacity
+          style={{ ...styles.button }}
+          onPress={() => register()}
+        >
+          <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
+            Register
           </Text>
         </TouchableOpacity>
-      </View>
-    </Animated.View>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
+          <Text> ──────── OR ────────</Text>
+        </View>
+        <TouchableOpacity
+          style={{ ...styles.registerButton }}
+          onPress={() => props.navigation.goBack()}
+        >
+          <Text style={{ fontSize: 20, color: "black" }}>Back</Text>
+        </TouchableOpacity>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
+          <TouchableOpacity onPress={() => props.navigation.navigate('terms')}>
+            <Text style={{ fontSize: 15, color: "grey", marginVertical: 25 }}>
+              Terms and Conditions and Privacy Policy
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </Animated.View>
+    </SafeAreaView>
   );
 }
 

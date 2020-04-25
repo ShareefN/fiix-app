@@ -6,6 +6,8 @@ import android.net.Uri;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.reactlibrary.securekeystore.RNSecureKeyStorePackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -45,6 +47,16 @@ public class MainApplication extends Application implements ReactApplication {
       packages.add(new ModuleRegistryAdapter(mModuleRegistryProvider));
       return packages;
     }
+
+    // @Override
+    // protected List<ReactPackage> getPackages() {
+    //   return Arrays.<ReactPackage>asList(
+    //       new MainReactPackage(),
+            new VectorIconsPackage(),
+    //         new RNSecureKeyStorePackage(),
+    //       new ModuleRegistryAdapter(mModuleRegistryProvider)
+    //   );
+    // }
 
     @Override
     protected String getJSMainModuleName() {

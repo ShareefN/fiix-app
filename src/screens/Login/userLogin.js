@@ -2,16 +2,13 @@ import React, { useState } from "react";
 import {
   Text,
   TextInput,
-  Image,
   View,
   StyleSheet,
-  Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
+  SafeAreaView
 } from "react-native";
-import { userLogin } from "../../Api/api";
+import { userLogin, storeUserToken, storeUserCredentials } from "../../Api/api";
 import * as Animated from "react-native-animatable";
-
-const { height } = Dimensions.get("window");
 
 function UserLogin(props) {
   const [email, setEmail] = useState("");
@@ -20,90 +17,98 @@ function UserLogin(props) {
   const login = () => {
     return userLogin(email.email, password.password)
       .then(({ data }) => {
-        console.log(data);
+        storeUserToken(data.token);
+        storeUserCredentials(data.User.username, data.User.id);
+        props.navigation.navigate("userHome");
+        setEmail("");
+        setPassword("");
       })
       .catch(err => {
-        alert("Invalid email or password");
+        console.log(err);
+        // alert("Invalid email or password");
         setPassword("");
       });
   };
 
   return (
-    <Animated.View
-      animation="zoomIn"
-      iterationCount={1}
-      style={{
-        height: height / 3,
-        marginTop: 200,
-        justifyContent: "center"
-      }}
-    >
-      <TextInput
-        placeholder="EMAIL"
-        autoCorrect={false}
-        autoCapitalize="none"
-        style={styles.textInput}
-        onChangeText={email => setEmail({ email })}
-        value={email}
-        placeholderTextColor="grey"
-      />
-      <TextInput
-        placeholder="PASSWORD"
-        secureTextEntry
-        style={styles.textInput}
-        onChangeText={password => setPassword({ password })}
-        value={password}
-        placeholderTextColor="grey"
-      />
-      <View style={{ alignItems: "flex-end", marginRight: 30 }}>
-        <TouchableOpacity style={{ padding: 10 }}>
-          <Text>Forgot Password</Text>
-        </TouchableOpacity>
-      </View>
-      <TouchableOpacity style={{ ...styles.button }} onPress={() => login()}>
-        <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
-          SIGN IN
-        </Text>
-      </TouchableOpacity>
-      <View
+    <SafeAreaView style={{ marginTop: 30 }}>
+      <Animated.View
+        animation="zoomIn"
+        iterationCount={1}
         style={{
-          alignItems: "center",
           justifyContent: "center"
         }}
       >
-        <Text> ──────── OR ────────</Text>
-      </View>
-      <TouchableOpacity
-        style={{ ...styles.registerButton }}
-        onPress={() => props.navigation.navigate("userRegister")}
-      >
-        <Text style={{ fontSize: 20, color: "black" }}>Create Account</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{
-          ...styles.registerButton,
-          marginVertical: 0,
-          borderColor: "grey"
-        }}
-        onPress={() => props.navigation.navigate("contractorLogin")}
-      >
-        <Text style={{ fontSize: 20, color: "black" }}>
-          I'm a FiiX Contractor
-        </Text>
-      </TouchableOpacity>
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "center"
-        }}
-      >
-        <TouchableOpacity>
-          <Text style={{ fontSize: 15, color: "grey", marginVertical: 25 }}>
-            Terms and Conditions and Privacy Policy
+        <View style={{ marginHorizontal: 25, marginVertical: 10 }}>
+          <Text style={{ fontSize: 25 }}>User Login</Text>
+        </View>
+        <TextInput
+          placeholder="EMAIL"
+          autoCorrect={false}
+          autoCapitalize="none"
+          style={styles.textInput}
+          onChangeText={email => setEmail({ email })}
+          value={email}
+          placeholderTextColor="grey"
+        />
+        <TextInput
+          placeholder="PASSWORD"
+          secureTextEntry
+          style={styles.textInput}
+          onChangeText={password => setPassword({ password })}
+          value={password}
+          placeholderTextColor="grey"
+        />
+        <View style={{ alignItems: "flex-end", marginRight: 30 }}>
+          <TouchableOpacity style={{ padding: 10 }}>
+            <Text>Forgot Password</Text>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity style={{ ...styles.button }} onPress={() => login()}>
+          <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
+            SIGN IN
           </Text>
         </TouchableOpacity>
-      </View>
-    </Animated.View>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
+          <Text> ──────── OR ────────</Text>
+        </View>
+        <TouchableOpacity
+          style={{ ...styles.registerButton }}
+          onPress={() => props.navigation.navigate("userRegister")}
+        >
+          <Text style={{ fontSize: 20, color: "black" }}>Create Account</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            ...styles.registerButton,
+            marginVertical: 0,
+            borderColor: "grey"
+          }}
+          onPress={() => props.navigation.navigate("contractorLogin")}
+        >
+          <Text style={{ fontSize: 20, color: "black" }}>
+            I'm a FiiX Contractor
+          </Text>
+        </TouchableOpacity>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
+          <TouchableOpacity onPress={() => props.navigation.navigate('terms')}>
+            <Text style={{ fontSize: 15, color: "grey", marginVertical: 25 }}>
+              Terms and Conditions and Privacy Policy
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </Animated.View>
+    </SafeAreaView>
   );
 }
 
