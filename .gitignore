@@ -28,6 +28,7 @@ build/
 .idea
 .gradle
 java_pid2245.hprof
+java_pid60106.hprof
 local.properties
 *.iml
 
