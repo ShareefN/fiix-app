@@ -16,7 +16,7 @@ function ReviewsList(props) {
                 subtitleStyle={{ marginTop: 10, color: "black" }}
                 subtitle={elm.review}
                 bottomDivider
-                rightIcon={() => <Icon name="delete" />}
+                // rightIcon={() => <Icon name="delete" />}
               />
             );
           })}
