@@ -4,7 +4,7 @@ import RNSecureKeyStore, { ACCESSIBLE } from "react-native-secure-key-store";
 var Axios = null;
 
 const initAxios = () => {
-  RNSecureKeyStore.get("token")
+  RNSecureKeyStore.get("user_token")
     .then(res => {
       token = res;
       Axios = axios.create({
@@ -65,7 +65,7 @@ export const userRegister = (username, email, password, number) => {
     username,
     email,
     password,
-    number,
+    number
   });
 };
 
@@ -83,4 +83,17 @@ export const contractorLogout = async () => {
   await RNSecureKeyStore.remove("contractor_token");
   await RNSecureKeyStore.remove("contractor_name");
   await RNSecureKeyStore.remove("contractor_id");
-}
+};
+
+export const getReviews = () => {
+  return Axios.get("/users/reviews");
+};
+
+export const postReview = value => {
+  const review = value.review
+  RNSecureKeyStore.get("user_id")
+    .then(res => {
+      return Axios.post(`/users/review/user/${res}`, { review });
+    })
+    .catch(err => console.log(err));
+};

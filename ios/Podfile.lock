@@ -279,6 +279,8 @@ PODS:
     - ReactCommon/callinvoker (= 0.62.2)
   - RNCMaskedView (0.1.10):
     - React
+  - RNDeviceInfo (5.5.6):
+    - React
   - RNGestureHandler (1.6.1):
     - React
   - RNReanimated (1.7.1):
@@ -350,6 +352,7 @@ DEPENDENCIES:
   - ReactCommon/callinvoker (from `../node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
+  - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -451,6 +454,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCMaskedView:
     :path: "../node_modules/@react-native-community/masked-view"
+  RNDeviceInfo:
+    :path: "../node_modules/react-native-device-info"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNReanimated:
@@ -530,6 +535,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: 4356114dbcba4ce66991096e51a66e61eda51256
   ReactCommon: ed4e11d27609d571e7eee8b65548efc191116eb3
   RNCMaskedView: f5c7d14d6847b7b44853f7acb6284c1da30a3459
+  RNDeviceInfo: c3ea4a4d4547740c548cdd1e5a78f9b04e524688
   RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
   RNReanimated: 4e102df74a9674fa943e05f97f3362b6e44d0b48
   RNScreens: 812b79d384e2bea7eebc4ec981469160d4948fd5
@@ -550,6 +556,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 4e6c4c34a89512e2225d336154df1cb689226a29
   Yoga: 3ebccbdd559724312790e7742142d062476b698e
 
-PODFILE CHECKSUM: d004232e7a2a630308417aec9af8ff0c3486091d
+PODFILE CHECKSUM: 5a5ee81fcff194548e1b307faf621156cdccb5c5
 
 COCOAPODS: 1.9.1

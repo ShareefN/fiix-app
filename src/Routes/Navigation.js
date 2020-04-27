@@ -1,7 +1,6 @@
 import React from "react";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
-import { createDrawerNavigator } from "react-navigation-drawer";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import { Icon } from "react-native-elements";
 
@@ -13,8 +12,8 @@ import ContractorHome from "../screens/Contractor/Home";
 import Terms from "../screens/Terms";
 import Categories from "../screens/User/Categories";
 import List from "../screens/User/List";
-import Reviews from "../screens/User/Reviews";
-import Settings from "../screens/User/Settings";
+import Reviews from "../screens/User/Reviews/Reviews";
+import AddReview from "../screens/User/Reviews/Dialogs/AddReview";
 
 const UserBottomNavigator = createMaterialBottomTabNavigator(
   {
@@ -52,13 +51,6 @@ const UserBottomNavigator = createMaterialBottomTabNavigator(
 const UserBottomContainer = createAppContainer(UserBottomNavigator);
 
 UserBottomContainer.navigationOptions = { headerShown: false };
-
-const UserDrawerNavigator = createDrawerNavigator({
-  settings: { screen: Settings }
-});
-
-const UserDrawer = createAppContainer(UserDrawerNavigator);
-UserDrawer.navigationOptions = { headerShown: false };
 
 const MainStackNavigator = createStackNavigator(
   {
@@ -99,6 +91,13 @@ const MainStackNavigator = createStackNavigator(
       screen: Terms,
       navigationOptions: {
         title: "Terms and Conditions",
+        headerBackTitle: null
+      }
+    },
+    addReview: {
+      screen: AddReview,
+      navigationOptions: {
+        title: "Post A Review",
         headerBackTitle: null
       }
     }

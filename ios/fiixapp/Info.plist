@@ -24,33 +24,16 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allow fiix-app to use your location</string>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>armv7</string>
-	</array>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
+			<key>https://fiix-app.herokuapp.com</key>
+			<string></string>
 			<key>localhost</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
+			<string></string>
 		</dict>
 	</dict>
 	<key>NSCalendarsUsageDescription</key>
@@ -62,6 +45,8 @@
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Allow fiix-app to use your location</string>
 	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Allow fiix-app to use your location</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Allow fiix-app to use your location</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Allow fiix-app to access your microphone</string>
@@ -92,5 +77,19 @@
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
 	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 </dict>
 </plist>
