@@ -5,7 +5,6 @@ import PostReview from "../Components/PostFab";
 
 function AddReview(props) {
   const [review, setReview] = useState("");
-
   return (
     <>
       <View style={{ marginHorizontal: 20, marginVertical: 20 }}>
@@ -22,7 +21,10 @@ function AddReview(props) {
           placeholderTextColor="grey"
         />
       </View>
-      <PostReview review={review} navigation={props.navigation}/>
+      <PostReview
+        review={review}
+        navigation={props.navigation}
+      />
     </>
   );
 }

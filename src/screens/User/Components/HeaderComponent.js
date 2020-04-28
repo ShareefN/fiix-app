@@ -12,7 +12,7 @@ function HeaderComponent(props) {
         text: props.title,
         style: { color: "black", fontSize: 30 }
       }}
-      rightComponent={<RightComponent />}
+      rightComponent={<RightComponent title={props.title} value={props.value}/>}
     />
   );
 }

@@ -57,7 +57,6 @@ function UserRegister(props) {
           autoCorrect={false}
           style={styles.textInput}
           onChangeText={username => setUsername({ username })}
-          value={username}
           placeholderTextColor="grey"
         />
         <TextInput
@@ -67,15 +66,13 @@ function UserRegister(props) {
           autoCorrect={false}
           style={styles.textInput}
           onChangeText={email => setEmail({ email })}
-          value={email}
           placeholderTextColor="grey"
         />
         <TextInput
           placeholder="NUMBER"
-          keyboardType='numeric'
+          keyboardType="numeric"
           style={styles.textInput}
           onChangeText={number => setNumber({ number })}
-          value={number}
           placeholderTextColor="grey"
         />
         <TextInput
@@ -83,7 +80,6 @@ function UserRegister(props) {
           secureTextEntry
           style={styles.textInput}
           onChangeText={password => setPassword({ password })}
-          value={password}
           placeholderTextColor="grey"
         />
         <TouchableOpacity
@@ -114,7 +110,7 @@ function UserRegister(props) {
             justifyContent: "center"
           }}
         >
-          <TouchableOpacity onPress={() => props.navigation.navigate('terms')}>
+          <TouchableOpacity onPress={() => props.navigation.navigate("terms")}>
             <Text style={{ fontSize: 15, color: "grey", marginVertical: 25 }}>
               Terms and Conditions and Privacy Policy
             </Text>

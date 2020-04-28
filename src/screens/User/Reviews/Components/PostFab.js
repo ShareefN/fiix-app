@@ -4,9 +4,10 @@ import { FAB } from "react-native-paper";
 import { postReview } from "../../../../Api/api";
 
 function PostReview(props) {
+
   const submitReview = async () => {
     if (props.review.length <= 3) {
-      alert("Please be more specific");
+      alert("Review too short");
     } else {
       await postReview(props.review);
       props.navigation.goBack();

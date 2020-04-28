@@ -52,7 +52,6 @@ function ContractorLogin(props) {
           autoCorrect={false}
           style={styles.textInput}
           onChangeText={email => setEmail({ email })}
-          value={email}
           placeholderTextColor="grey"
         />
         <TextInput
@@ -60,7 +59,6 @@ function ContractorLogin(props) {
           secureTextEntry
           style={styles.textInput}
           onChangeText={password => setPassword({ password })}
-          value={password}
           placeholderTextColor="grey"
         />
         <View style={{ alignItems: "flex-end", marginRight: 30 }}>

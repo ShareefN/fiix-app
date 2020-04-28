@@ -1,6 +1,6 @@
 import React from "react";
 import { Text } from "react-native";
-import Header from "../../Components/HeaderComponent";
+import Header from "./Components/HeaderComponent";
 import {userLogout} from '../../Api/api';
 
 function Categories(props) {
@@ -10,7 +10,7 @@ function Categories(props) {
   }
   return (
     <>
-      <Header title="Categories" />
+      <Header title="Categories" value='categories'/>
       <Text>categories screen</Text>
       <Text onPress={() => handelLogout()}>Logout</Text>
     </>

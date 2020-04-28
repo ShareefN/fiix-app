@@ -6,7 +6,6 @@ import android.net.Uri;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactlibrary.securekeystore.RNSecureKeyStorePackage;
 import com.facebook.react.ReactNativeHost;
@@ -53,7 +52,7 @@ public class MainApplication extends Application implements ReactApplication {
 //  protected List<ReactPackage> getPackages() {
 //    return Arrays.<ReactPackage>asList(
 //        new MainReactPackage(),
-            new RNDeviceInfo(),
+//             new RNDeviceInfo(),
 //          new VectorIconsPackage(),
 //          new RNSecureKeyStorePackage(),
 //        new ModuleRegistryAdapter(mModuleRegistryProvider)

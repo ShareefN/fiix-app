@@ -90,10 +90,18 @@ export const getReviews = () => {
 };
 
 export const postReview = value => {
-  const review = value.review
+  const review = value.review;
   RNSecureKeyStore.get("user_id")
     .then(res => {
       return Axios.post(`/users/review/user/${res}`, { review });
+    })
+    .catch(err => console.log(err));
+};
+
+export const deleteReview = reviewId => {
+  RNSecureKeyStore.get("user_id")
+    .then(res => {
+      return Axios.delete(`/users/review/${reviewId}/user/${res}`);
     })
     .catch(err => console.log(err));
 };
