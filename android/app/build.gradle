@@ -184,6 +184,7 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+" , { force = true } // From node_modules
+    implementation project(':react-native-sqlite-storage')
     addUnimodulesDependencies()
 
     if (enableHermes) {

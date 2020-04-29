@@ -22,6 +22,10 @@ const initAxios = () => {
 };
 initAxios();
 
+export const wake = () => {
+  Axios.get("/");
+};
+
 export const storeUserToken = async token => {
   await RNSecureKeyStore.set("user_token", token, {
     accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY
@@ -89,8 +93,7 @@ export const getReviews = () => {
   return Axios.get("/users/reviews");
 };
 
-export const postReview = value => {
-  const review = value.review;
+export const postReview = review => {
   RNSecureKeyStore.get("user_id")
     .then(res => {
       return Axios.post(`/users/review/user/${res}`, { review });

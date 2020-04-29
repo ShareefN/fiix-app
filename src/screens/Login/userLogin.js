@@ -20,8 +20,6 @@ function UserLogin(props) {
         storeUserToken(data.token);
         storeUserCredentials(data.User.username, data.User.id);
         props.navigation.navigate("userHome");
-        setEmail("");
-        setPassword("");
       })
       .catch(err => {
         console.log(err);
@@ -99,7 +97,7 @@ function UserLogin(props) {
             justifyContent: "center"
           }}
         >
-          <TouchableOpacity onPress={() => props.navigation.navigate('terms')}>
+          <TouchableOpacity onPress={() => props.navigation.navigate("terms")}>
             <Text style={{ fontSize: 15, color: "grey", marginVertical: 25 }}>
               Terms and Conditions and Privacy Policy
             </Text>

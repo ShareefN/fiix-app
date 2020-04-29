@@ -11,9 +11,8 @@ import ContractorLogin from "../screens/Login/contractorLogin";
 import ContractorHome from "../screens/Contractor/Home";
 import Terms from "../screens/Terms";
 import Categories from "../screens/User/Categories";
-import List from "../screens/User/List";
+import List from "../screens/User/List/List";
 import Reviews from "../screens/User/Reviews/Reviews";
-import AddReview from "../screens/User/Reviews/Dialogs/AddReview";
 
 const UserBottomNavigator = createMaterialBottomTabNavigator(
   {
@@ -94,13 +93,6 @@ const MainStackNavigator = createStackNavigator(
         headerBackTitle: null
       }
     },
-    addReview: {
-      screen: AddReview,
-      navigationOptions: {
-        title: "Post A Review",
-        headerBackTitle: null
-      }
-    }
   },
   {
     initialRouteName: "splash"
