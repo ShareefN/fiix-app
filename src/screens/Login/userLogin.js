@@ -20,6 +20,8 @@ function UserLogin(props) {
         storeUserToken(data.token);
         storeUserCredentials(data.User.username, data.User.id);
         props.navigation.navigate("userHome");
+        setEmail('')
+        setPassword('')
       })
       .catch(err => {
         console.log(err);
@@ -47,6 +49,7 @@ function UserLogin(props) {
           style={styles.textInput}
           onChangeText={email => setEmail({ email })}
           placeholderTextColor="grey"
+          value={email.email}
         />
         <TextInput
           placeholder="PASSWORD"
@@ -54,6 +57,7 @@ function UserLogin(props) {
           style={styles.textInput}
           onChangeText={password => setPassword({ password })}
           placeholderTextColor="grey"
+          value={password.password}
         />
         <View style={{ alignItems: "flex-end", marginRight: 30 }}>
           <TouchableOpacity style={{ padding: 10 }}>

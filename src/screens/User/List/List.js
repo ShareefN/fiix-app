@@ -4,10 +4,10 @@ import {
   ScrollView,
   RefreshControl,
   TextInput,
-  StyleSheet,
+  StyleSheet
 } from "react-native";
 import Header from "../Components/HeaderComponent";
-import Database from "../Database/LocalDB";
+import Database from "./Database/LocalDB";
 import { Divider } from "react-native-elements";
 import RNSecureKeyStore from "react-native-secure-key-store";
 import * as Animated from "react-native-animatable";
@@ -48,19 +48,23 @@ function List(props) {
   }, [refreshing]);
 
   const postItem = () => {
-    const data = {
-      itemId: Date.now(),
-      userId: userId,
-      itemTitle: chore,
-      itemStatus: "new"
-    };
+    if (chore.length <= 1) {
+      alert("Item too short!");
+    } else {
+      const data = {
+        itemId: Date.now(),
+        userId: userId,
+        itemTitle: chore,
+        itemStatus: "new"
+      };
 
-    db.addItem(data)
-      .then(result => {
-        fetchList();
-        setChore("");
-      })
-      .catch(err => console.log(err));
+      db.addItem(data)
+        .then(result => {
+          fetchList();
+          setChore("");
+        })
+        .catch(err => console.log(err));
+    }
   };
 
   const updateItemStatus = (id, status) => {

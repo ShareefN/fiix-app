@@ -7,7 +7,7 @@ function RightComponent(props) {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
-    <View>
+    <>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -30,7 +30,7 @@ function RightComponent(props) {
       <TouchableOpacity onPress={() => setModalVisible(true)}>
         <Icon name="help-outline" />
       </TouchableOpacity>
-    </View>
+    </>
   );
 }
 

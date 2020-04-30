@@ -10,9 +10,10 @@ import UserRegister from "../screens/Login/userRegister";
 import ContractorLogin from "../screens/Login/contractorLogin";
 import ContractorHome from "../screens/Contractor/Home";
 import Terms from "../screens/Terms";
-import Categories from "../screens/User/Categories";
+import Categories from "../screens/User/Categories/Categories";
 import List from "../screens/User/List/List";
 import Reviews from "../screens/User/Reviews/Reviews";
+import Category from "../screens/User/Categories/Category";
 
 const UserBottomNavigator = createMaterialBottomTabNavigator(
   {
@@ -86,13 +87,19 @@ const MainStackNavigator = createStackNavigator(
         headerShown: false
       }
     },
+    category: {
+      screen: Category,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
     terms: {
       screen: Terms,
       navigationOptions: {
         title: "Terms and Conditions",
         headerBackTitle: null
       }
-    },
+    }
   },
   {
     initialRouteName: "splash"

@@ -108,3 +108,7 @@ export const deleteReview = reviewId => {
     })
     .catch(err => console.log(err));
 };
+
+export const fetchContractors = category => {
+  return Axios.get(`/users/contractors/${category}`);
+};
