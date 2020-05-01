@@ -7,11 +7,17 @@ import {
   Image,
   ScrollView
 } from "react-native";
-import Header from "./Components/Header";
+import ContractorHeader from "./Components/contractorHeader";
 import { Divider } from "react-native-elements";
 import * as Animated from "react-native-animatable";
-import { getContractor, getContractorsReviews } from "../../../Api/api";
+import {
+  getContractor,
+  getContractorsReviews,
+  addContractorReview,
+  deleteContractorReview
+} from "../../../Api/api";
 import { ListItem } from "react-native-elements";
+import RNSecureKeyStore from "react-native-secure-key-store";
 
 const { width, height } = Dimensions.get("window");
 
@@ -24,6 +30,7 @@ function wait(timeout) {
 function Contractor(props) {
   const [refreshing, setRefreshing] = useState(false);
   const [contractor, setContractor] = useState({});
+  const [userId, setUserId] = useState(null);
   const [contractorReviews, setContractorReview] = useState([]);
   const [contractorName] = useState(
     props.navigation.getParam("contractorName")
@@ -31,6 +38,10 @@ function Contractor(props) {
   const [contractorId] = useState(props.navigation.getParam("contractorId"));
 
   useEffect(() => {
+    RNSecureKeyStore.get("user_id")
+      .then(res => setUserId(res))
+      .catch(err => console.timeLog(err));
+
     fetchContractor();
     fetchContractorsReviews();
   }, [contractorId]);
@@ -53,6 +64,20 @@ function Contractor(props) {
       .catch(err => console.log(err));
   };
 
+  const postReview = async review => {
+    if (review.length <= 3) {
+      alert("Review too short!");
+    } else {
+      await addContractorReview(contractorId, review);
+      fetchContractorsReviews();
+    }
+  };
+
+  const deleteReview = async reviewId => {
+    await deleteContractorReview(reviewId);
+    await onRefresh();
+  };
+
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     fetchContractorsReviews();
@@ -61,8 +86,13 @@ function Contractor(props) {
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <Header title={contractorName} navigation={props.navigation} />
-      <View style={{ height: height / 4, backgroundColor: "#00ccff" }}>
+      <ContractorHeader
+        title={contractorName}
+        navigation={props.navigation}
+        post={postReview}
+        number={contractor.number}
+      />
+      <View style={{ height: height / 4, backgroundColor: "white" }}>
         <View
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
         >
@@ -71,7 +101,7 @@ function Contractor(props) {
               width: 100,
               height: 100,
               borderRadius: 50,
-              borderColor: "white",
+              borderColor: "black",
               borderWidth: 3
             }}
             source={{
@@ -88,12 +118,12 @@ function Contractor(props) {
         </View>
       </View>
       <Animated.View animation="zoomIn" iterationCount={1} style={{ flex: 1 }}>
-        <View style={{ marginHorizontal: 10, marginVertical: 10 }}>
+        <View style={{ marginHorizontal: 30, marginVertical: 10 }}>
           <Text style={{ fontSize: 15 }}>
             What people think about {contractorName}
           </Text>
         </View>
-        <Divider style={{ backgroundColor: "black", marginHorizontal: 10 }} />
+        <Divider style={{ backgroundColor: "black", marginHorizontal: 25 }} />
         {!contractorReviews ? (
           <View
             style={{
@@ -118,13 +148,12 @@ function Contractor(props) {
               }}
             >
               {contractorName} dosn't have any reviews yet! Share one and let
-              people know about you're experince with {contractorName}
+              people know about your experince with {contractorName}
             </Text>
           </View>
         ) : (
           <ScrollView
             showsVerticalScrollIndicator={false}
-            style={{ marginHorizontal: 10, marginVertical: 10 }}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
@@ -139,6 +168,16 @@ function Contractor(props) {
                     subtitleStyle={{ marginTop: 5, color: "black" }}
                     subtitle={elm.review}
                     bottomDivider
+                    rightIcon={{
+                      name:
+                        elm.userId.toString() === userId.toString()
+                          ? "delete"
+                          : null,
+                      color: "grey",
+                      onPress: () => {
+                        deleteReview(elm.id);
+                      }
+                    }}
                   />
                 );
               })}

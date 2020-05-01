@@ -48,8 +48,8 @@ function Reviews(props) {
       alert("Review too short");
     } else {
       await postReview(review);
-      setReview('')
-      fetchReviews()
+      await onRefresh();
+      setReview("");
     }
   };
 
@@ -72,6 +72,7 @@ function Reviews(props) {
         <TextInput
           placeholder="Whats on your mind?"
           style={styles.textInput}
+          multiline
           onChangeText={review => setReview(review)}
           value={review}
           placeholderTextColor="grey"

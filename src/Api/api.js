@@ -118,5 +118,21 @@ export const getContractor = contractorId => {
 };
 
 export const getContractorsReviews = contractorId => {
-  return Axios.get(`/users/contractor/${contractorId}/REVIEWS`)
-}
+  return Axios.get(`/users/contractor/${contractorId}/REVIEWS`);
+};
+
+export const addContractorReview = (contractorId, review) => {
+  RNSecureKeyStore.get("user_id").then(res => {
+    return Axios.post(`/users/contractor/${contractorId}/user/${res}/review`, {
+      review
+    });
+  });
+};
+
+export const deleteContractorReview = reviewId => {
+  RNSecureKeyStore.get("user_id")
+    .then(res => {
+      return Axios.delete(`/users/contractorsreview/${reviewId}/user/${res}`);
+    })
+    .catch(err => console.log(err));
+};

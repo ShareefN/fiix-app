@@ -7,7 +7,7 @@ import {
   StyleSheet
 } from "react-native";
 import Header from "../Components/HeaderComponent";
-import Database from "./Database/LocalDB";
+import Database from "../Database/listDB";
 import { Divider } from "react-native-elements";
 import RNSecureKeyStore from "react-native-secure-key-store";
 import * as Animated from "react-native-animatable";
@@ -94,6 +94,7 @@ function List(props) {
           style={styles.textInput}
           onChangeText={chore => setChore(chore)}
           value={chore}
+          multiline
           placeholderTextColor="grey"
         />
         <FAB

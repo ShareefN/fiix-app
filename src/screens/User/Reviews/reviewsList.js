@@ -13,36 +13,26 @@ function ReviewsList(props) {
     <View style={{ marginHorizontal: 10, marginBottom: 50 }}>
       {props.list &&
         props.list.map((elm, index) => {
-          if (elm.userId.toString() === props.userId.toString()) {
-            return (
-              <ListItem
-                key={index}
-                title={elm.username}
-                titleStyle={{ fontWeight: "bold" }}
-                subtitleStyle={{ marginTop: 10, color: "black" }}
-                subtitle={elm.review}
-                bottomDivider
-                rightIcon={{
-                  name: "delete",
-                  color: "grey",
-                  onPress: () => {
-                    removeReview(elm.id);
-                  }
-                }}
-              />
-            );
-          } else {
-            return (
-              <ListItem
-                key={index}
-                title={elm.username}
-                titleStyle={{ fontWeight: "bold" }}
-                subtitleStyle={{ marginTop: 10, color: "black" }}
-                subtitle={elm.review}
-                bottomDivider
-              />
-            );
-          }
+          return (
+            <ListItem
+              key={index}
+              title={elm.username}
+              titleStyle={{ fontWeight: "bold" }}
+              subtitleStyle={{ marginTop: 10, color: "black" }}
+              subtitle={elm.review}
+              bottomDivider
+              rightIcon={{
+                name:
+                  elm.userId.toString() === props.userId.toString()
+                    ? "delete"
+                    : null,
+                color: "grey",
+                onPress: () => {
+                  removeReview(elm.id);
+                }
+              }}
+            />
+          );
         })}
     </View>
   );

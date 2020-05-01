@@ -12,6 +12,12 @@ export const categories = [
     value: "electricians"
   },
   {
+    label: "Hardware Electricians",
+    image:
+      "https://www.dailynews.com/wp-content/uploads/2017/09/0917_opn_picappliances.jpg?w=1024&h=768",
+    value: "hardwareElectricicans"
+  },
+  {
     label: "Carpenters",
     image: "https://images.wisegeek.com/carpenter.jpg",
     value: "carpenter"
