@@ -112,3 +112,11 @@ export const deleteReview = reviewId => {
 export const fetchContractors = category => {
   return Axios.get(`/users/contractors/${category}`);
 };
+
+export const getContractor = contractorId => {
+  return Axios.get(`/users/contractor/${contractorId}`);
+};
+
+export const getContractorsReviews = contractorId => {
+  return Axios.get(`/users/contractor/${contractorId}/REVIEWS`)
+}

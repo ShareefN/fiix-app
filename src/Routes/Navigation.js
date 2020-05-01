@@ -14,6 +14,7 @@ import Categories from "../screens/User/Categories/Categories";
 import List from "../screens/User/List/List";
 import Reviews from "../screens/User/Reviews/Reviews";
 import Category from "../screens/User/Categories/Category";
+import Contractor from "../screens/User/Categories/Contractor";
 
 const UserBottomNavigator = createMaterialBottomTabNavigator(
   {
@@ -89,6 +90,12 @@ const MainStackNavigator = createStackNavigator(
     },
     category: {
       screen: Category,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
+    contractor: {
+      screen: Contractor,
       navigationOptions: {
         headerShown: false
       }

@@ -47,6 +47,12 @@ export const categories = [
     value: "dryClean"
   },
   {
+    label: "Tailor",
+    image:
+      "https://static1.fashionbeans.com/wp-content/uploads/2013/07/diytailoring.jpg",
+    value: "tailor"
+  },
+  {
     label: "House Keepers",
     image:
       "https://img.freepik.com/free-vector/cleaners-with-cleaning-products-housekeeping-service_18591-52055.jpg?size=626&ext=jpg",

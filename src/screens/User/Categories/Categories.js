@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   Image,
   View,
-  BackHandler
 } from "react-native";
 import Header from "../Components/HeaderComponent";
 import { userLogout, wake } from "../../../Api/api";
@@ -18,10 +17,6 @@ function Categories(props) {
   };
 
   wake();
-
-  BackHandler.addEventListener("hardwareBackPress", function() {
-    return false;
-  });
 
   return (
     <>
