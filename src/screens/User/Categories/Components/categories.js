@@ -77,6 +77,12 @@ export const categories = [
     translation: "غاز"
   },
   {
+    label: "Pickup Trucks",
+    image:
+      "https://lh3.googleusercontent.com/proxy/iwl3SYSjgLAk_XT9_4853xD0FYVQB6ej-TIIxXpykAYL43A_6t9jZG4y61CC_6jc99Ts8S73B9lo_d8ulYZOs8CdXAhjHgtbnCu1c0te-NG0n1wLG_7HX1DtMHh-",
+    translation: "شاحنات بيك اب"
+  },
+  {
     label: "Deisel Trucks",
     image:
       "https://www.safetysignsandnotices.co.uk/image/cache/catalog/old_products/ds778-500x300.gif",
@@ -93,5 +99,5 @@ export const categories = [
     image:
       "https://apexcargoservices.com/wp-content/uploads/2018/08/Freight-Forwarding.png",
     translation: "خدمات النقل"
-  }
+  },
 ];
