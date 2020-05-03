@@ -87,10 +87,9 @@ function Contractor(props) {
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <ContractorHeader
-        title={contractorName}
+        contractor={contractor}
         navigation={props.navigation}
         post={postReview}
-        number={contractor.number}
       />
       <View style={{ height: height / 4, backgroundColor: "white" }}>
         <View

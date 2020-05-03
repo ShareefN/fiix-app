@@ -31,7 +31,6 @@ function List(props) {
     RNSecureKeyStore.get("user_id").then(res => {
       setUserId(res);
     });
-    // db.delete()
     fetchList();
   }, []);
 

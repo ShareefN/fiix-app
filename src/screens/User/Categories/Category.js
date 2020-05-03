@@ -13,6 +13,7 @@ import { fetchContractors } from "../../../Api/api";
 import Header from "./Components/Header";
 import * as Animated from "react-native-animatable";
 import RNSecureKeyStore from "react-native-secure-key-store";
+import Database from "../Database/favoriteDB";
 
 function wait(timeout) {
   return new Promise(resolve => {
@@ -26,7 +27,10 @@ function Category(props) {
   const [refreshing, setRefreshing] = useState(false);
   const [username, setUsername] = useState(null);
   const [category] = useState(props.navigation.getParam("category"));
+  const [favFlag, setFavFlag] = useState(false);
   const [contractors, setContractors] = useState(null);
+
+  const favDb = new Database();
 
   useEffect(() => {
     RNSecureKeyStore.get("username").then(res => {
@@ -45,6 +49,19 @@ function Category(props) {
         }
       })
       .catch(err => console.log(err));
+  };
+
+  const fetchFav = async () => {
+    await favDb.getFavorites().then(data => {
+      data.forEach(element => {
+        contractors &&
+          contractors.forEach(elm => {
+            if (element.contractorId === elm.id) {
+              setFavFlag(true);
+            }
+          });
+      });
+    });
   };
 
   const onRefresh = useCallback(() => {
@@ -132,6 +149,7 @@ function Category(props) {
                             : "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
                         }
                       }}
+                      rightIcon={{ name: favFlag ? "favorite" : null }}
                       chevron
                     />
                   </TouchableOpacity>

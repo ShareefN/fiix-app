@@ -5,12 +5,22 @@ import {
   TouchableOpacity,
   Image,
   View,
+  Platform
 } from "react-native";
 import Header from "../Components/HeaderComponent";
 import { userLogout, wake } from "../../../Api/api";
 import { categories } from "./Components/categories";
 
 function Categories(props) {
+  // const Banner = firebase.admob.Banner;
+  // const AdRequest = firebase.admob.AdRequest;
+  // const request = new AdRequest();
+
+  const unitId =
+    Platform.OS === "ios"
+      ? "ca-app-pub-6510981239392097/1800299468"
+      : "ca-app-pub-6510981239392097/7346505079";
+
   const handelLogout = async () => {
     await userLogout();
     props.navigation.navigate("userLogin");
@@ -32,6 +42,22 @@ function Categories(props) {
         <FlatList
           style={{ flexDirection: "column" }}
           numColumns={2}
+          ItemSeparatorComponent={() => (
+            <View style={{alignItems: 'center'}}>
+              <Text>Ad BANNER goes here!</Text>
+              {/* // <Banner
+            //   unitId={unitId}
+            //   size={"SMART_BANNER"}
+            //   request={request.build()}
+            //   onAdLoaded={() => {
+            //     console.log("Advert loaded");
+            //   }}
+            //   onAdFailedToLoad={() => {
+            //     console.log("Advert failed to load!!!!");
+            //   }}
+            // /> */}
+            </View>
+          )}
           showsVerticalScrollIndicator={false}
           data={categories}
           renderItem={({ item }) => (
@@ -61,9 +87,10 @@ function Categories(props) {
               <Text style={{ marginTop: 10, fontSize: 15, fontWeight: "bold" }}>
                 {item.label}
               </Text>
+              <Text>{item.translation}</Text>
             </TouchableOpacity>
           )}
-          keyExtractor={item => item.value}
+          keyExtractor={item => item.translation}
         />
       </View>
     </>

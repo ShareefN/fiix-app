@@ -10,10 +10,10 @@ function ContractorHeader(props) {
       backgroundColor="white"
       leftComponent={<LeftComponent nav={props.navigation} />}
       centerComponent={{
-        text: props.title,
+        text: props.contractor.name,
         style: { color: "black", fontSize: 20 }
       }}
-      rightComponent={<RightComponent post={props.post} number={props.number}/>}
+      rightComponent={<RightComponent post={props.post} contractor={props.contractor}/>}
     />
   );
 }

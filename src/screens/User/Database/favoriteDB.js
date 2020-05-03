@@ -27,7 +27,7 @@ export default class Favorites {
               .then(() => {
                 console.log("DB is ready");
               })
-              .catch(Err => {
+              .catch(err => {
                 db.transaction(tx => {
                   tx.executeSql(
                     "CREATE TABLE IF NOT EXISTS Favorites (contractorId, contractorName, contractorImage)"
@@ -63,46 +63,83 @@ export default class Favorites {
   getFavorites() {
     return new Promise(resolve => {
       const favorites = [];
-      this.initDB();
-    })
-      .then(db => {
+      this.initDB()
+        .then(db => {
+          db.transaction(tx => {
+            tx.executeSql("SELECT * FROM Favorites").then(([tx, results]) => {
+              var len = results.rows.length;
+              for (var i = 0; i < len; i++) {
+                let row = results.rows.item(i);
+                const { contractorId, contractorName, contractorImage } = row;
+                favorites.push({
+                  contractorId,
+                  contractorName,
+                  contractorImage
+                });
+              }
+              resolve(favorites);
+            });
+          })
+          .then(result => {
+            this.closeDatabase(db);
+          }).catch(err => console.log(err))
+        })
+        .catch(err => console.log(err));
+    });
+  }
+
+  addFavorite(contractor) {
+    return new Promise(resolve => {
+      this.initDB().then(db => {
         db.transaction(tx => {
-          tx.executeSql("SELECT * FROM Favorites").then(([tx, results]) => {
-            var len = results.rows.length;
-            for (var i = 0; i < len; i++) {
-              let row = results.rows.item(i);
-              const { contractorId, contractorName, contractorImage } = row;
-              favorites.push({ contractorId, contractorName, contractorImage });
-            }
-            resolve(favorites);
+          tx.executeSql("INSERT INTO Favorites VALUES (?, ?, ?)", [
+            contractor.id,
+            contractor.name,
+            contractor.image
+          ]).then(([tx, results]) => {
+            resolve(results);
           });
         })
           .then(result => {
             this.closeDatabase(db);
           })
           .catch(err => console.log(err));
-      })
-      .catch(err => console.log(err));
+      });
+    }).catch(err => console.log(err));
   }
 
-  addFavorite(contractor) {
+  removeContractor(contractorId) {
+    return new Promise(resolve => {
+      this.initDB().then(db => {
+        db.transaction(tx => {
+          tx.executeSql("DELETE FROM Favorites WHERE contractorId = ?", [
+            contractorId
+          ])
+            .then(([tx, results]) => {
+              resolve(results);
+            })
+            .then(result => {
+              this.closeDatabase(db);
+            })
+            .catch(err => console.log(err));
+        });
+      });
+    });
+  }
+
+  delete() {
     return new Promise(resolve => {
       this.initDB()
         .then(db => {
           db.transaction(tx => {
-            tx.executeSql("INSERT INTO Favorites VALUES (?, ?, ?)", [
-              contractor.id,
-              contractor.name,
-              contractor.image
-            ]).then(([tx, results]) => {
+            tx.executeSql("DROP TABLE Favorites").then(([tx, results]) => {
               resolve(results);
             });
-          });
-        })
-        .then(result => {
-          this.closeDatabase(db);
+          })
+            .then(result => this.closeDatabase(db))
+            .catch(err => console.log(err));
         })
         .catch(err => console.log(err));
-    }).catch(err => console.log(err));
+    });
   }
 }
