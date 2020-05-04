@@ -16,7 +16,7 @@ function Settings(props) {
   useEffect(() => {
     RNSecureKeyStore.get("user_id")
       .then(res => {
-        setUser(res);
+        setUserId(res);
       })
       .catch(err => console.log(err));
 
