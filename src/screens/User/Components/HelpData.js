@@ -9,9 +9,9 @@ const reviews = {
 };
 
 const list = {
-  title: 'Your FiiX List',
-  content: 'Never forget another chore, start by writting them down here!'
-}
+  title: "Your FiiX List",
+  content: "Never forget another chore, start by writting them down here!"
+};
 
 const data = {
   categories,

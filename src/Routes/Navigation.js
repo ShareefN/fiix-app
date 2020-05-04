@@ -1,6 +1,8 @@
 import React from "react";
+import { Dimensions } from "react-native";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
+import { createDrawerNavigator } from "react-navigation-drawer";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import { Icon } from "react-native-elements";
 
@@ -15,6 +17,10 @@ import List from "../screens/User/List/List";
 import Reviews from "../screens/User/Reviews/Reviews";
 import Category from "../screens/User/Categories/Category";
 import Contractor from "../screens/User/Categories/Contractor";
+import Settings from "../screens/User/Settings/Settings";
+import MenuDrawer from "./Drawer";
+
+const WIDTH = Dimensions.get('window').width 
 
 const UserBottomNavigator = createMaterialBottomTabNavigator(
   {
@@ -45,6 +51,7 @@ const UserBottomNavigator = createMaterialBottomTabNavigator(
     activeTintColor: "black",
     order: ["list", "categories", "reviews"],
     shifting: true,
+    sceneAnimationEnabled: true,
     barStyle: { backgroundColor: "white" }
   }
 );
@@ -100,6 +107,12 @@ const MainStackNavigator = createStackNavigator(
         headerShown: false
       }
     },
+    settings: {
+      screen: Settings,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
     terms: {
       screen: Terms,
       navigationOptions: {
@@ -113,4 +126,15 @@ const MainStackNavigator = createStackNavigator(
   }
 );
 
-export default AppNavigation = createAppContainer(MainStackNavigator);
+const DrawerNavigation = createDrawerNavigator(
+  {
+    main: {screen: MainStackNavigator},
+    tabs: { screen: UserBottomContainer }
+  },
+  {
+    drawerWidth: WIDTH * 0.7,
+    contentComponent: MenuDrawer
+  }
+);
+
+export default AppNavigation = createAppContainer(DrawerNavigation);

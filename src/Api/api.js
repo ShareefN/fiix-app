@@ -34,11 +34,14 @@ export const storeUserToken = async token => {
     .catch(err => console.log(err));
 };
 
-export const storeUserCredentials = async (username, id) => {
+export const storeUserCredentials = async (username, id, number) => {
   await RNSecureKeyStore.set("username", username, {
     accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY
   });
   await RNSecureKeyStore.set("user_id", id.toString(), {
+    accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY
+  });
+  await RNSecureKeyStore.set("user_number", number, {
     accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY
   });
 };
@@ -81,6 +84,7 @@ export const userLogout = async () => {
   await RNSecureKeyStore.remove("user_token");
   await RNSecureKeyStore.remove("user_id");
   await RNSecureKeyStore.remove("username");
+  await RNSecureKeyStore.remove("user_number");
 };
 
 export const contractorLogout = async () => {
@@ -118,7 +122,7 @@ export const getContractor = contractorId => {
 };
 
 export const getContractorsReviews = contractorId => {
-  return Axios.get(`/users/contractor/${contractorId}/REVIEWS`);
+  return Axios.get(`/users/contractor/${contractorId}/reviews`);
 };
 
 export const addContractorReview = (contractorId, review) => {
@@ -135,4 +139,14 @@ export const deleteContractorReview = reviewId => {
       return Axios.delete(`/users/contractorsreview/${reviewId}/user/${res}`);
     })
     .catch(err => console.log(err));
+};
+
+export const getUser = (userId) => {
+  return Axios.get(`/users/user/${userId}`);
+};
+
+export const updateUser = values => {
+  RNSecureKeyStore.get("user_id").then(res => {
+    return Axios.put(`/users/update/user/${res}`, { values });
+  });
 };

@@ -7,7 +7,7 @@ function HeaderComponent(props) {
   return (
     <Header
       backgroundColor="white"
-      leftComponent={<LeftComponent />}
+      leftComponent={<LeftComponent navigation={props.navigation}/>}
       centerComponent={{
         text: props.title,
         style: { color: "black", fontSize: 30 }

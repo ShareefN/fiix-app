@@ -5,7 +5,7 @@ import { Icon } from "react-native-elements";
 function LeftComponent(props) {
   return (
     <>
-      <TouchableOpacity onPress={() => alert("hii")}>
+      <TouchableOpacity onPress={() => props.navigation.openDrawer()}>
         <Icon name="menu" />
       </TouchableOpacity>
     </>

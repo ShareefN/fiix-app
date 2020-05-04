@@ -18,14 +18,18 @@ function UserLogin(props) {
     return userLogin(email.email, password.password)
       .then(({ data }) => {
         storeUserToken(data.token);
-        storeUserCredentials(data.User.username, data.User.id);
+        storeUserCredentials(
+          data.User.username,
+          data.User.id,
+          data.User.number
+        );
         props.navigation.navigate("userHome");
-        setEmail('')
-        setPassword('')
+        setEmail("");
+        setPassword("");
       })
       .catch(err => {
         console.log(err);
-        // alert("Invalid email or password");
+        alert("Invalid email or password");
         setPassword("");
       });
   };

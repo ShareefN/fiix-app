@@ -18,6 +18,7 @@ import {
 } from "../../../Api/api";
 import { ListItem } from "react-native-elements";
 import RNSecureKeyStore from "react-native-secure-key-store";
+import moment from "moment";
 
 const { width, height } = Dimensions.get("window");
 
@@ -113,6 +114,10 @@ function Contractor(props) {
           </Text>
           <Text style={{ fontSize: 15 }}>
             {contractor.timeIn} - {contractor.timeOut}
+          </Text>
+          <Text style={{ fontSize: 10 }}>
+            Joined {" "}
+            {moment(contractor.createdAt).format("MMM-D-YYYY")}
           </Text>
         </View>
       </View>
