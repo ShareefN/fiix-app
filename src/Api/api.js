@@ -34,14 +34,11 @@ export const storeUserToken = async token => {
     .catch(err => console.log(err));
 };
 
-export const storeUserCredentials = async (username, id, number) => {
+export const storeUserCredentials = async (username, id) => {
   await RNSecureKeyStore.set("username", username, {
     accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY
   });
   await RNSecureKeyStore.set("user_id", id.toString(), {
-    accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY
-  });
-  await RNSecureKeyStore.set("user_number", number, {
     accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY
   });
 };
@@ -67,12 +64,12 @@ export const userLogin = (email, password) => {
   return Axios.post("/users/user/login", { email, password });
 };
 
-export const userRegister = (username, email, password, number) => {
+export const userRegister = user => {
   return Axios.post("/users/user/register", {
-    username,
-    email,
-    password,
-    number
+    username: user.username,
+    email: user.email,
+    password: user.password,
+    number: user.number
   });
 };
 
@@ -84,7 +81,6 @@ export const userLogout = async () => {
   await RNSecureKeyStore.remove("user_token");
   await RNSecureKeyStore.remove("user_id");
   await RNSecureKeyStore.remove("username");
-  await RNSecureKeyStore.remove("user_number");
 };
 
 export const contractorLogout = async () => {
@@ -141,12 +137,27 @@ export const deleteContractorReview = reviewId => {
     .catch(err => console.log(err));
 };
 
-export const getUser = (userId) => {
+export const getUser = userId => {
   return Axios.get(`/users/user/${userId}`);
 };
 
-export const updateUser = values => {
+export const updateUser = (userId, values) => {
+  return Axios.put(`/users/update/user/${userId}`, {
+    email: values.email,
+    number: values.number,
+    username: values.username
+  });
+};
+
+export const userDeactivateAccount = userId => {
+  return Axios.put(`/users/deactivate/user/${userId}`);
+};
+
+export const updateUserpassword = (password, newPassword) => {
   RNSecureKeyStore.get("user_id").then(res => {
-    return Axios.put(`/users/update/user/${res}`, { values });
+    return Axios.put(`/users/update/user/password/${res}`, {
+      password: password,
+      newPassword: newPassword
+    });
   });
 };

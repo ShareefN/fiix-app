@@ -19,6 +19,7 @@ import Category from "../screens/User/Categories/Category";
 import Contractor from "../screens/User/Categories/Contractor";
 import Settings from "../screens/User/Settings/Settings";
 import MenuDrawer from "./Drawer";
+import UpdatePassword from '../screens/User/Settings/updatePassword';
 
 const WIDTH = Dimensions.get('window').width 
 
@@ -109,6 +110,12 @@ const MainStackNavigator = createStackNavigator(
     },
     settings: {
       screen: Settings,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
+    updatePassword: {
+      screen: UpdatePassword,
       navigationOptions: {
         headerShown: false
       }

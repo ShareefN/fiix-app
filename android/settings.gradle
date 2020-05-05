@@ -1,4 +1,6 @@
 rootProject.name = 'fiixapp'
+include ':react-native-secure-key-store'
+project(':react-native-secure-key-store').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-secure-key-store/android')
 include ':react-native-sqlite-storage'
 project(':react-native-sqlite-storage').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sqlite-storage/platforms/android')
 include ':react-native-device-info'

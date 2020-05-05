@@ -7,12 +7,18 @@ function HeaderComponent(props) {
   return (
     <Header
       backgroundColor="white"
-      leftComponent={<LeftComponent navigation={props.navigation}/>}
+      leftComponent={
+        props && props.title === "Categories" ? (
+          <LeftComponent navigation={props.navigation} />
+        ) : null
+      }
       centerComponent={{
         text: props.title,
         style: { color: "black", fontSize: 30 }
       }}
-      rightComponent={<RightComponent title={props.title} value={props.value}/>}
+      rightComponent={
+        <RightComponent title={props.title} value={props.value} />
+      }
     />
   );
 }

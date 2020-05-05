@@ -1,27 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import RNSecureKeyStore from "react-native-secure-key-store";
-import { userLogout } from "../Api/api";
+import { userLogout, getUser } from "../Api/api";
 
 function MenuDrawer(props) {
-  const [username, setUsername] = useState("");
-  const [userNumber, setUserNumber] = useState("");
+  const [user, setUser] = useState({ username: "", number: "" });
 
   useEffect(() => {
-    RNSecureKeyStore.get("username")
-      .then(res => {
-        setUsername(res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-
-    RNSecureKeyStore.get("user_number")
-      .then(res => {
-        setUserNumber(res);
-      })
-      .catch(err => console.log(err));
+    me();
   });
+
+  const me = () => {
+    RNSecureKeyStore.get("user_id").then(async res => {
+      await getUser(res)
+        .then(({ data }) =>
+          setUser({ ...user, username: data.username, number: data.number })
+        )
+        .catch(err => console.log(err));
+    });
+  };
 
   const navItem = (nav, title) => {
     return (
@@ -67,16 +64,16 @@ function MenuDrawer(props) {
               fontSize: 20
             }}
           >
-            {username}
+            {user.username}
           </Text>
           <Text
             style={{
               color: "white",
               textAlign: "center",
-              marginVertical: 10
+              fontSize: 15
             }}
           >
-            {userNumber}
+            {user.number}
           </Text>
         </View>
       </View>

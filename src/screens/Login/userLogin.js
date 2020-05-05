@@ -9,27 +9,24 @@ import {
 } from "react-native";
 import { userLogin, storeUserToken, storeUserCredentials } from "../../Api/api";
 import * as Animated from "react-native-animatable";
+import Dialog from "react-native-dialog";
 
 function UserLogin(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [dialogVisible, setDialogVisible] = useState(false);
 
   const login = () => {
     return userLogin(email.email, password.password)
       .then(({ data }) => {
         storeUserToken(data.token);
-        storeUserCredentials(
-          data.User.username,
-          data.User.id,
-          data.User.number
-        );
+        storeUserCredentials(data.User.username, data.User.id);
         props.navigation.navigate("userHome");
         setEmail("");
         setPassword("");
       })
       .catch(err => {
-        console.log(err);
-        alert("Invalid email or password");
+        setDialogVisible(true);
         setPassword("");
       });
   };
@@ -112,6 +109,15 @@ function UserLogin(props) {
           </TouchableOpacity>
         </View>
       </Animated.View>
+      <Dialog.Container visible={dialogVisible}>
+        <Dialog.Title>Invalid credentials</Dialog.Title>
+        <Dialog.Description>
+          Invalid email or password, Or this account might be deactivated or
+          prohibited from accessing FiiX services, Please contact FiiX support
+          for futhur information
+        </Dialog.Description>
+        <Dialog.Button label="Close" onPress={() => setDialogVisible(false)} />
+      </Dialog.Container>
     </SafeAreaView>
   );
 }

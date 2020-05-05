@@ -15,21 +15,23 @@ import {
 } from "../../Api/api";
 
 function UserRegister(props) {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [number, setNumber] = useState("");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+    number: "",
+    password: ""
+  });
 
   const register = () => {
-    if (username === "" || email === "" || number === "" || password === "") {
+    if (
+      user.username === "" ||
+      user.email === "" ||
+      user.number === "" ||
+      user.password === ""
+    ) {
       alert("Invalid request, please check inputs");
     } else {
-      return userRegister(
-        username.username,
-        email.email,
-        number.number,
-        password.password
-      )
+      return userRegister(user)
         .then(({ data }) => {
           storeUserToken(data.token);
           storeUserCredentials(data.User.username, data.User.id);
@@ -56,7 +58,8 @@ function UserRegister(props) {
           autoCapitalize="none"
           autoCorrect={false}
           style={styles.textInput}
-          onChangeText={username => setUsername({ username })}
+          onChangeText={username => setUser({ ...user, username: username })}
+          value={user.username}
           placeholderTextColor="grey"
         />
         <TextInput
@@ -65,21 +68,25 @@ function UserRegister(props) {
           autoCapitalize="none"
           autoCorrect={false}
           style={styles.textInput}
-          onChangeText={email => setEmail({ email })}
+          onChangeText={email => setUser({ ...user, email: email })}
+          value={user.email}
           placeholderTextColor="grey"
         />
         <TextInput
           placeholder="NUMBER"
           keyboardType="numeric"
+          maxLength={10}
           style={styles.textInput}
-          onChangeText={number => setNumber({ number })}
+          onChangeText={number => setUser({ ...user, number: number })}
+          value={user.number}
           placeholderTextColor="grey"
         />
         <TextInput
           placeholder="PASSWORD"
           secureTextEntry
           style={styles.textInput}
-          onChangeText={password => setPassword({ password })}
+          onChangeText={password => setUser({ ...user, password: password })}
+          value={user.password}
           placeholderTextColor="grey"
         />
         <TouchableOpacity

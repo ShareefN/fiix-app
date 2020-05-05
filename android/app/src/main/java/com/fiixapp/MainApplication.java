@@ -6,6 +6,7 @@ import android.net.Uri;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.reactlibrary.securekeystore.RNSecureKeyStorePackage;
 import org.pgsqlite.SQLitePluginPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactlibrary.securekeystore.RNSecureKeyStorePackage;
@@ -54,6 +55,7 @@ public class MainApplication extends Application implements ReactApplication {
 //  protected List<ReactPackage> getPackages() {
 //    return Arrays.<ReactPackage>asList(
 //        new MainReactPackage(),
+            // new RNSecureKeyStorePackage();
             // new SQLitePluginPackage();
 //             new RNDeviceInfo(),
 //          new VectorIconsPackage(),
