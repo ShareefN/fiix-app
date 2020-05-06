@@ -50,7 +50,7 @@ function Settings(props) {
   const handleUpdateUser = () => {
     setLoading(true);
     RNSecureKeyStore.get("user_id").then(async res => {
-      await updateUser(res, user.password)
+      await updateUser(res, user)
         .then(res => {
           setLoading(false);
           setSuccessDialog(true);
