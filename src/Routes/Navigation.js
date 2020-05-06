@@ -19,9 +19,10 @@ import Category from "../screens/User/Categories/Category";
 import Contractor from "../screens/User/Categories/Contractor";
 import Settings from "../screens/User/Settings/Settings";
 import MenuDrawer from "./Drawer";
-import UpdatePassword from '../screens/User/Settings/updatePassword';
+import UpdatePassword from "../screens/User/Settings/updatePassword";
+import Feedback from "../screens/User/Feedback";
 
-const WIDTH = Dimensions.get('window').width 
+const WIDTH = Dimensions.get("window").width;
 
 const UserBottomNavigator = createMaterialBottomTabNavigator(
   {
@@ -120,6 +121,12 @@ const MainStackNavigator = createStackNavigator(
         headerShown: false
       }
     },
+    feedback: {
+      screen: Feedback,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
     terms: {
       screen: Terms,
       navigationOptions: {
@@ -135,7 +142,7 @@ const MainStackNavigator = createStackNavigator(
 
 const DrawerNavigation = createDrawerNavigator(
   {
-    main: {screen: MainStackNavigator},
+    main: { screen: MainStackNavigator },
     tabs: { screen: UserBottomContainer }
   },
   {

@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import Header from "../Categories/Components/Header";
 import { Input } from "react-native-elements";
-import { updateUserpassword } from "../../../Api/api";
+import { updateUserpassword, userLogout } from "../../../Api/api";
+import RNSecureKeyStore from "react-native-secure-key-store";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp
+} from "react-native-responsive-screen";
 
 function UpdatePassword(props) {
   const [userPassword, setUserPassword] = useState({
@@ -15,13 +20,24 @@ function UpdatePassword(props) {
     if (userPassword.newPassword !== userPassword.confirmPassword) {
       alert("Those password dont match");
       setUserPassword({ ...userPassword, newPassword: "", oldPassword: "" });
+    } else {
+      RNSecureKeyStore.get("user_id").then(async res => {
+        await updateUserpassword(
+          res,
+          userPassword.oldPassword,
+          userPassword.newPassword
+        )
+          .then(async res => {
+            alert("Success");
+            await userLogout();
+            props.navigation.navigate("userLogin");
+          })
+          .catch(err => {
+            alert("Invalid password");
+            setUserPassword({ ...userPassword, oldPassword: "" });
+          });
+      });
     }
-
-    await updateUserpassword(userPassword)
-      .then(res => {
-        alert("Success");
-      })
-      .catch(err => console.log(err));
   };
 
   return (
@@ -31,13 +47,13 @@ function UpdatePassword(props) {
         value="settings"
         navigation={props.navigation}
       />
-      <View style={{ marginHorizontal: 20, marginVertical: 30 }}>
+      <View style={{ marginHorizontal: 20 }}>
         <Input
           placeholder="Old Password"
           label="Old Password"
           secureTextEntry
           value={userPassword.oldPassword}
-          containerStyle={{ marginVertical: 20 }}
+          containerStyle={{ height: hp("4%"), marginVertical: 30 }}
           onChangeText={value =>
             setUserPassword({ ...userPassword, oldPassword: value })
           }
@@ -47,7 +63,7 @@ function UpdatePassword(props) {
           label="New Password"
           secureTextEntry
           value={userPassword.newPassword}
-          containerStyle={{ marginVertical: 20 }}
+          containerStyle={{ height: hp("4%"), marginVertical: 30 }}
           onChangeText={value =>
             setUserPassword({ ...userPassword, newPassword: value })
           }
@@ -57,21 +73,21 @@ function UpdatePassword(props) {
           label="Confirm New Password"
           secureTextEntry
           value={userPassword.confirmPassword}
-          containerStyle={{ marginVertical: 20 }}
+          containerStyle={{ height: hp("4%"), marginVertical: 30 }}
           onChangeText={value =>
             setUserPassword({ ...userPassword, confirmPassword: value })
           }
         />
         <TouchableOpacity
-        onPress={() => handleUpdatePassword()}
+          onPress={() => handleUpdatePassword()}
           style={{
             backgroundColor: "black",
-            height: 50,
-            marginHorizontal: 20,
-            borderRadius: 5,
-            alignItems: "center",
-            justifyContent: "center",
-            marginVertical: 20
+          height: hp("7%"),
+          marginHorizontal: wp('3%'),
+          borderRadius: 15,
+          alignItems: "center",
+          justifyContent: "center",
+          marginVertical: hp('7%')
           }}
         >
           <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>

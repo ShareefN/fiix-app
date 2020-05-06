@@ -19,6 +19,10 @@ import {
 import { ListItem } from "react-native-elements";
 import RNSecureKeyStore from "react-native-secure-key-store";
 import moment from "moment";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp
+} from "react-native-responsive-screen";
 
 const { width, height } = Dimensions.get("window");
 
@@ -92,9 +96,13 @@ function Contractor(props) {
         navigation={props.navigation}
         post={postReview}
       />
-      <View style={{ height: height / 4, backgroundColor: "white" }}>
+      <View style={{ backgroundColor: "white" }}>
         <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          style={{
+            marginVertical: hp("2%"),
+            alignItems: "center",
+            justifyContent: "center"
+          }}
         >
           <Image
             style={{
@@ -116,13 +124,12 @@ function Contractor(props) {
             {contractor.timeIn} - {contractor.timeOut}
           </Text>
           <Text style={{ fontSize: 10 }}>
-            Joined {" "}
-            {moment(contractor.createdAt).format("MMM-D-YYYY")}
+            Joined {moment(contractor.createdAt).format("MMM-D-YYYY")}
           </Text>
         </View>
       </View>
       <Animated.View animation="zoomIn" iterationCount={1} style={{ flex: 1 }}>
-        <View style={{ marginHorizontal: 30, marginVertical: 10 }}>
+        <View style={{ marginHorizontal: wp("2%"), marginVertical: 10 }}>
           <Text style={{ fontSize: 15 }}>
             What people think about {contractorName}
           </Text>
@@ -131,7 +138,6 @@ function Contractor(props) {
         {!contractorReviews ? (
           <View
             style={{
-              flex: 1,
               alignItems: "center",
               justifyContent: "center",
               width: width,
@@ -140,13 +146,13 @@ function Contractor(props) {
             }}
           >
             <Image
-              style={{ width: 250, height: 250 }}
+              style={{ width: wp("30%"), height: 100 }}
               source={require("../../../Assets/noreviews.jpg")}
             />
             <Text
               style={{
                 fontSize: 15,
-                marginHorizontal: 30,
+                marginHorizontal: wp('2%'),
                 color: "grey",
                 textAlign: "center"
               }}

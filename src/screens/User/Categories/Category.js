@@ -5,7 +5,6 @@ import {
   RefreshControl,
   TouchableOpacity,
   Text,
-  Dimensions,
   Image
 } from "react-native";
 import { ListItem } from "react-native-elements";
@@ -14,14 +13,16 @@ import Header from "./Components/Header";
 import * as Animated from "react-native-animatable";
 import RNSecureKeyStore from "react-native-secure-key-store";
 import Database from "../Database/favoriteDB";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp
+} from "react-native-responsive-screen";
 
 function wait(timeout) {
   return new Promise(resolve => {
     setTimeout(resolve, timeout);
   });
 }
-
-const { width } = Dimensions.get("window");
 
 function Category(props) {
   const [refreshing, setRefreshing] = useState(false);
@@ -80,13 +81,12 @@ function Category(props) {
               flex: 1,
               alignItems: "center",
               justifyContent: "center",
-              width: width,
               alignItems: "center",
               justifyContent: "center"
             }}
           >
             <Image
-              style={{ width: 250, height: 250 }}
+              style={{ width: wp("40%"), height: 150 }}
               source={require("../../../Assets/notfound.jpg")}
             />
             <Text
@@ -94,7 +94,7 @@ function Category(props) {
                 fontSize: 35,
                 color: "orange",
                 marginHorizontal: 25,
-                marginVertical: 25
+                marginVertical: hp("1%")
               }}
             >
               Hi {username}!
@@ -102,7 +102,7 @@ function Category(props) {
             <Text
               style={{
                 fontSize: 15,
-                marginHorizontal: 30,
+                marginHorizontal: wp("5%"),
                 color: "grey",
                 textAlign: "center"
               }}
@@ -138,7 +138,7 @@ function Category(props) {
                     }
                   >
                     <ListItem
-                      title={`${elm.name} - Rating`}
+                      title={`${elm.name} - 3.2`}
                       subtitle={`${elm.location}, ${elm.timeIn} - ${elm.timeOut}`}
                       subtitleStyle={{ color: "grey" }}
                       bottomDivider

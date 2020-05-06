@@ -10,6 +10,10 @@ import {
 import { userLogin, storeUserToken, storeUserCredentials } from "../../Api/api";
 import * as Animated from "react-native-animatable";
 import Dialog from "react-native-dialog";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp
+} from "react-native-responsive-screen";
 
 function UserLogin(props) {
   const [email, setEmail] = useState("");
@@ -32,7 +36,7 @@ function UserLogin(props) {
   };
 
   return (
-    <SafeAreaView style={{ marginTop: 30 }}>
+    <SafeAreaView style={{ marginTop: 30, flex: 1 }}>
       <Animated.View
         animation="zoomIn"
         iterationCount={1}
@@ -126,7 +130,7 @@ export default UserLogin;
 
 const styles = StyleSheet.create({
   textInput: {
-    height: 50,
+    height: hp("7%"),
     borderRadius: 25,
     borderWidth: 0.5,
     marginHorizontal: 20,
@@ -136,21 +140,21 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "black",
-    height: 50,
+    height: hp("7%"),
     marginHorizontal: 20,
     borderRadius: 35,
     alignItems: "center",
     justifyContent: "center",
-    marginVertical: 25
+    marginVertical: 15
   },
   registerButton: {
     borderColor: "grey",
-    height: 50,
+    height: hp("7%"),
     borderWidth: 2,
-    marginHorizontal: 20,
+    marginHorizontal: hp("4%"),
     borderRadius: 5,
     alignItems: "center",
     justifyContent: "center",
-    marginVertical: 25
+    marginVertical: 15
   }
 });

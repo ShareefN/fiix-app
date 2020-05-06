@@ -2,6 +2,10 @@ import React from "react";
 import { Text, FlatList, TouchableOpacity, Image, View } from "react-native";
 import Header from "../Components/HeaderComponent";
 import { categories } from "./Components/categories";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp
+} from "react-native-responsive-screen";
 
 function Categories(props) {
   return (
@@ -13,8 +17,9 @@ function Categories(props) {
       />
       <View
         style={{
-          marginBottom: 80,
+          flex: 1,
           alignItems: "center",
+          justifyContent: "center",
           backgroundColor: "white"
         }}
       >
@@ -43,10 +48,10 @@ function Categories(props) {
             >
               <Image
                 style={{
-                  width: 150,
+                  width: wp("40%"),
                   height: 150,
                   borderRadius: 10,
-                  marginHorizontal: 20
+                  marginHorizontal: wp("2%")
                 }}
                 source={{
                   uri: item.image

@@ -2,13 +2,17 @@ import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import RNSecureKeyStore from "react-native-secure-key-store";
 import { userLogout, getUser } from "../Api/api";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp
+} from "react-native-responsive-screen";
 
 function MenuDrawer(props) {
   const [user, setUser] = useState({ username: "", number: "" });
 
   useEffect(() => {
     me();
-  });
+  }, []);
 
   const me = () => {
     RNSecureKeyStore.get("user_id").then(async res => {
@@ -23,15 +27,14 @@ function MenuDrawer(props) {
   const navItem = (nav, title) => {
     return (
       <TouchableOpacity
-        style={{ height: 80, paddingTop: 30 }}
+        style={{ height: hp("10%") }}
         onPress={() => {
           props.navigation.navigate(nav), props.navigation.closeDrawer();
         }}
       >
         <Text
           style={{
-            textAlign: "center",
-            fontSize: 25
+            fontSize: 20
           }}
         >
           {title}
@@ -48,11 +51,10 @@ function MenuDrawer(props) {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ height: 128, backgroundColor: "black" }}>
+      <View style={{ height: hp("15%"), backgroundColor: "black" }}>
         <View
           style={{
             flex: 1,
-            marginTop: 30,
             justifyContent: "center",
             alignItems: "center"
           }}
@@ -77,24 +79,24 @@ function MenuDrawer(props) {
           </Text>
         </View>
       </View>
-      {navItem("", "Apply With FiiX")}
-      {navItem("settings", "Settings")}
-      {navItem("", "Something Wrong?")}
-      {navItem("terms", "Terms & Conditions")}
-      <TouchableOpacity
-        onPress={() => handleLogout()}
-        style={{ height: 80, paddingTop: 30 }}
-      >
-        <Text
-          style={{
-            textAlign: "center",
-            fontSize: 25
-          }}
+      <View style={{ marginVertical: hp("4%"), marginLeft: wp("5%") }}>
+        {navItem("", "Apply With FiiX")}
+        {navItem("settings", "Settings")}
+        {navItem("feedback", "Something Wrong?")}
+        {navItem("terms", "Terms & Conditions")}
+        <TouchableOpacity
+          onPress={() => handleLogout()}
+          style={{ height: hp("10%") }}
         >
-          Logout
-        </Text>
-      </TouchableOpacity>
-
+          <Text
+            style={{
+              fontSize: 20
+            }}
+          >
+            Logout
+          </Text>
+        </TouchableOpacity>
+      </View>
       <View style={{ flex: 1, justifyContent: "flex-end" }}>
         <View
           style={{

@@ -4,7 +4,6 @@ import {
   TextInput,
   View,
   StyleSheet,
-  Dimensions,
   TouchableOpacity,
   SafeAreaView
 } from "react-native";
@@ -14,8 +13,10 @@ import {
   storeContractorCredentials
 } from "../../Api/api";
 import * as Animated from "react-native-animatable";
-
-const { height } = Dimensions.get("window");
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp
+} from "react-native-responsive-screen";
 
 function ContractorLogin(props) {
   const [email, setEmail] = useState("");
@@ -91,7 +92,7 @@ function ContractorLogin(props) {
             justifyContent: "center"
           }}
         >
-          <TouchableOpacity onPress={() => props.navigation.navigate('terms')}>
+          <TouchableOpacity onPress={() => props.navigation.navigate("terms")}>
             <Text style={{ fontSize: 15, color: "grey", marginVertical: 25 }}>
               Terms and Conditions and Privacy Policy
             </Text>
@@ -106,7 +107,7 @@ export default ContractorLogin;
 
 const styles = StyleSheet.create({
   textInput: {
-    height: 50,
+    height: hp("7%"),
     borderRadius: 25,
     borderWidth: 0.5,
     marginHorizontal: 20,
@@ -116,21 +117,21 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "black",
-    height: 50,
+    height: hp("7%"),
     marginHorizontal: 20,
     borderRadius: 35,
     alignItems: "center",
     justifyContent: "center",
-    marginVertical: 25
+    marginVertical: 15
   },
   registerButton: {
     borderColor: "grey",
-    height: 50,
+    height: hp("7%"),
     borderWidth: 2,
-    marginHorizontal: 20,
+    marginHorizontal: hp("4%"),
     borderRadius: 5,
     alignItems: "center",
     justifyContent: "center",
-    marginVertical: 25
+    marginVertical: 15
   }
 });

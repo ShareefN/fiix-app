@@ -10,16 +10,22 @@ import {
 import RNSecureKeyStore from "react-native-secure-key-store";
 import { Input } from "react-native-elements";
 import Dialog from "react-native-dialog";
+import DialogInput from "react-native-dialog-input";
 import Loading from "react-native-loading-spinner-overlay";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp
+} from "react-native-responsive-screen";
 
 function Settings(props) {
   const [loading, setLoading] = useState(false);
-  const [successDialog, setSuccessDialog] = useState(false)
+  const [successDialog, setSuccessDialog] = useState(false);
   const [dialogVisible, setDialogVisible] = useState(false);
   const [user, setUser] = useState({
     username: "",
     email: "",
-    number: ""
+    number: "",
+    password: ""
   });
 
   useEffect(() => {
@@ -44,10 +50,10 @@ function Settings(props) {
   const handleUpdateUser = () => {
     setLoading(true);
     RNSecureKeyStore.get("user_id").then(async res => {
-      await updateUser(res, user)
+      await updateUser(res, user.password)
         .then(res => {
           setLoading(false);
-          setSuccessDialog(true)
+          setSuccessDialog(true);
         })
         .catch(err => setLoading(false));
     });
@@ -56,7 +62,7 @@ function Settings(props) {
   const handleDeactivateAccount = async () => {
     setLoading(true);
     RNSecureKeyStore.get("user_id").then(async res => {
-      await userDeactivateAccount(res)
+      await userDeactivateAccount(res, user.password)
         .then(async res => {
           await userLogout()
             .then(res => {
@@ -64,9 +70,13 @@ function Settings(props) {
               setLoading(false);
               props.navigation.navigate("userLogin");
             })
-            .catch(err => setLoading(false));
+            .catch(err => {
+              setLoading(false), alert("Invalid password");
+            });
         })
-        .catch(err => setLoading(false));
+        .catch(err => {
+          setLoading(false), alert("Invalid password");
+        });
     });
   };
 
@@ -76,17 +86,17 @@ function Settings(props) {
       <View
         style={{
           alignItems: "flex-end",
-          marginHorizontal: 25,
-          marginVertical: 20
+          marginHorizontal: 25
         }}
       >
         <TouchableOpacity
           onPress={() => handleUpdateUser()}
           style={{
             backgroundColor: "green",
-            height: 25,
-            width: 100,
+            height: hp("4%"),
+            width: wp("25%"),
             borderRadius: 5,
+            marginTop: hp("2%"),
             alignItems: "center",
             justifyContent: "center"
           }}
@@ -94,19 +104,19 @@ function Settings(props) {
           <Text style={{ fontSize: 20, color: "white" }}>Save</Text>
         </TouchableOpacity>
       </View>
-      <View style={{ marginHorizontal: 20 }}>
+      <View style={{ marginHorizontal: 20, flex: 1 }}>
         <Input
           placeholder="Username"
           label="Username"
           value={user.username}
-          containerStyle={{ marginVertical: 20 }}
+          containerStyle={{ height: hp("4%"), marginVertical: 25 }}
           onChangeText={value => setUser({ ...user, username: value })}
         />
         <Input
           placeholder="Email"
           label="Email"
           value={user.email}
-          containerStyle={{ marginVertical: 20 }}
+          containerStyle={{ height: hp("4%"), marginVertical: 25 }}
           onChangeText={value => setUser({ ...user, email: value })}
         />
         <Input
@@ -115,20 +125,20 @@ function Settings(props) {
           maxLength={10}
           keyboardType="numeric"
           value={user.number}
-          containerStyle={{ marginVertical: 20 }}
+          containerStyle={{ height: hp("4%"), marginVertical: 25 }}
           onChangeText={value => setUser({ ...user, number: value })}
         />
       </View>
       <TouchableOpacity
-      onPress={() => props.navigation.navigate('updatePassword')}
+        onPress={() => props.navigation.navigate("updatePassword")}
         style={{
           backgroundColor: "black",
-          height: 50,
-          marginHorizontal: 20,
-          borderRadius: 5,
+          height: hp("7%"),
+          marginHorizontal: wp("3%"),
+          borderRadius: 15,
           alignItems: "center",
           justifyContent: "center",
-          marginVertical: 20
+          marginVertical: 15
         }}
       >
         <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
@@ -139,31 +149,32 @@ function Settings(props) {
         onPress={() => setDialogVisible(true)}
         style={{
           backgroundColor: "red",
-          height: 50,
-          marginHorizontal: 20,
-          borderRadius: 5,
+          height: hp("7%"),
+          marginHorizontal: wp("3%"),
+          borderRadius: 15,
           alignItems: "center",
           justifyContent: "center",
-          marginVertical: 20
+          marginVertical: 15
         }}
       >
         <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
           Deactivate account
         </Text>
       </TouchableOpacity>
-      <Dialog.Container visible={dialogVisible}>
-        <Dialog.Title>Deactivate Account</Dialog.Title>
-        <Dialog.Description>
-          By confirming your account will be deactivated and you can no longer
-          login unless you contact FiiX support
-        </Dialog.Description>
-        <Dialog.Button label="Cancel" onPress={() => setDialogVisible(false)} />
-        <Dialog.Button
-          label="Deactivate"
-          color="red"
-          onPress={() => handleDeactivateAccount()}
-        />
-      </Dialog.Container>
+      <DialogInput
+        isDialogVisible={dialogVisible}
+        title={"Deactivate Account"}
+        message={
+          "By confirming your account will be deactivated and you can no longer login unless you contact FiiX support"
+        }
+        submitInput={inputText => {
+          setUser({ ...user, password: inputText });
+          handleDeactivateAccount();
+        }}
+        closeDialog={() => {
+          setDialogVisible(false);
+        }}
+      ></DialogInput>
       <Dialog.Container visible={successDialog}>
         <Dialog.Title>Success</Dialog.Title>
         <Dialog.Description>

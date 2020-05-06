@@ -149,15 +149,17 @@ export const updateUser = (userId, values) => {
   });
 };
 
-export const userDeactivateAccount = userId => {
-  return Axios.put(`/users/deactivate/user/${userId}`);
+export const userDeactivateAccount = (userId, password) => {
+  return Axios.put(`/users/deactivate/user/${userId}`, { password });
 };
 
-export const updateUserpassword = (password, newPassword) => {
-  RNSecureKeyStore.get("user_id").then(res => {
-    return Axios.put(`/users/update/user/password/${res}`, {
-      password: password,
-      newPassword: newPassword
-    });
+export const updateUserpassword = (userId, password, newPassword) => {
+  return Axios.put(`/users/update/user/password/${userId}`, {
+    password: password,
+    newPassword: newPassword
   });
+};
+
+export const postFeedback = (userId, report) => {
+  return Axios.post(`/users/report/${userId}`, { report });
 };
