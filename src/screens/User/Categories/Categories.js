@@ -48,6 +48,7 @@ function Categories(props) {
             >
               <Image
                 style={{
+                  flex:1,
                   width: wp("40%"),
                   height: 150,
                   borderRadius: 10,

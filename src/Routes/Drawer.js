@@ -80,7 +80,7 @@ function MenuDrawer(props) {
         </View>
       </View>
       <View style={{ marginVertical: hp("4%"), marginLeft: wp("5%") }}>
-        {navItem("", "Apply With FiiX")}
+        {navItem("application1", "Apply With FiiX")}
         {navItem("settings", "Settings")}
         {navItem("feedback", "Something Wrong?")}
         {navItem("terms", "Terms & Conditions")}

@@ -6,6 +6,7 @@ import android.net.Uri;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 import com.reactlibrary.securekeystore.RNSecureKeyStorePackage;
 import org.pgsqlite.SQLitePluginPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -55,6 +56,7 @@ public class MainApplication extends Application implements ReactApplication {
 //  protected List<ReactPackage> getPackages() {
 //    return Arrays.<ReactPackage>asList(
 //        new MainReactPackage(),
+            // new RNDateTimePickerPackage(),
             // new RNSecureKeyStorePackage();
             // new SQLitePluginPackage();
 //             new RNDeviceInfo(),

@@ -21,6 +21,8 @@ import Settings from "../screens/User/Settings/Settings";
 import MenuDrawer from "./Drawer";
 import UpdatePassword from "../screens/User/Settings/updatePassword";
 import Feedback from "../screens/User/Feedback";
+import Application1 from "../screens/User/Application/Application1";
+import Application2 from "../screens/User/Application/Application2";
 
 const WIDTH = Dimensions.get("window").width;
 
@@ -123,6 +125,18 @@ const MainStackNavigator = createStackNavigator(
     },
     feedback: {
       screen: Feedback,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
+    application1: {
+      screen: Application1,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
+    application2: {
+      screen: Application2,
       navigationOptions: {
         headerShown: false
       }
