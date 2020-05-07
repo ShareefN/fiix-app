@@ -20,22 +20,22 @@ function Application2(props) {
     lastname: "",
     category: "",
     location: "",
-    timeIn: new Date(1598051730000),
-    timeOut: new Date(1598051730000)
+    timeIn: new Date(),
+    timeOut: new Date()
   });
 
-  const handleTimeIn = async date => {
+  const handleTimeIn = date => {
     setContractor({
       ...contractor,
-      timeIn: await moment(date).format("hh:mm A")
+      timeIn: date
     });
     setTimeInDialog(false);
   };
 
-  const handleTimeOut = async date => {
+  const handleTimeOut = date => {
     setContractor({
       ...contractor,
-      timeOut: await moment(date).format("hh:mm A")
+      timeOut: date
     });
     setTimeOutDialog(false);
   };
@@ -43,12 +43,12 @@ function Application2(props) {
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <Header title="Contractor Info." navigation={props.navigation} />
-      <View style={{ marginHorizontal: 20, flex: 1 }}>
+      <View style={{ marginHorizontal: hp('2%'), flex: 1 }}>
         <Input
           placeholder="First Name"
           label="First Name"
           value={contractor.firstname}
-          containerStyle={{ height: hp("4%"), marginVertical: 25 }}
+          containerStyle={{ height: hp("4%"), marginVertical: hp('3%') }}
           onChangeText={value =>
             setContractor({ ...contractor, firstname: value })
           }
@@ -70,11 +70,11 @@ function Application2(props) {
             data={categories}
             initValue="Choose Category"
             onChange={value => {
-              setContractor({ ...contractor, category: value });
+              setContractor({ ...contractor, category: value.label });
             }}
           />
         </View>
-        <View style={{ marginHorizontal: wp("2%") }}>
+        <View>
           <Text style={{ color: "grey", fontWeight: "bold", fontSize: 17 }}>
             Location
           </Text>
@@ -82,30 +82,60 @@ function Application2(props) {
             data={locations}
             initValue="Choose Location"
             onChange={value => {
-              setContractor({ ...contractor, location: value });
+              setContractor({ ...contractor, location: value.label });
             }}
           />
         </View>
-        <TouchableOpacity onPress={() => setTimeInDialog(true)}>
-          <Text>Set Time In</Text>
-        </TouchableOpacity>
-        <DateTimePickerModal
-          isVisible={timeInDialog}
-          mode="time"
-          value={contractor.timeIn}
-          onConfirm={handleTimeIn}
-          onCancel={() => setTimeInDialog(false)}
-        />
-        <TouchableOpacity onPress={() => setTimeOutDialog(true)}>
-          <Text>Set Time Out</Text>
-        </TouchableOpacity>
-        <DateTimePickerModal
-          isVisible={timeOutDialog}
-          mode="time"
-          value={contractor.timeOut}
-          onConfirm={handleTimeOut}
-          onCancel={() => setTimeOutDialog(false)}
-        />
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+            marginVertical: hp("1%")
+          }}
+        >
+          <View style={{flexDirection: 'column', alignItems: 'center'}}>
+            <TouchableOpacity onPress={() => setTimeInDialog(true)}>
+              <Text style={{fontSize: 20}}>Set Time In</Text>
+            </TouchableOpacity>
+            <Text style={{fontSize: 15}}>{moment(contractor.timeIn).format("hh:mm A")}</Text>
+          </View>
+          <DateTimePickerModal
+            isVisible={timeInDialog}
+            mode="time"
+            value={contractor.timeIn}
+            onConfirm={handleTimeIn}
+            onCancel={() => setTimeInDialog(false)}
+          />
+           <View style={{flexDirection: 'column', alignItems: 'center'}}>
+            <TouchableOpacity onPress={() => setTimeOutDialog(true)}>
+              <Text style={{fontSize: 20}}>Set Time Out</Text>
+            </TouchableOpacity>
+            <Text style={{fontSize: 15}}>{moment(contractor.timeOut).format("hh:mm A")}</Text>
+          </View>
+          <DateTimePickerModal
+            isVisible={timeOutDialog}
+            mode="time"
+            value={contractor.timeOut}
+            onConfirm={handleTimeOut}
+            onCancel={() => setTimeOutDialog(false)}
+          />
+        </View>
+        <TouchableOpacity
+        onPress={() => console.log(contractor)}
+        style={{
+          backgroundColor: "black",
+          height: hp("7%"),
+          marginHorizontal: wp("3%"),
+          borderRadius: 15,
+          alignItems: "center",
+          justifyContent: "center",
+          marginVertical: 15
+        }}
+      >
+        <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
+          Next
+        </Text>
+      </TouchableOpacity>
       </View>
     </View>
   );
