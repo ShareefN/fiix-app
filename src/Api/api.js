@@ -163,3 +163,17 @@ export const updateUserpassword = (userId, password, newPassword) => {
 export const postFeedback = (userId, report) => {
   return Axios.post(`/users/report/${userId}`, { report });
 };
+
+export const apply = (userId, contractor) => {
+  return Axios.post(`/application/apply/${userId}`, {
+    firstName: contractor.firstname,
+    lastName: contractor.lastname,
+    location: contractor.location,
+    category: contractor.category,
+    timeIn: contractor.timeIn,
+    timeOut: contractor.timeOut,
+    identity: contractor.identity,
+    nonCriminal: contractor.nonCriminal,
+    profileImage: contractor.profileImage
+  });
+};

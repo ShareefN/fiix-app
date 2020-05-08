@@ -1,13 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Text, FlatList, TouchableOpacity, Image, View } from "react-native";
 import Header from "../Components/HeaderComponent";
 import { categories } from "./Components/categories";
+import { getUser, userLogout } from "../../../Api/api";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
+import RNSecureKeyStore from "react-native-secure-key-store";
 
 function Categories(props) {
+  useEffect(() => {
+    me();
+  }, []);
+
+  const me = async () => {
+    RNSecureKeyStore.get("user_id").then(async res => {
+      await getUser(res)
+        .then(({ data }) => {
+          if (data.status !== "active") {
+            props.navigation.navigate("prohibited", {
+              reason: data.notes
+            });
+          }
+        })
+        .catch(async err => {
+          await userLogout();
+          props.navigation.navigate("userLogin");
+        });
+    });
+  };
+
   return (
     <>
       <Header
@@ -48,7 +71,7 @@ function Categories(props) {
             >
               <Image
                 style={{
-                  flex:1,
+                  flex: 1,
                   width: wp("40%"),
                   height: 150,
                   borderRadius: 10,

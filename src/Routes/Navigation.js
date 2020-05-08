@@ -23,6 +23,10 @@ import UpdatePassword from "../screens/User/Settings/updatePassword";
 import Feedback from "../screens/User/Feedback";
 import Application1 from "../screens/User/Application/Application1";
 import Application2 from "../screens/User/Application/Application2";
+import Applicaton3 from "../screens/User/Application/Application3";
+import ApplicationSuccess from "../screens/User/Application/ApplicationSuccess";
+import ApplicationStatus from "../screens/User/Application/ApplicationStatus";
+import Prohibited from "../screens/User/Prohibited";
 
 const WIDTH = Dimensions.get("window").width;
 
@@ -137,6 +141,30 @@ const MainStackNavigator = createStackNavigator(
     },
     application2: {
       screen: Application2,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
+    application3: {
+      screen: Applicaton3,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
+    applicationSuccess: {
+      screen: ApplicationSuccess,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
+    applicationStatus: {
+      screen: ApplicationStatus,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
+    prohibited: {
+      screen: Prohibited,
       navigationOptions: {
         headerShown: false
       }

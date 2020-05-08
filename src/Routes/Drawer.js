@@ -8,7 +8,11 @@ import {
 } from "react-native-responsive-screen";
 
 function MenuDrawer(props) {
-  const [user, setUser] = useState({ username: "", number: "" });
+  const [user, setUser] = useState({
+    username: "",
+    number: "",
+    applicationStatus: ""
+  });
 
   useEffect(() => {
     me();
@@ -17,9 +21,14 @@ function MenuDrawer(props) {
   const me = () => {
     RNSecureKeyStore.get("user_id").then(async res => {
       await getUser(res)
-        .then(({ data }) =>
-          setUser({ ...user, username: data.username, number: data.number })
-        )
+        .then(({ data }) => {
+          setUser({
+            ...user,
+            username: data.username,
+            number: data.number,
+            applicationStatus: data.applicationStatus
+          });
+        })
         .catch(err => console.log(err));
     });
   };
@@ -80,7 +89,10 @@ function MenuDrawer(props) {
         </View>
       </View>
       <View style={{ marginVertical: hp("4%"), marginLeft: wp("5%") }}>
-        {navItem("application1", "Apply With FiiX")}
+        {user.applicationStatus === "applied" ||
+        user.applicationStatus === "rejected"
+          ? navItem("applicationStatus", "Application Status")
+          : navItem("application1", "Apply With FiiX")}
         {navItem("settings", "Settings")}
         {navItem("feedback", "Something Wrong?")}
         {navItem("terms", "Terms & Conditions")}

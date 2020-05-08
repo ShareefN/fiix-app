@@ -16,12 +16,12 @@ function Application2(props) {
   const [timeInDialog, setTimeInDialog] = useState(false);
   const [timeOutDialog, setTimeOutDialog] = useState(false);
   const [contractor, setContractor] = useState({
-    firstname: "",
-    lastname: "",
-    category: "",
-    location: "",
-    timeIn: new Date(),
-    timeOut: new Date()
+    firstname: null,
+    lastname: null,
+    category: null,
+    location: null,
+    timeIn: null,
+    timeOut: null
   });
 
   const handleTimeIn = date => {
@@ -40,15 +40,33 @@ function Application2(props) {
     setTimeOutDialog(false);
   };
 
+  const handleNext = () => {
+    if (
+      !contractor.firstname ||
+      !contractor.lastname ||
+      !contractor.category ||
+      !contractor.location ||
+      !contractor.timeIn ||
+      !contractor.timeOut
+    ) {
+      alert("Please check all inputs");
+    } else {
+      props.navigation.navigate("application3", {
+        contractor: contractor
+      });
+    }
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <Header title="Contractor Info." navigation={props.navigation} />
-      <View style={{ marginHorizontal: hp('2%'), flex: 1 }}>
+      <View style={{ marginHorizontal: hp("2%"), flex: 1 }}>
         <Input
           placeholder="First Name"
+          autoCapitalize={true}
           label="First Name"
           value={contractor.firstname}
-          containerStyle={{ height: hp("4%"), marginVertical: hp('3%') }}
+          containerStyle={{ height: hp("4%"), marginVertical: hp("3%") }}
           onChangeText={value =>
             setContractor({ ...contractor, firstname: value })
           }
@@ -56,6 +74,7 @@ function Application2(props) {
         <Input
           placeholder="Last Name"
           label="Last Name"
+          autoCapitalize={true}
           value={contractor.lastname}
           containerStyle={{ height: hp("4%"), marginVertical: 25 }}
           onChangeText={value =>
@@ -93,11 +112,15 @@ function Application2(props) {
             marginVertical: hp("1%")
           }}
         >
-          <View style={{flexDirection: 'column', alignItems: 'center'}}>
+          <View style={{ flexDirection: "column", alignItems: "center" }}>
             <TouchableOpacity onPress={() => setTimeInDialog(true)}>
-              <Text style={{fontSize: 20}}>Set Time In</Text>
+              <Text style={{ fontSize: 20 }}>Set Time In</Text>
             </TouchableOpacity>
-            <Text style={{fontSize: 15}}>{moment(contractor.timeIn).format("hh:mm A")}</Text>
+            <Text style={{ fontSize: 15 }}>
+              {contractor.timeIn
+                ? moment(contractor.timeIn).format("hh:mm A")
+                : "--"}
+            </Text>
           </View>
           <DateTimePickerModal
             isVisible={timeInDialog}
@@ -106,11 +129,15 @@ function Application2(props) {
             onConfirm={handleTimeIn}
             onCancel={() => setTimeInDialog(false)}
           />
-           <View style={{flexDirection: 'column', alignItems: 'center'}}>
+          <View style={{ flexDirection: "column", alignItems: "center" }}>
             <TouchableOpacity onPress={() => setTimeOutDialog(true)}>
-              <Text style={{fontSize: 20}}>Set Time Out</Text>
+              <Text style={{ fontSize: 20 }}>Set Time Out</Text>
             </TouchableOpacity>
-            <Text style={{fontSize: 15}}>{moment(contractor.timeOut).format("hh:mm A")}</Text>
+            <Text style={{ fontSize: 15 }}>
+              {contractor.timeOut
+                ? moment(contractor.timeOut).format("hh:mm A")
+                : "--"}
+            </Text>
           </View>
           <DateTimePickerModal
             isVisible={timeOutDialog}
@@ -121,21 +148,21 @@ function Application2(props) {
           />
         </View>
         <TouchableOpacity
-        onPress={() => console.log(contractor)}
-        style={{
-          backgroundColor: "black",
-          height: hp("7%"),
-          marginHorizontal: wp("3%"),
-          borderRadius: 15,
-          alignItems: "center",
-          justifyContent: "center",
-          marginVertical: 15
-        }}
-      >
-        <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
-          Next
-        </Text>
-      </TouchableOpacity>
+          onPress={() => handleNext()}
+          style={{
+            backgroundColor: "black",
+            height: hp("7%"),
+            marginHorizontal: wp("3%"),
+            borderRadius: 15,
+            alignItems: "center",
+            justifyContent: "center",
+            marginVertical: 15
+          }}
+        >
+          <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
+            Next
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
