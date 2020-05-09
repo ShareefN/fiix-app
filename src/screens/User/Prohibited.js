@@ -7,11 +7,12 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
+import RNRestart from "react-native-restart";
 
 function Prohibited(props) {
   const handleLogout = async () => {
     await userLogout();
-    props.navigation.navigate("userLogin");
+    RNRestart.Restart();
   };
 
   return (
@@ -32,7 +33,7 @@ function Prohibited(props) {
           fontSize: 20
         }}
       >
-        This account is either probihited or deaticated from using FiiX services
+        This account is probihited from using FiiX services
       </Text>
       <Text
         style={{

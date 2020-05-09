@@ -17,6 +17,7 @@ import {
   storeUserToken,
   storeUserCredentials
 } from "../../Api/api";
+import RNRestart from "react-native-restart";
 
 function UserRegister(props) {
   const [user, setUser] = useState({
@@ -36,10 +37,10 @@ function UserRegister(props) {
       alert("Invalid request, please check inputs");
     } else {
       return userRegister(user)
-        .then(({ data }) => {
-          storeUserToken(data.token);
-          storeUserCredentials(data.User.username, data.User.id);
-          props.navigation.navigate("userHome");
+        .then(async ({ data }) => {
+          await storeUserToken(data.token);
+          await storeUserCredentials(data.User.username, data.User.id);
+          RNRestart.Restart();
         })
         .catch(err => console.log(err));
     }
