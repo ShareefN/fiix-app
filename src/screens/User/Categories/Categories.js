@@ -8,6 +8,7 @@ import {
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
 import RNSecureKeyStore from "react-native-secure-key-store";
+import RNRestart from "react-native-restart";
 
 function Categories(props) {
   useEffect(() => {
@@ -26,7 +27,7 @@ function Categories(props) {
         })
         .catch(async err => {
           await userLogout();
-          props.navigation.navigate("userLogin");
+          RNRestart.Restart();
         });
     });
   };

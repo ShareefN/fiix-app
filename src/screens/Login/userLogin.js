@@ -10,6 +10,7 @@ import {
 import { userLogin, storeUserToken, storeUserCredentials } from "../../Api/api";
 import * as Animated from "react-native-animatable";
 import Dialog from "react-native-dialog";
+import RNRestart from "react-native-restart";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
@@ -22,10 +23,10 @@ function UserLogin(props) {
 
   const login = () => {
     return userLogin(email.email, password.password)
-      .then(({ data }) => {
-        storeUserToken(data.token);
-        storeUserCredentials(data.User.username, data.User.id);
-        props.navigation.navigate("userHome");
+      .then(async ({ data }) => {
+        await storeUserToken(data.token);
+        await storeUserCredentials(data.User.username, data.User.id);
+        RNRestart.Restart();
         setEmail("");
         setPassword("");
       })

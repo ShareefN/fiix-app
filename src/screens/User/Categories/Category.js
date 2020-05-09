@@ -107,14 +107,9 @@ function Category(props) {
                 textAlign: "center"
               }}
             >
-              Unfortunately there's no contractors for this category yet! If
-              you're intrested in making money and have experince in this
-              category click {"\n"}
-              <Text
-                style={{ fontWeight: "bold", fontSize: 20, color: "black" }}
-              >
-                Apply.
-              </Text>
+              Unfortunately there's no contractors for this category yet! If you
+              know someone that is intrested in making money with FiiX please
+              let them know
             </Text>
           </View>
         ) : (

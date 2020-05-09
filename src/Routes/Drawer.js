@@ -6,6 +6,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
+import RNRestart from "react-native-restart";
 
 function MenuDrawer(props) {
   const [user, setUser] = useState({
@@ -54,8 +55,7 @@ function MenuDrawer(props) {
 
   const handleLogout = async () => {
     await userLogout();
-    props.navigation.closeDrawer();
-    props.navigation.navigate("userLogin");
+    RNRestart.Restart();
   };
 
   return (

@@ -20,10 +20,10 @@ function Feedback(props) {
         alert("Feedback too short!");
       } else {
         await postFeedback(res, feedback)
-          .then(res => {
+          .then(() => {
             setDialogVisible(true);
           })
-          .catch(err => console.log(err));
+          .catch(err => alert(err));
       }
     });
   };
