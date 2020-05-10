@@ -7,13 +7,11 @@ import {
   StyleSheet
 } from "react-native";
 import Header from "../Components/HeaderComponent";
-import { Divider } from "react-native-elements";
-import { getReviews } from "../../../Api/api";
-import ReviewsList from "./reviewsList";
+import { Divider, ListItem } from "react-native-elements";
+import { getReviews, deleteReview, postReview } from "../../../Api/api";
 import RNSecureKeyStore from "react-native-secure-key-store";
 import * as Animated from "react-native-animatable";
 import { FAB } from "react-native-paper";
-import { postReview } from "../../../Api/api";
 
 function wait(timeout) {
   return new Promise(resolve => {
@@ -47,10 +45,15 @@ function Reviews(props) {
     if (review.length <= 3) {
       alert("Review too short");
     } else {
-      await postReview(review);
-      await onRefresh();
+      await postReview(userId, review);
+      fetchReviews();
       setReview("");
     }
+  };
+
+  const removeReview = async reviewId => {
+    await deleteReview(userId, reviewId);
+    fetchReviews();
   };
 
   const onRefresh = useCallback(() => {
@@ -93,11 +96,28 @@ function Reviews(props) {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
         >
-          <ReviewsList
-            list={reviews && reviews}
-            userId={userId && userId}
-            refresh={onRefresh}
-          />
+          <View style={{ marginHorizontal: 10, marginBottom: 50 }}>
+            {reviews &&
+              reviews.map((elm, index) => {
+                return (
+                  <ListItem
+                    key={index}
+                    title={elm.username}
+                    titleStyle={{ fontWeight: "bold" }}
+                    subtitleStyle={{ marginTop: 10, color: "black" }}
+                    subtitle={elm.review}
+                    bottomDivider
+                    rightIcon={{
+                      name: elm.userId.toString() === userId ? "delete" : null,
+                      color: "grey",
+                      onPress: () => {
+                        removeReview(elm.id);
+                      }
+                    }}
+                  />
+                );
+              })}
+          </View>
         </ScrollView>
       </Animated.View>
     </View>

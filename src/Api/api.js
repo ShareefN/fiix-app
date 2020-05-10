@@ -15,9 +15,21 @@ const initAxios = () => {
       });
     })
     .catch(err => {
-      Axios = axios.create({
-        baseURL: "https://fiix-app.herokuapp.com"
-      });
+      RNSecureKeyStore.get("contractor_token")
+        .then(res => {
+          token = res;
+          Axios = axios.create({
+            baseURL: "https://fiix-app.herokuapp.com",
+            headers: {
+              Authorization: token
+            }
+          });
+        })
+        .catch(err => {
+          Axios = axios.create({
+            baseURL: "https://fiix-app.herokuapp.com"
+          });
+        });
     });
 };
 initAxios();
@@ -93,20 +105,12 @@ export const getReviews = () => {
   return Axios.get("/users/reviews");
 };
 
-export const postReview = review => {
-  RNSecureKeyStore.get("user_id")
-    .then(res => {
-      return Axios.post(`/users/review/user/${res}`, { review });
-    })
-    .catch(err => console.log(err));
+export const postReview = (userId, review) => {
+  return Axios.post(`/users/review/user/${userId}`, { review });
 };
 
-export const deleteReview = reviewId => {
-  RNSecureKeyStore.get("user_id")
-    .then(res => {
-      return Axios.delete(`/users/review/${reviewId}/user/${res}`);
-    })
-    .catch(err => console.log(err));
+export const deleteReview = (userId, reviewId) => {
+  return Axios.delete(`/users/review/${reviewId}/user/${userId}`);
 };
 
 export const fetchContractors = category => {
@@ -176,4 +180,23 @@ export const apply = (userId, contractor) => {
     nonCriminal: contractor.nonCriminal,
     profileImage: contractor.profileImage
   });
+};
+
+export const postReminder = (type, typeId, reminder) => {
+  return Axios.post(`/reminders/reminder/${type}/${typeId}`, { reminder });
+};
+
+export const updateReminder = (type, typeId, reminderId, status) => {
+  return Axios.put(
+    `/reminders/update/reminder/${reminderId}/${type}/${typeId}`,
+    { status }
+  );
+};
+
+export const getReminders = (type, typeId) => {
+  return Axios.get(`/reminders/${type}/${typeId}`);
+};
+
+export const deleteReminders = (type, typeId, reminderId) => {
+  return Axios.delete(`/reminders/reminder/${reminderId}/${type}/${typeId}`);
 };

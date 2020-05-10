@@ -1,18 +1,24 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   View,
-  ScrollView,
   RefreshControl,
+  StyleSheet,
+  Alert,
   TextInput,
-  StyleSheet
+  ScrollView
 } from "react-native";
 import Header from "../Components/HeaderComponent";
-import Database from "../Database/listDB";
-import { Divider } from "react-native-elements";
-import RNSecureKeyStore from "react-native-secure-key-store";
 import * as Animated from "react-native-animatable";
 import { FAB } from "react-native-paper";
+import { Divider } from "react-native-elements";
+import RNSecureKeyStore from "react-native-secure-key-store";
 import { ListItem } from "react-native-elements";
+import {
+  postReminder,
+  updateReminder,
+  deleteReminders,
+  getReminders
+} from "../../../Api/api";
 
 function wait(timeout) {
   return new Promise(resolve => {
@@ -20,23 +26,48 @@ function wait(timeout) {
   });
 }
 
-function List(props) {
-  const [data, setData] = useState(null);
-  const [userId, setUserId] = useState(null);
-  const [chore, setChore] = useState("");
+function TodoList(props) {
   const [refreshing, setRefreshing] = useState(false);
-  const db = new Database();
+  const [list, setList] = useState(null);
+  const [item, setItem] = useState(null);
 
   useEffect(() => {
-    RNSecureKeyStore.get("user_id").then(res => {
-      setUserId(res);
-    });
     fetchList();
   }, []);
 
   const fetchList = () => {
-    db.getList(userId).then(data => {
-      setData(data);
+    RNSecureKeyStore.get("user_id").then(async res => {
+      await getReminders("user", res)
+        .then(({ data }) => {
+          setList(data);
+        })
+        .catch(err => console.log(err));
+    });
+  };
+
+  const postItem = () => {
+    if (item && item.length <= 3) {
+      Alert.alert("Item too short!");
+    } else {
+      RNSecureKeyStore.get("user_id").then(async res => {
+        await postReminder("user", res, item);
+        setItem(null);
+        fetchList();
+      });
+    }
+  };
+
+  const update = (reminderId, status) => {
+    RNSecureKeyStore.get("user_id").then(async res => {
+      await updateReminder("user", res, reminderId, status);
+      fetchList();
+    });
+  };
+
+  const deleteItem = reminderId => {
+    RNSecureKeyStore.get("user_id").then(async res => {
+      await deleteReminders("user", res, reminderId);
+      fetchList();
     });
   };
 
@@ -45,38 +76,6 @@ function List(props) {
     fetchList();
     wait(2000).then(() => setRefreshing(false));
   }, [refreshing]);
-
-  const postItem = () => {
-    if (chore.length <= 1) {
-      alert("Item too short!");
-    } else {
-      const data = {
-        itemId: Date.now(),
-        userId: userId,
-        itemTitle: chore,
-        itemStatus: "new"
-      };
-
-      db.addItem(data)
-        .then(result => {
-          fetchList();
-          setChore("");
-        })
-        .catch(err => console.log(err));
-    }
-  };
-
-  const updateItemStatus = (id, status) => {
-    db.updateItemStatus(id, status).then(result => {
-      fetchList();
-    });
-  };
-
-  const deleteItem = id => {
-    db.deleteItem(id).then(result => {
-      fetchList();
-    });
-  };
 
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
@@ -91,8 +90,8 @@ function List(props) {
         <TextInput
           placeholder="Whats on your agenda?"
           style={styles.textInput}
-          onChangeText={chore => setChore(chore)}
-          value={chore}
+          onChangeText={item => setItem(item)}
+          value={item}
           multiline
           placeholderTextColor="grey"
         />
@@ -112,32 +111,33 @@ function List(props) {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
         >
-          <View style={{ marginVertical: 10 }}>
-            {data &&
-              data.map((elm, index) => {
+          <View style={{ marginVertical: 10, marginHorizontal: 20 }}>
+            {list &&
+              list.map((elm, index) => {
                 return (
                   <ListItem
                     key={index}
-                    title={elm.itemTitle}
+                    title={elm.item}
                     titleStyle={{
-                      fontWeight: "bold",
-                      color: elm.itemStatus === "new" ? "black" : "grey"
+                      fontSize: 18,
+                      color: elm.status === "new" ? "black" : "grey"
                     }}
+                    subtitle={elm.review}
                     bottomDivider
-                    leftIcon={{
-                      name: elm.itemStatus === "new" ? "crop-din" : "done",
-                      color: elm.itemStatus === "new" ? "black" : "green",
-                      onPress: () => {
-                        elm.itemStatus === "new"
-                          ? updateItemStatus(elm.itemId, "done")
-                          : updateItemStatus(elm.itemId, "new");
-                      }
-                    }}
                     rightIcon={{
                       name: "delete",
-                      color: "black",
+                      color: "grey",
                       onPress: () => {
-                        deleteItem(elm.itemId);
+                        deleteItem(elm.id);
+                      }
+                    }}
+                    leftIcon={{
+                      name: elm.status === "new" ? "crop-din" : "done",
+                      color: elm.status === "new" ? "black" : "green",
+                      onPress: () => {
+                        elm.status === "new"
+                          ? update(elm.id, "done")
+                          : update(elm.id, "new");
                       }
                     }}
                   />
@@ -150,11 +150,13 @@ function List(props) {
   );
 }
 
-export default List;
+export default TodoList;
 
 const styles = StyleSheet.create({
   textInput: {
     flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
     height: 50,
     borderRadius: 25,
     borderWidth: 0.5,

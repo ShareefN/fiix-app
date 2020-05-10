@@ -8,7 +8,7 @@ import { Icon } from "react-native-elements";
 
 import Terms from "../screens/Terms";
 import Categories from "../screens/User/Categories/Categories";
-import List from "../screens/User/List/List";
+import TodoList from '../screens/User/List/TodoList';
 import Reviews from "../screens/User/Reviews/Reviews";
 import Category from "../screens/User/Categories/Category";
 import Contractor from "../screens/User/Categories/Contractor";
@@ -28,7 +28,7 @@ const WIDTH = Dimensions.get("window").width;
 const UserBottomNavigator = createMaterialBottomTabNavigator(
   {
     list: {
-      screen: List,
+      screen: TodoList,
       navigationOptions: {
         tabBarLabel: "FiiX List",
         tabBarIcon: <Icon name="book" />
