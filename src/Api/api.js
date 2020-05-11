@@ -125,20 +125,14 @@ export const getContractorsReviews = contractorId => {
   return Axios.get(`/users/contractor/${contractorId}/reviews`);
 };
 
-export const addContractorReview = (contractorId, review) => {
-  RNSecureKeyStore.get("user_id").then(res => {
-    return Axios.post(`/users/contractor/${contractorId}/user/${res}/review`, {
-      review
-    });
+export const addContractorReview = (userId, contractorId, review) => {
+  return Axios.post(`/users/contractor/${contractorId}/user/${userId}/review`, {
+    review
   });
 };
 
-export const deleteContractorReview = reviewId => {
-  RNSecureKeyStore.get("user_id")
-    .then(res => {
-      return Axios.delete(`/users/contractorsreview/${reviewId}/user/${res}`);
-    })
-    .catch(err => console.log(err));
+export const deleteContractorReview = (userId, reviewId) => {
+  return Axios.delete(`/users/contractorsreview/${reviewId}/user/${userId}`);
 };
 
 export const getUser = userId => {

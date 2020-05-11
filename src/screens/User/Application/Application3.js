@@ -9,6 +9,7 @@ import moment from "moment";
 import ImagePicker from "react-native-image-picker";
 import RNSecureKeyStore from "react-native-secure-key-store";
 import { apply } from "../../../Api/api";
+import { DotIndicator } from "react-native-indicators";
 
 const options = {
   title: "Select Avatar",
@@ -20,6 +21,7 @@ const options = {
 };
 
 function Application3(props) {
+  const [loadingIndicator, setLoadingIndocator] = useState(false);
   const [contractor, setContractor] = useState({
     firstname: props.navigation.getParam("contractor").firstname,
     lastname: props.navigation.getParam("contractor").lastname,
@@ -62,18 +64,22 @@ function Application3(props) {
     ) {
       alert("Please check all inputs");
     } else {
+      setLoadingIndocator(true);
       RNSecureKeyStore.get("user_id").then(async res => {
         await apply(res, contractor)
           .then(res => {
             props.navigation.navigate("applicationSuccess");
           })
-          .catch(err => alert(err));
+          .catch(err => setLoadingIndocator(false));
       });
     }
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <View
+      style={{ flex: 1, backgroundColor: "white" }}
+      pointerEvents={loadingIndicator ? "none" : "auto"}
+    >
       <Header title="Contractor Assets" navigation={props.navigation} />
       <View style={{ alignItems: "center", marginVertical: hp("1%") }}>
         <Text style={{ marginVertical: hp("1%"), fontSize: 20 }}>
@@ -154,6 +160,7 @@ function Application3(props) {
           Submit Application
         </Text>
       </TouchableOpacity>
+      <DotIndicator color="black" animating={loadingIndicator} />
     </View>
   );
 }

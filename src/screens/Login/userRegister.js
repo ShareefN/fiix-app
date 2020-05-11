@@ -5,7 +5,8 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  SafeAreaView
+  SafeAreaView,
+  Alert
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -18,8 +19,10 @@ import {
   storeUserCredentials
 } from "../../Api/api";
 import RNRestart from "react-native-restart";
+import { DotIndicator } from "react-native-indicators";
 
 function UserRegister(props) {
+  const [loadingIndicator, setLoadingIndocator] = useState(false);
   const [user, setUser] = useState({
     username: "",
     email: "",
@@ -34,20 +37,24 @@ function UserRegister(props) {
       user.number === "" ||
       user.password === ""
     ) {
-      alert("Invalid request, please check inputs");
+      Alert.alert("Invalid request, please check inputs");
     } else {
+      setLoadingIndocator(true);
       return userRegister(user)
         .then(async ({ data }) => {
           await storeUserToken(data.token);
           await storeUserCredentials(data.User.username, data.User.id);
           RNRestart.Restart();
         })
-        .catch(err => console.log(err));
+        .catch(err => setLoadingIndocator(false));
     }
   };
 
   return (
-    <SafeAreaView style={{ marginVertical: 30, flex: 1 }}>
+    <SafeAreaView
+      style={{ marginVertical: 30, flex: 1 }}
+      pointerEvents={loadingIndicator ? "none" : "auto"}
+    >
       <Animated.View
         animation="zoomIn"
         iterationCount={1}
@@ -60,7 +67,7 @@ function UserRegister(props) {
         </View>
         <TextInput
           placeholder="USERNAME"
-          autoCapitalize="none"
+          autoCapitalize
           autoCorrect={false}
           style={styles.textInput}
           onChangeText={username => setUser({ ...user, username: username })}
@@ -70,7 +77,7 @@ function UserRegister(props) {
         <TextInput
           placeholder="EMAIL"
           keyboardType="email-address"
-          autoCapitalize="none"
+          autoCapitalize
           autoCorrect={false}
           style={styles.textInput}
           onChangeText={email => setUser({ ...user, email: email })}
@@ -129,6 +136,7 @@ function UserRegister(props) {
           </TouchableOpacity>
         </View>
       </Animated.View>
+      <DotIndicator color="black" animating={loadingIndicator} />
     </SafeAreaView>
   );
 }

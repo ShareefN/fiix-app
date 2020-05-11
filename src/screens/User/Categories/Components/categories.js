@@ -47,6 +47,18 @@ export const categories = [
     translation: "الاستشارات القانونية"
   },
   {
+    label: "Barbers",
+    image:
+      "https://media.beam.usnews.com/d7/18/446edaba4d22a0da5d6f382c5e54/hairdresser.jpg",
+    translation: "الحلاقون"
+  },
+  {
+    label: "Hair Dressers",
+    image:
+      "https://internewscast.com/wp-content/uploads/2020/03/hairdressers-blast-scott-morrisons-ridiculous-30-minute-per-customer-hair-salon-limit.jpg",
+    translation: "تسريحات الشعر"
+  },
+  {
     label: "Dry Cleans",
     image:
       "https://www.thespruce.com/thmb/CK_4AWQNQMZEqhD7rZlQrM646NM=/3000x2000/filters:fill(auto,1)/worker-laundry-ironed-clothes-iron-dry-542303516-5abf0cbcba617700372b3b75.jpg",

@@ -5,11 +5,12 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  SafeAreaView
+  SafeAreaView,
+  Alert
 } from "react-native";
+import { DotIndicator } from "react-native-indicators";
 import { userLogin, storeUserToken, storeUserCredentials } from "../../Api/api";
 import * as Animated from "react-native-animatable";
-import Dialog from "react-native-dialog";
 import RNRestart from "react-native-restart";
 import {
   widthPercentageToDP as wp,
@@ -19,25 +20,25 @@ import {
 function UserLogin(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [dialogVisible, setDialogVisible] = useState(false);
+  const [loadingIndicator, setLoadingIndocator] = useState(false);
 
   const login = () => {
+    setLoadingIndocator(true);
     return userLogin(email.email, password.password)
       .then(async ({ data }) => {
         await storeUserToken(data.token);
         await storeUserCredentials(data.User.username, data.User.id);
         RNRestart.Restart();
-        setEmail("");
-        setPassword("");
       })
       .catch(err => {
-        setDialogVisible(true);
+        setLoadingIndocator(false);
+        Alert.alert("Invalid email or password");
         setPassword("");
       });
   };
 
   return (
-    <SafeAreaView style={{ marginTop: 30, flex: 1 }}>
+    <SafeAreaView style={{ marginTop: 30, flex: 1 }} pointerEvents={loadingIndicator ? 'none' : 'auto'}>
       <Animated.View
         animation="zoomIn"
         iterationCount={1}
@@ -51,6 +52,7 @@ function UserLogin(props) {
         <TextInput
           placeholder="EMAIL"
           autoCorrect={false}
+          keyboardType="email-address"
           autoCapitalize="none"
           style={styles.textInput}
           onChangeText={email => setEmail({ email })}
@@ -70,7 +72,13 @@ function UserLogin(props) {
             <Text>Forgot Password</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={{ ...styles.button }} onPress={() => login()}>
+        <TouchableOpacity
+          style={{
+            ...styles.button,
+            backgroundColor: loadingIndicator ? "grey" : "black"
+          }}
+          onPress={() => login()}
+        >
           <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
             SIGN IN
           </Text>
@@ -107,22 +115,16 @@ function UserLogin(props) {
             justifyContent: "center"
           }}
         >
-          <TouchableOpacity onPress={() => props.navigation.navigate("terms")}>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate("terms")}
+          >
             <Text style={{ fontSize: 15, color: "grey", marginVertical: 25 }}>
               Terms and Conditions and Privacy Policy
             </Text>
           </TouchableOpacity>
         </View>
       </Animated.View>
-      <Dialog.Container visible={dialogVisible}>
-        <Dialog.Title>Invalid credentials</Dialog.Title>
-        <Dialog.Description>
-          Invalid email or password, Or this account might be deactivated or
-          prohibited from accessing FiiX services, Please contact FiiX support
-          for futhur information
-        </Dialog.Description>
-        <Dialog.Button label="Close" onPress={() => setDialogVisible(false)} />
-      </Dialog.Container>
+      <DotIndicator color="black" animating={loadingIndicator} />
     </SafeAreaView>
   );
 }

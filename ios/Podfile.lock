@@ -218,6 +218,8 @@ PODS:
   - React-jsinspector (0.62.2)
   - react-native-image-picker (2.3.1):
     - React
+  - react-native-netinfo (5.8.1):
+    - React
   - react-native-restart (0.0.17):
     - React
   - react-native-safe-area-context (0.7.3):
@@ -346,6 +348,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
+  - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-restart (from `../node_modules/react-native-restart`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-sqlite-storage (from `../node_modules/react-native-sqlite-storage`)
@@ -441,6 +444,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
+  react-native-netinfo:
+    :path: "../node_modules/@react-native-community/netinfo"
   react-native-restart:
     :path: "../node_modules/react-native-restart"
   react-native-safe-area-context:
@@ -539,6 +544,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 1540d1c01bb493ae3124ed83351b1b6a155db7da
   React-jsinspector: 512e560d0e985d0e8c479a54a4e5c147a9c83493
   react-native-image-picker: 668e72d0277dc8c12ae90e835507c1eddd2e4f85
+  react-native-netinfo: ae21a6ab293d6c75af0c17c562ef37a931218886
   react-native-restart: 3b23471050bde7f392395703c4a3f959e2b0ff8e
   react-native-safe-area-context: 8260e5157617df4b72865f44006797f895b2ada7
   react-native-sqlite-storage: ce71689c5a73b79390a1ab213555ae80979a5dc7

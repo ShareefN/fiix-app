@@ -9,18 +9,22 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
+import { DotIndicator } from "react-native-indicators";
 
 function Feedback(props) {
   const [feedback, setFeedback] = useState("");
   const [dialogVisible, setDialogVisible] = useState(false);
+  const [loadingIndicator, setLoadingIndocator] = useState(false);
 
   const handleSubmit = () => {
     RNSecureKeyStore.get("user_id").then(async res => {
       if (feedback.length <= 3) {
         alert("Feedback too short!");
       } else {
+        setLoadingIndocator(true)
         await postFeedback(res, feedback)
           .then(() => {
+            setLoadingIndocator(false)
             setDialogVisible(true);
           })
           .catch(err => alert(err));
@@ -29,7 +33,7 @@ function Feedback(props) {
   };
 
   return (
-    <View style={{ backgroundColor: "white", flex: 1 }}>
+    <View style={{ backgroundColor: "white", flex: 1 }} pointerEvents={loadingIndicator ? "none" : "auto"}>
       <Header title="Feedback" navigation={props.navigation} />
       <View style={{ marginHorizontal: 20, marginVertical: hp("7%") }}>
         <Input
@@ -72,6 +76,7 @@ function Feedback(props) {
           }}
         />
       </Dialog.Container>
+      <DotIndicator color="black" animating={loadingIndicator} />
     </View>
   );
 }

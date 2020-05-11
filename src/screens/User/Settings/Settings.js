@@ -16,6 +16,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
+import RNRestart from "react-native-restart";
 
 function Settings(props) {
   const [loading, setLoading] = useState(false);
@@ -64,15 +65,8 @@ function Settings(props) {
     RNSecureKeyStore.get("user_id").then(async res => {
       await userDeactivateAccount(res, user.password)
         .then(async res => {
-          await userLogout()
-            .then(res => {
-              setDialogVisible(false);
-              setLoading(false);
-              props.navigation.navigate("userLogin");
-            })
-            .catch(err => {
-              setLoading(false), alert("Invalid password");
-            });
+          await userLogout();
+          RNRestart.Restart();
         })
         .catch(err => {
           setLoading(false), alert("Invalid password");
@@ -81,7 +75,10 @@ function Settings(props) {
   };
 
   return (
-    <View style={{ backgroundColor: "white", flex: 1 }}>
+    <View
+      style={{ backgroundColor: "white", flex: 1 }}
+      pointerEvents={loading ? "none" : "auto"}
+    >
       <Header title="Settings" value="settings" navigation={props.navigation} />
       <View
         style={{

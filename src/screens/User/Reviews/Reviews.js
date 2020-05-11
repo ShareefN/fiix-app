@@ -12,6 +12,7 @@ import { getReviews, deleteReview, postReview } from "../../../Api/api";
 import RNSecureKeyStore from "react-native-secure-key-store";
 import * as Animated from "react-native-animatable";
 import { FAB } from "react-native-paper";
+import { DotIndicator } from "react-native-indicators";
 
 function wait(timeout) {
   return new Promise(resolve => {
@@ -21,6 +22,7 @@ function wait(timeout) {
 
 function Reviews(props) {
   const [refreshing, setRefreshing] = useState(false);
+  const [loadingIndicator, setLoadingIndocator] = useState(false);
   const [userId, setUserId] = useState(null);
   const [reviews, setReviews] = useState(null);
   const [review, setReview] = useState("");
@@ -34,9 +36,12 @@ function Reviews(props) {
   }, []);
 
   const fetchReviews = async () => {
+    setLoadingIndocator(true);
     await getReviews()
       .then(({ data }) => {
         setReviews(data);
+        setRefreshing(false);
+        setLoadingIndocator(false);
       })
       .catch(err => console.log(err));
   };
@@ -45,6 +50,7 @@ function Reviews(props) {
     if (review.length <= 3) {
       alert("Review too short");
     } else {
+      setLoadingIndocator(true);
       await postReview(userId, review);
       fetchReviews();
       setReview("");
@@ -52,6 +58,7 @@ function Reviews(props) {
   };
 
   const removeReview = async reviewId => {
+    setLoadingIndocator(true);
     await deleteReview(userId, reviewId);
     fetchReviews();
   };
@@ -59,11 +66,14 @@ function Reviews(props) {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     fetchReviews();
-    wait(2000).then(() => setRefreshing(false));
+    wait(2000);
   }, [refreshing]);
 
   return (
-    <View style={{ backgroundColor: "white", flex: 1 }}>
+    <View
+      style={{ backgroundColor: "white", flex: 1 }}
+      pointerEvents={loadingIndicator ? "none" : "auto"}
+    >
       <Header title="Reviews" value="reviews" />
       <View
         style={{
@@ -75,7 +85,6 @@ function Reviews(props) {
         <TextInput
           placeholder="Whats on your mind?"
           style={styles.textInput}
-          multiline
           onChangeText={review => setReview(review)}
           value={review}
           placeholderTextColor="grey"
@@ -119,6 +128,7 @@ function Reviews(props) {
               })}
           </View>
         </ScrollView>
+        <DotIndicator color="black" animating={loadingIndicator} />
       </Animated.View>
     </View>
   );

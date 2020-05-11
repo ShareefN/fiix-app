@@ -4,6 +4,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
+import RNRestart from "react-native-restart";
 
 function ApplicationSuccess(props) {
   return (
@@ -12,14 +13,20 @@ function ApplicationSuccess(props) {
         <Text style={{ color: "green", fontSize: 20, textAlign: "center" }}>
           Application Successfully Sent!
         </Text>
-        <Text style={{textAlign: 'center', marginHorizontal: wp('2%'), marginVertical: hp('2%')}}>
+        <Text
+          style={{
+            textAlign: "center",
+            marginHorizontal: wp("2%"),
+            marginVertical: hp("2%")
+          }}
+        >
           Your first step into a productive future is complete! Your application
-          is now under very professional study, Expect a call within 24 - 48 hours
-          from the FiiX Team to let you know if your accepted.
+          is now under very professional study, Expect a call within 24 - 48
+          hours from the FiiX Team to let you know if your accepted.
         </Text>
       </View>
       <TouchableOpacity
-        onPress={() => props.navigation.navigate("userHome")}
+        onPress={() => RNRestart.Restart()}
         style={{
           backgroundColor: "black",
           height: hp("7%"),

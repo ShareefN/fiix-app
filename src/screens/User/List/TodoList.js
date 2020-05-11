@@ -19,6 +19,7 @@ import {
   deleteReminders,
   getReminders
 } from "../../../Api/api";
+import { DotIndicator } from "react-native-indicators";
 
 function wait(timeout) {
   return new Promise(resolve => {
@@ -28,6 +29,7 @@ function wait(timeout) {
 
 function TodoList(props) {
   const [refreshing, setRefreshing] = useState(false);
+  const [loadingIndicator, setLoadingIndocator] = useState(false);
   const [list, setList] = useState(null);
   const [item, setItem] = useState(null);
 
@@ -36,12 +38,14 @@ function TodoList(props) {
   }, []);
 
   const fetchList = () => {
+    setLoadingIndocator(true);
     RNSecureKeyStore.get("user_id").then(async res => {
       await getReminders("user", res)
         .then(({ data }) => {
           setList(data);
+          setLoadingIndocator(false);
         })
-        .catch(err => console.log(err));
+        .catch(err => setLoadingIndocator(false));
     });
   };
 
@@ -49,6 +53,7 @@ function TodoList(props) {
     if (item && item.length <= 3) {
       Alert.alert("Item too short!");
     } else {
+      setLoadingIndocator(true);
       RNSecureKeyStore.get("user_id").then(async res => {
         await postReminder("user", res, item);
         setItem(null);
@@ -58,6 +63,7 @@ function TodoList(props) {
   };
 
   const update = (reminderId, status) => {
+    setLoadingIndocator(true);
     RNSecureKeyStore.get("user_id").then(async res => {
       await updateReminder("user", res, reminderId, status);
       fetchList();
@@ -65,6 +71,7 @@ function TodoList(props) {
   };
 
   const deleteItem = reminderId => {
+    setLoadingIndocator(true);
     RNSecureKeyStore.get("user_id").then(async res => {
       await deleteReminders("user", res, reminderId);
       fetchList();
@@ -78,7 +85,10 @@ function TodoList(props) {
   }, [refreshing]);
 
   return (
-    <View style={{ backgroundColor: "white", flex: 1 }}>
+    <View
+      style={{ backgroundColor: "white", flex: 1 }}
+      pointerEvents={loadingIndicator ? "none" : "auto"}
+    >
       <Header title="FiiX List" value="list" />
       <View
         style={{
@@ -92,7 +102,6 @@ function TodoList(props) {
           style={styles.textInput}
           onChangeText={item => setItem(item)}
           value={item}
-          multiline
           placeholderTextColor="grey"
         />
         <FAB
@@ -145,6 +154,7 @@ function TodoList(props) {
               })}
           </View>
         </ScrollView>
+        <DotIndicator color="black" animating={loadingIndicator} />
       </Animated.View>
     </View>
   );

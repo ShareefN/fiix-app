@@ -1,11 +1,12 @@
 import React from "react";
 import { SafeAreaView, Text, TouchableOpacity } from "react-native";
 import { contractorLogout } from "../../Api/api";
+import RNRestart from "react-native-restart";
 
 function ContractorHome(props) {
   const hanldeLogout = async () => {
     await contractorLogout();
-    props.navigation.navigate("userLogin");
+    RNRestart.Restart();
   };
 
   return (

@@ -2,10 +2,13 @@ import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
-  Dimensions,
   RefreshControl,
   Image,
-  ScrollView
+  ScrollView,
+  TextInput,
+  StyleSheet,
+  Alert,
+  Linking
 } from "react-native";
 import ContractorHeader from "./Components/contractorHeader";
 import { Divider } from "react-native-elements";
@@ -23,8 +26,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
-
-const { width, height } = Dimensions.get("window");
+import { FAB } from "react-native-paper";
+import { DotIndicator } from "react-native-indicators";
 
 function wait(timeout) {
   return new Promise(resolve => {
@@ -35,8 +38,10 @@ function wait(timeout) {
 function Contractor(props) {
   const [refreshing, setRefreshing] = useState(false);
   const [contractor, setContractor] = useState({});
+  const [loadingIndicator, setLoadingIndocator] = useState(false);
   const [userId, setUserId] = useState(null);
   const [contractorReviews, setContractorReview] = useState([]);
+  const [review, setReview] = useState("");
   const [contractorName] = useState(
     props.navigation.getParam("contractorName")
   );
@@ -45,42 +50,55 @@ function Contractor(props) {
   useEffect(() => {
     RNSecureKeyStore.get("user_id")
       .then(res => setUserId(res))
-      .catch(err => console.timeLog(err));
+      .catch(err => console.log(err));
 
     fetchContractor();
     fetchContractorsReviews();
   }, [contractorId]);
 
   const fetchContractor = async () => {
+    setLoadingIndocator(true);
     await getContractor(contractorId)
-      .then(({ data }) => setContractor(data))
-      .catch(err => console.log(err));
+      .then(({ data }) => {
+        setLoadingIndocator(false);
+        setContractor(data);
+      })
+      .catch(err => setLoadingIndocator(false));
   };
 
   const fetchContractorsReviews = async () => {
     await getContractorsReviews(contractorId)
       .then(({ data }) => {
         if (data && data.length === 0) {
+          setLoadingIndocator(false);
           setContractorReview(null);
         } else {
+          setLoadingIndocator(false);
           setContractorReview(data);
         }
       })
-      .catch(err => console.log(err));
+      .catch(err => setLoadingIndocator(false));
   };
 
-  const postReview = async review => {
+  const postReview = () => {
     if (review.length <= 3) {
-      alert("Review too short!");
+      Alert.alert("Review too short!");
     } else {
-      await addContractorReview(contractorId, review);
-      fetchContractorsReviews();
+      setLoadingIndocator(true);
+      RNSecureKeyStore.get("user_id").then(async res => {
+        await addContractorReview(res, contractorId, review);
+        fetchContractorsReviews();
+        setReview("");
+      });
     }
   };
 
-  const deleteReview = async reviewId => {
-    await deleteContractorReview(reviewId);
-    await onRefresh();
+  const deleteReview = reviewId => {
+    setLoadingIndocator(true);
+    RNSecureKeyStore.get("user_id").then(async res => {
+      await deleteContractorReview(res, reviewId);
+      fetchContractorsReviews();
+    });
   };
 
   const onRefresh = useCallback(() => {
@@ -90,12 +108,11 @@ function Contractor(props) {
   }, [refreshing]);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
-      <ContractorHeader
-        contractor={contractor}
-        navigation={props.navigation}
-        post={postReview}
-      />
+    <View
+      style={{ flex: 1, backgroundColor: "white" }}
+      pointerEvents={loadingIndicator ? "none" : "auto"}
+    >
+      <ContractorHeader contractor={contractor} navigation={props.navigation} />
       <View style={{ backgroundColor: "white" }}>
         <View
           style={{
@@ -129,10 +146,27 @@ function Contractor(props) {
         </View>
       </View>
       <Animated.View animation="zoomIn" iterationCount={1} style={{ flex: 1 }}>
-        <View style={{ marginHorizontal: wp("2%"), marginVertical: 10 }}>
-          <Text style={{ fontSize: 15 }}>
-            What people think about {contractorName}
-          </Text>
+        <View
+          style={{
+            marginVertical: 5,
+            flexDirection: "row",
+            alignItems: "center"
+          }}
+        >
+          <TextInput
+            placeholder={`Say something about ${contractorName}!`}
+            style={styles.textInput}
+            onChangeText={review => setReview(review)}
+            value={review}
+            placeholderTextColor="grey"
+          />
+          <FAB
+            style={styles.fab}
+            icon="plus"
+            color="black"
+            small
+            onPress={() => postReview()}
+          />
         </View>
         <Divider style={{ backgroundColor: "black", marginHorizontal: 25 }} />
         {!contractorReviews ? (
@@ -140,9 +174,8 @@ function Contractor(props) {
             style={{
               alignItems: "center",
               justifyContent: "center",
-              width: width,
-              alignItems: "center",
-              justifyContent: "center"
+              marginVertical: hp("3%"),
+              marginHorizontal: wp("10%")
             }}
           >
             <Image
@@ -152,7 +185,7 @@ function Contractor(props) {
             <Text
               style={{
                 fontSize: 15,
-                marginHorizontal: wp('2%'),
+                marginHorizontal: wp("2%"),
                 color: "grey",
                 textAlign: "center"
               }}
@@ -163,6 +196,7 @@ function Contractor(props) {
           </View>
         ) : (
           <ScrollView
+            style={{ marginBottom: 50 }}
             showsVerticalScrollIndicator={false}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -193,9 +227,57 @@ function Contractor(props) {
               })}
           </ScrollView>
         )}
+        <DotIndicator color="black" animating={loadingIndicator} />
       </Animated.View>
+      <FAB
+        onPress={() =>
+          Linking.openURL(`whatsapp://send?phone=${contractor.number}`)
+        }
+        icon="chat"
+        color="white"
+        small
+        style={{
+          position: "absolute",
+          backgroundColor: "black",
+          margin: 16,
+          left: 0,
+          bottom: 0
+        }}
+      />
+      <FAB
+        onPress={() => Linking.openURL(`tel:${contractor.number}`)}
+        icon="phone"
+        color="white"
+        small
+        style={{
+          position: "absolute",
+          margin: 16,
+          backgroundColor: "black",
+          right: 0,
+          bottom: 0
+        }}
+      />
     </View>
   );
 }
 
 export default Contractor;
+
+const styles = StyleSheet.create({
+  textInput: {
+    flex: 1,
+    height: hp("5%"),
+    borderRadius: 25,
+    borderWidth: 0.5,
+    marginHorizontal: 20,
+    paddingLeft: 10,
+    marginVertical: 5,
+    borderColor: "rgba(0,0,0,0.2)"
+  },
+  fab: {
+    backgroundColor: "white",
+    width: 40,
+    height: 40,
+    marginRight: 20
+  }
+});

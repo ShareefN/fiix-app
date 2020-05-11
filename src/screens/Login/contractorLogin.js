@@ -17,26 +17,34 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
+import RNRestart from "react-native-restart";
+import { DotIndicator } from "react-native-indicators";
 
 function ContractorLogin(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loadingIndicator, setLoadingIndocator] = useState(false);
 
   const login = () => {
+    setLoadingIndocator(true);
     return contractorLogin(email.email, password.password)
-      .then(({ data }) => {
-        storeContractorToken(data.token);
-        storeContractorCredentials(data.Contractor.id, data.Contractor.name);
-        props.navigation.navigate("contractorHome");
+      .then(async ({ data }) => {
+        await storeContractorToken(data.token);
+        await storeContractorCredentials(
+          data.Contractor.id,
+          data.Contractor.name
+        );
+        RNRestart.Restart();
       })
       .catch(err => {
+        setLoadingIndocator(false);
         alert("Invalid email or password");
         setPassword("");
       });
   };
 
   return (
-    <SafeAreaView style={{ marginTop: 30 }}>
+    <SafeAreaView style={{ marginTop: 30 }} pointerEvents={loadingIndicator ? 'none' : 'auto'}>
       <Animated.View
         animation="zoomIn"
         iterationCount={1}
@@ -51,6 +59,7 @@ function ContractorLogin(props) {
           placeholder="EMAIL"
           autoCapitalize="none"
           autoCorrect={false}
+          keyboardType="email-address"
           style={styles.textInput}
           onChangeText={email => setEmail({ email })}
           placeholderTextColor="grey"
@@ -67,7 +76,13 @@ function ContractorLogin(props) {
             <Text>Forgot Password</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={{ ...styles.button }} onPress={() => login()}>
+        <TouchableOpacity
+          style={{
+            ...styles.button,
+            backgroundColor: loadingIndicator ? "grey" : "black"
+          }}
+          onPress={() => login()}
+        >
           <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
             SIGN IN
           </Text>
@@ -92,13 +107,17 @@ function ContractorLogin(props) {
             justifyContent: "center"
           }}
         >
-          <TouchableOpacity onPress={() => props.navigation.navigate("terms")}>
+          <TouchableOpacity
+
+            onPress={() => props.navigation.navigate("terms")}
+          >
             <Text style={{ fontSize: 15, color: "grey", marginVertical: 25 }}>
               Terms and Conditions and Privacy Policy
             </Text>
           </TouchableOpacity>
         </View>
       </Animated.View>
+      <DotIndicator color="black" animating={loadingIndicator} />
     </SafeAreaView>
   );
 }

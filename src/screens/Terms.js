@@ -3,8 +3,14 @@ import {
   View,
   Text,
   ScrollView,
-  SafeAreaView
+  SafeAreaView,
+  TouchableOpacity,
+  Linking
 } from "react-native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp
+} from "react-native-responsive-screen";
 
 function Terms(props) {
   return (
@@ -15,7 +21,7 @@ function Terms(props) {
             flex: 1,
             justifyContent: "center",
             alignItems: "center",
-            padding: 25,
+            padding: 25
           }}
         >
           <Text>
@@ -71,13 +77,24 @@ function Terms(props) {
             {"\n"}
             <Text style={{ fontWeight: "bold", fontSize: 20 }}>Contact</Text>
             {"\n"}
-            {"\n"}
-            For further inquiries, please contact us by calling{" "}
-            <Text style={{ fontWeight: "bold" }}>0790524873</Text>
-            {"\n"}Or by sending an email to{" "}
-            <Text style={{ fontWeight: "bold" }}>fiixinfo1@gmail.com</Text>
-            {"\n"}
           </Text>
+          <TouchableOpacity
+          onPress={() => Linking.openURL(`tel:0790524873`)}
+            style={{
+              width: wp('70&'),
+              backgroundColor: "black",
+              height: hp("4%"),
+              marginHorizontal: 20,
+              borderRadius: 35,
+              alignItems: "center",
+              justifyContent: "center",
+              marginVertical: 15
+            }}
+          >
+            <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
+              Call FiiX
+            </Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>

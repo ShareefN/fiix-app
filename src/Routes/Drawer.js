@@ -7,8 +7,10 @@ import {
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
 import RNRestart from "react-native-restart";
+import { DotIndicator } from "react-native-indicators";
 
 function MenuDrawer(props) {
+  const [loadingIndicator, setLoadingIndocator] = useState(false);
   const [user, setUser] = useState({
     username: "",
     number: "",
@@ -54,12 +56,16 @@ function MenuDrawer(props) {
   };
 
   const handleLogout = async () => {
+    setLoadingIndocator(true);
     await userLogout();
     RNRestart.Restart();
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View
+      style={{ flex: 1 }}
+      pointerEvents={loadingIndicator ? "none" : "auto"}
+    >
       <View style={{ height: hp("15%"), backgroundColor: "black" }}>
         <View
           style={{
@@ -126,6 +132,7 @@ function MenuDrawer(props) {
           <Text style={{ color: "grey" }}>V 1.0</Text>
         </View>
       </View>
+      <DotIndicator color="black" animating={loadingIndicator} />
     </View>
   );
 }

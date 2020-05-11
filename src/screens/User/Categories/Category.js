@@ -12,11 +12,11 @@ import { fetchContractors } from "../../../Api/api";
 import Header from "./Components/Header";
 import * as Animated from "react-native-animatable";
 import RNSecureKeyStore from "react-native-secure-key-store";
-import Database from "../Database/favoriteDB";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
+import { DotIndicator } from "react-native-indicators";
 
 function wait(timeout) {
   return new Promise(resolve => {
@@ -27,11 +27,9 @@ function wait(timeout) {
 function Category(props) {
   const [refreshing, setRefreshing] = useState(false);
   const [username, setUsername] = useState(null);
+  const [loadingIndicator, setLoadingIndocator] = useState(false);
   const [category] = useState(props.navigation.getParam("category"));
-  const [favFlag, setFavFlag] = useState(false);
   const [contractors, setContractors] = useState(null);
-
-  const favDb = new Database();
 
   useEffect(() => {
     RNSecureKeyStore.get("username").then(res => {
@@ -41,28 +39,18 @@ function Category(props) {
   }, [category]);
 
   const getContractors = async () => {
+    setLoadingIndocator(true);
     await fetchContractors(category)
       .then(({ data }) => {
         if (data && data.length === 0) {
+          setLoadingIndocator(false);
           setContractors(null);
         } else {
+          setLoadingIndocator(false);
           setContractors(data);
         }
       })
-      .catch(err => console.log(err));
-  };
-
-  const fetchFav = async () => {
-    await favDb.getFavorites().then(data => {
-      data.forEach(element => {
-        contractors &&
-          contractors.forEach(elm => {
-            if (element.contractorId === elm.id) {
-              setFavFlag(true);
-            }
-          });
-      });
-    });
+      .catch(err => setLoadingIndocator(false));
   };
 
   const onRefresh = useCallback(() => {
@@ -133,8 +121,8 @@ function Category(props) {
                     }
                   >
                     <ListItem
-                      title={`${elm.name} - 3.2`}
-                      subtitle={`${elm.location}, ${elm.timeIn} - ${elm.timeOut}`}
+                      title={`${elm.name}`}
+                      subtitle={`${elm.location} \u2B16 ${elm.timeIn} - ${elm.timeOut}`}
                       subtitleStyle={{ color: "grey" }}
                       bottomDivider
                       leftAvatar={{
@@ -144,7 +132,6 @@ function Category(props) {
                             : "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
                         }
                       }}
-                      rightIcon={{ name: favFlag ? "favorite" : null }}
                       chevron
                     />
                   </TouchableOpacity>
@@ -152,6 +139,7 @@ function Category(props) {
               })}
           </ScrollView>
         )}
+        <DotIndicator color="black" animating={loadingIndicator} />
       </Animated.View>
     </View>
   );

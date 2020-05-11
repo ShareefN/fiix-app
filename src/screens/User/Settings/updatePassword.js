@@ -8,8 +8,11 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
+import { DotIndicator } from "react-native-indicators";
+import RNRestart from "react-native-restart";
 
 function UpdatePassword(props) {
+  const [loadingIndicator, setLoadingIndocator] = useState(false);
   const [userPassword, setUserPassword] = useState({
     oldPassword: "",
     newPassword: "",
@@ -21,6 +24,7 @@ function UpdatePassword(props) {
       alert("Those password dont match");
       setUserPassword({ ...userPassword, newPassword: "", oldPassword: "" });
     } else {
+      setLoadingIndocator(true);
       RNSecureKeyStore.get("user_id").then(async res => {
         await updateUserpassword(
           res,
@@ -30,9 +34,10 @@ function UpdatePassword(props) {
           .then(async res => {
             alert("Success");
             await userLogout();
-            props.navigation.navigate("userLogin");
+            RNRestart.Restart();
           })
           .catch(err => {
+            setLoadingIndocator(false);
             alert("Invalid password");
             setUserPassword({ ...userPassword, oldPassword: "" });
           });
@@ -41,7 +46,10 @@ function UpdatePassword(props) {
   };
 
   return (
-    <View style={{ backgroundColor: "white", flex: 1 }}>
+    <View
+      style={{ backgroundColor: "white", flex: 1 }}
+      pointerEvents={loadingIndicator ? "none" : "auto"}
+    >
       <Header
         title="Change Password"
         value="settings"
@@ -82,12 +90,12 @@ function UpdatePassword(props) {
           onPress={() => handleUpdatePassword()}
           style={{
             backgroundColor: "black",
-          height: hp("7%"),
-          marginHorizontal: wp('3%'),
-          borderRadius: 15,
-          alignItems: "center",
-          justifyContent: "center",
-          marginVertical: hp('7%')
+            height: hp("7%"),
+            marginHorizontal: wp("3%"),
+            borderRadius: 15,
+            alignItems: "center",
+            justifyContent: "center",
+            marginVertical: hp("7%")
           }}
         >
           <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
@@ -95,6 +103,7 @@ function UpdatePassword(props) {
           </Text>
         </TouchableOpacity>
       </View>
+      <DotIndicator color="black" animating={loadingIndicator} />
     </View>
   );
 }
