@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, TextInput } from "react-native";
+import { View, Text, TouchableOpacity, Alert } from "react-native";
 import Header from "./Categories/Components/Header";
 import { Input } from "react-native-elements";
 import { postFeedback } from "../../Api/api";
@@ -19,21 +19,24 @@ function Feedback(props) {
   const handleSubmit = () => {
     RNSecureKeyStore.get("user_id").then(async res => {
       if (feedback.length <= 3) {
-        alert("Feedback too short!");
+        Alert.alert("Feedback too short!");
       } else {
-        setLoadingIndocator(true)
+        setLoadingIndocator(true);
         await postFeedback(res, feedback)
           .then(() => {
-            setLoadingIndocator(false)
+            setLoadingIndocator(false);
             setDialogVisible(true);
           })
-          .catch(err => alert(err));
+          .catch(err => setLoadingIndocator(false));
       }
     });
   };
 
   return (
-    <View style={{ backgroundColor: "white", flex: 1 }} pointerEvents={loadingIndicator ? "none" : "auto"}>
+    <View
+      style={{ backgroundColor: "white", flex: 1 }}
+      pointerEvents={loadingIndicator ? "none" : "auto"}
+    >
       <Header title="Feedback" navigation={props.navigation} />
       <View style={{ marginHorizontal: 20, marginVertical: hp("7%") }}>
         <Input

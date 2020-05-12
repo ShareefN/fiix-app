@@ -4,7 +4,8 @@ import {
   View,
   ScrollView,
   RefreshControl,
-  StyleSheet
+  StyleSheet,
+  Alert
 } from "react-native";
 import Header from "../Components/HeaderComponent";
 import { Divider, ListItem } from "react-native-elements";
@@ -48,7 +49,7 @@ function Reviews(props) {
 
   const submitReview = async () => {
     if (review.length <= 3) {
-      alert("Review too short");
+      Alert.alert("Review too short");
     } else {
       setLoadingIndocator(true);
       await postReview(userId, review);

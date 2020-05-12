@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, Alert } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
@@ -8,7 +8,12 @@ import Header from "../Categories/Components/Header";
 import moment from "moment";
 import ImagePicker from "react-native-image-picker";
 import RNSecureKeyStore from "react-native-secure-key-store";
-import { apply } from "../../../Api/api";
+import {
+  apply,
+  uploadProfileImage,
+  uploadNoncriminal,
+  uploadIdentity
+} from "../../../Api/api";
 import { DotIndicator } from "react-native-indicators";
 
 const options = {
@@ -35,12 +40,16 @@ function Application3(props) {
     ),
     identity: null,
     nonCriminal: null,
-    profileImage: null
+    profileImage: "https://static.thenounproject.com/png/3134331-200.png"
   });
 
-  const selectImage = () => {
-    ImagePicker.launchImageLibrary(options, response => {
-      setContractor({ ...contractor, profileImage: response.uri });
+  const selectImage = async () => {
+    // setLoadingIndocator(true)
+    await ImagePicker.launchImageLibrary(options, response => {
+   
+      // return uploadProfileImage(response.uri).then(({ data }) =>
+        setContractor({ ...contractor, profileImage: response.uri })
+      // );
     });
   };
 
@@ -62,7 +71,7 @@ function Application3(props) {
       !contractor.nonCriminal ||
       !contractor.identity
     ) {
-      alert("Please check all inputs");
+      Alert.alert("All inputs are mandatory");
     } else {
       setLoadingIndocator(true);
       RNSecureKeyStore.get("user_id").then(async res => {
@@ -96,8 +105,6 @@ function Application3(props) {
             }}
             source={{
               uri: contractor.profileImage
-                ? contractor.profileImage
-                : "https://static.thenounproject.com/png/3134331-200.png"
             }}
           />
         </TouchableOpacity>

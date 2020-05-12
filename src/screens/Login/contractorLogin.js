@@ -5,7 +5,8 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  SafeAreaView
+  SafeAreaView,
+  Alert,
 } from "react-native";
 import {
   contractorLogin,
@@ -38,7 +39,7 @@ function ContractorLogin(props) {
       })
       .catch(err => {
         setLoadingIndocator(false);
-        alert("Invalid email or password");
+        Alert.alert("Invalid email or password");
         setPassword("");
       });
   };

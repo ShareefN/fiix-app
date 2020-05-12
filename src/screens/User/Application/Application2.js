@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, Text } from "react-native";
+import { View, TouchableOpacity, Text, Alert } from "react-native";
 import { Input } from "react-native-elements";
 import Header from "../Categories/Components/Header";
 import {
@@ -49,7 +49,7 @@ function Application2(props) {
       !contractor.timeIn ||
       !contractor.timeOut
     ) {
-      alert("Please check all inputs");
+      Alert.alert("All fields are mandatory");
     } else {
       props.navigation.navigate("application3", {
         contractor: contractor

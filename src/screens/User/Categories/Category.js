@@ -8,7 +8,7 @@ import {
   Image
 } from "react-native";
 import { ListItem, SearchBar } from "react-native-elements";
-import { fetchContractors } from "../../../Api/api";
+import { fetchContractors, fetchContractorsByLocation } from "../../../Api/api";
 import Header from "./Components/Header";
 import * as Animated from "react-native-animatable";
 import RNSecureKeyStore from "react-native-secure-key-store";
@@ -17,6 +17,8 @@ import {
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
 import { DotIndicator } from "react-native-indicators";
+import ModalSelector from "react-native-modal-selector";
+import { locations } from "../Application/Components/locations";
 
 function wait(timeout) {
   return new Promise(resolve => {
@@ -31,6 +33,7 @@ function Category(props) {
   const [category] = useState(props.navigation.getParam("category"));
   const [contractors, setContractors] = useState(null);
   const [search] = useState(null);
+  const [location, setLocation] = useState(null);
 
   useEffect(() => {
     RNSecureKeyStore.get("username").then(res => {
@@ -40,6 +43,7 @@ function Category(props) {
   }, [category]);
 
   const getContractors = async () => {
+    setLocation(null);
     setLoadingIndocator(true);
     await fetchContractors(category)
       .then(({ data }) => {
@@ -55,6 +59,7 @@ function Category(props) {
   };
 
   const onRefresh = useCallback(() => {
+    setLocation(null);
     setRefreshing(true);
     getContractors();
     wait(2000).then(() => setRefreshing(false));
@@ -73,10 +78,26 @@ function Category(props) {
     setContractors(newData);
   };
 
+  const locationFilter = async location => {
+    setLoadingIndocator(true);
+    setLocation(location);
+    await fetchContractorsByLocation(category, location.label).then(
+      ({ data }) => {
+        setLoadingIndocator(false);
+        setContractors(data);
+      }
+    );
+  };
+
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
       <Header title={category} navigation={props.navigation} />
-      <Animated.View animation="zoomIn" iterationCount={1} style={{ flex: 1 }}>
+      <Animated.View
+        animation="zoomIn"
+        iterationCount={1}
+        style={{ flex: 1 }}
+        useNativeDriver={true}
+      >
         {!contractors ? (
           <View
             style={{
@@ -123,12 +144,33 @@ function Category(props) {
               value={search}
               lightTheme
               onClear={() => getContractors()}
+              showLoading={search}
               containerStyle={{
                 backgroundColor: "white",
                 borderColor: "white"
               }}
               inputContainerStyle={{ borderRadius: 30 }}
             />
+            <ModalSelector
+              style={{ marginHorizontal: wp("5%"), marginVertical: hp("2%") }}
+              data={locations}
+              cancelButtonAccessibilityLabel={'Cancel Button'}
+              value={location}
+              initValue="Filter by location"
+              onChange={value => {
+                locationFilter(value);
+              }}
+            />
+            <TouchableOpacity
+              onPress={() => getContractors()}
+              style={{
+                alignItems: "flex-end",
+                marginHorizontal: 30,
+                display: location ? "flex" : "none"
+              }}
+            >
+              <Text style={{ color: "red", fontSize: 17 }}>Clear filter</Text>
+            </TouchableOpacity>
             <ScrollView
               style={{ marginHorizontal: 10 }}
               showsVerticalScrollIndicator={false}
@@ -149,7 +191,7 @@ function Category(props) {
                       }
                     >
                       <ListItem
-                        title={`${elm.name}`}
+                        title={elm.name}
                         subtitle={`${elm.location} \u2B16 ${elm.timeIn} - ${elm.timeOut}`}
                         subtitleStyle={{ color: "grey" }}
                         bottomDivider
@@ -168,7 +210,7 @@ function Category(props) {
             </ScrollView>
           </>
         )}
-        <DotIndicator color="black" animating={loadingIndicator} />
+        <DotIndicator color="black" animating={loadingIndicator}/>
       </Animated.View>
     </View>
   );

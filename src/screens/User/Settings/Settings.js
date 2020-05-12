@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity, Alert } from "react-native";
 import Header from "../Categories/Components/Header";
 import {
   getUser,
@@ -69,7 +69,7 @@ function Settings(props) {
           RNRestart.Restart();
         })
         .catch(err => {
-          setLoading(false), alert("Invalid password");
+          setLoading(false), Alert.alert("Invalid password");
         });
     });
   };

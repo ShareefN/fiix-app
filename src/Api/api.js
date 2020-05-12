@@ -117,6 +117,12 @@ export const fetchContractors = category => {
   return Axios.get(`/users/contractors/${category}`);
 };
 
+export const fetchContractorsByLocation = (category, location) => {
+  return Axios.get(
+    `/users/contractors/category/${category}/location/${location}`
+  );
+};
+
 export const getContractor = contractorId => {
   return Axios.get(`/users/contractor/${contractorId}`);
 };
@@ -174,6 +180,18 @@ export const apply = (userId, contractor) => {
     nonCriminal: contractor.nonCriminal,
     profileImage: contractor.profileImage
   });
+};
+
+export const uploadProfileImage = image => {
+  return Axios.post("/application/uplaod/profileImage", { image });
+};
+
+export const uploadNoncriminal = image => {
+  return Axios.post("/application/upload/noncriminal", { image });
+};
+
+export const uploadIdentity = image => {
+  return Axios.post("/application/identitiy", { image });
 };
 
 export const postReminder = (type, typeId, reminder) => {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Alert } from "react-native";
 import Header from "../Categories/Components/Header";
 import { Input } from "react-native-elements";
 import { updateUserpassword, userLogout } from "../../../Api/api";
@@ -21,7 +21,7 @@ function UpdatePassword(props) {
 
   const handleUpdatePassword = async () => {
     if (userPassword.newPassword !== userPassword.confirmPassword) {
-      alert("Those password dont match");
+      Alert.alert("Those password dont match");
       setUserPassword({ ...userPassword, newPassword: "", oldPassword: "" });
     } else {
       setLoadingIndocator(true);
@@ -32,13 +32,13 @@ function UpdatePassword(props) {
           userPassword.newPassword
         )
           .then(async res => {
-            alert("Success");
+            Alert.alert("Success");
             await userLogout();
             RNRestart.Restart();
           })
           .catch(err => {
             setLoadingIndocator(false);
-            alert("Invalid password");
+            Alert.alert("Invalid password");
             setUserPassword({ ...userPassword, oldPassword: "" });
           });
       });
