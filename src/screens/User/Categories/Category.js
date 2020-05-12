@@ -7,7 +7,7 @@ import {
   Text,
   Image
 } from "react-native";
-import { ListItem } from "react-native-elements";
+import { ListItem, SearchBar } from "react-native-elements";
 import { fetchContractors } from "../../../Api/api";
 import Header from "./Components/Header";
 import * as Animated from "react-native-animatable";
@@ -30,6 +30,7 @@ function Category(props) {
   const [loadingIndicator, setLoadingIndocator] = useState(false);
   const [category] = useState(props.navigation.getParam("category"));
   const [contractors, setContractors] = useState(null);
+  const [search] = useState(null);
 
   useEffect(() => {
     RNSecureKeyStore.get("username").then(res => {
@@ -58,6 +59,19 @@ function Category(props) {
     getContractors();
     wait(2000).then(() => setRefreshing(false));
   }, [refreshing]);
+
+  const searchFilterFunction = text => {
+    const newData = contractors.filter(item => {
+      const itemData = `${item.name.toUpperCase()}   
+      ${item.name.toUpperCase()}`;
+
+      const textData = text.toUpperCase();
+
+      return itemData.indexOf(textData) > -1;
+    });
+
+    setContractors(newData);
+  };
 
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
@@ -101,43 +115,58 @@ function Category(props) {
             </Text>
           </View>
         ) : (
-          <ScrollView
-            style={{ marginHorizontal: 10 }}
-            showsVerticalScrollIndicator={false}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-          >
-            {contractors &&
-              contractors.map((elm, index) => {
-                return (
-                  <TouchableOpacity
-                    key={index}
-                    onPress={() =>
-                      props.navigation.navigate("contractor", {
-                        contractorId: elm.id,
-                        contractorName: elm.name
-                      })
-                    }
-                  >
-                    <ListItem
-                      title={`${elm.name}`}
-                      subtitle={`${elm.location} \u2B16 ${elm.timeIn} - ${elm.timeOut}`}
-                      subtitleStyle={{ color: "grey" }}
-                      bottomDivider
-                      leftAvatar={{
-                        source: {
-                          uri: elm.profileImage
-                            ? elm.profileImage
-                            : "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
-                        }
-                      }}
-                      chevron
-                    />
-                  </TouchableOpacity>
-                );
-              })}
-          </ScrollView>
+          <>
+            <SearchBar
+              placeholder="Search..."
+              showLoading={false}
+              onChangeText={value => searchFilterFunction(value)}
+              value={search}
+              lightTheme
+              onClear={() => getContractors()}
+              containerStyle={{
+                backgroundColor: "white",
+                borderColor: "white"
+              }}
+              inputContainerStyle={{ borderRadius: 30 }}
+            />
+            <ScrollView
+              style={{ marginHorizontal: 10 }}
+              showsVerticalScrollIndicator={false}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
+            >
+              {contractors &&
+                contractors.map((elm, index) => {
+                  return (
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() =>
+                        props.navigation.navigate("contractor", {
+                          contractorId: elm.id,
+                          contractorName: elm.name
+                        })
+                      }
+                    >
+                      <ListItem
+                        title={`${elm.name}`}
+                        subtitle={`${elm.location} \u2B16 ${elm.timeIn} - ${elm.timeOut}`}
+                        subtitleStyle={{ color: "grey" }}
+                        bottomDivider
+                        leftAvatar={{
+                          source: {
+                            uri: elm.profileImage
+                              ? elm.profileImage
+                              : "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"
+                          }
+                        }}
+                        chevron
+                      />
+                    </TouchableOpacity>
+                  );
+                })}
+            </ScrollView>
+          </>
         )}
         <DotIndicator color="black" animating={loadingIndicator} />
       </Animated.View>
