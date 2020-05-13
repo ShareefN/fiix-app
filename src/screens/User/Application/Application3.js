@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  Alert,
+  Platform
+} from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
@@ -18,7 +25,6 @@ import { DotIndicator } from "react-native-indicators";
 
 const options = {
   title: "Select Avatar",
-  customButtons: [{ name: "fb", title: "Choose Photo from Facebook" }],
   storageOptions: {
     skipBackup: true,
     path: "images"
@@ -43,14 +49,17 @@ function Application3(props) {
     profileImage: "https://static.thenounproject.com/png/3134331-200.png"
   });
 
-  const selectImage = async () => {
+  const selectImage = () => {
     // setLoadingIndocator(true)
-    await ImagePicker.launchImageLibrary(options, response => {
-   
-      // return uploadProfileImage(response.uri).then(({ data }) =>
-        setContractor({ ...contractor, profileImage: response.uri })
-      // );
-    });
+    ImagePicker.launchImageLibrary(options, response => {});
+  };
+
+  const cloudinaryUpload = async photo => {
+    await uploadProfileImage(photo)
+      .then(({ data }) => {
+        console.log(data);
+      })
+      .catch(err => console.log(err));
   };
 
   const selectNonCriminal = () => {
