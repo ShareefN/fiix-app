@@ -6,13 +6,13 @@ import {
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
-  Alert,
+  Alert
 } from "react-native";
 import {
   contractorLogin,
   storeContractorToken,
   storeContractorCredentials
-} from "../../Api/api";
+} from "../../Api/contractorApi";
 import * as Animated from "react-native-animatable";
 import {
   widthPercentageToDP as wp,
@@ -33,7 +33,8 @@ function ContractorLogin(props) {
         await storeContractorToken(data.token);
         await storeContractorCredentials(
           data.Contractor.id,
-          data.Contractor.name
+          data.Contractor.name,
+          data.Contractor.category
         );
         RNRestart.Restart();
       })
@@ -45,7 +46,10 @@ function ContractorLogin(props) {
   };
 
   return (
-    <SafeAreaView style={{ marginTop: 30 }} pointerEvents={loadingIndicator ? 'none' : 'auto'}>
+    <SafeAreaView
+      style={{ marginTop: 30 }}
+      pointerEvents={loadingIndicator ? "none" : "auto"}
+    >
       <Animated.View
         animation="zoomIn"
         iterationCount={1}
@@ -108,10 +112,7 @@ function ContractorLogin(props) {
             justifyContent: "center"
           }}
         >
-          <TouchableOpacity
-
-            onPress={() => props.navigation.navigate("terms")}
-          >
+          <TouchableOpacity onPress={() => props.navigation.navigate("terms")}>
             <Text style={{ fontSize: 15, color: "grey", marginVertical: 25 }}>
               Terms and Conditions and Privacy Policy
             </Text>

@@ -2,7 +2,7 @@ import React from "react";
 import { TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
 
-function LeftComponent(props) {
+function LeftContractorComponent(props) {
   return (
     <TouchableOpacity onPress={() => props.navigation.openDrawer()}>
       <Icon name="menu" />
@@ -10,4 +10,4 @@ function LeftComponent(props) {
   );
 }
 
-export default LeftComponent;
+export default LeftContractorComponent;

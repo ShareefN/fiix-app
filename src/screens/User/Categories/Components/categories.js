@@ -2,114 +2,115 @@ export const categories = [
   {
     label: "Mechanics",
     image:
-      "https://d1ix0byejyn2u7.cloudfront.net/drive/images/uploads/headers/ws_cropper/1_0x0_790x520_0x520_garage-shortcuts-drivers-danger.jpg",
+      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589480852/bsvoxr0s2d5bqsqqbvsf.jpg",
     translation: "ميكانيكي"
   },
   {
     label: "Electricians",
     image:
-      "https://st.depositphotos.com/1000291/3041/i/450/depositphotos_30414567-stock-photo-adult-electrician-engineer-worker.jpg",
+      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589480865/ujsdcwuqyuzlbw0zr0ug.jpg",
     translation: "اختصاصي بالكهرباء"
   },
   {
     label: "Hardware Electricians",
     image:
-      "https://www.dailynews.com/wp-content/uploads/2017/09/0917_opn_picappliances.jpg?w=1024&h=768",
+      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589480876/obdbjy5qfjp1klcineyv.jpg",
     translation: "كهربائيين الأجهزة"
   },
   {
     label: "Carpenters",
-    image: "https://images.wisegeek.com/carpenter.jpg",
+    image:
+      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589480894/bpp9d3xfs29ltxrvtm5r.jpg",
     translation: "النجارين"
   },
   {
     label: "Agricultural Engineers",
     image:
-      "https://www.environmentalscience.org/wp-content/uploads/2014/12/agricultural-engineer-300x200.jpg",
+      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589480907/fj2cchbkhvy3ctvjjtnt.jpg",
     translation: "المهندسين الزراعيين"
   },
   {
     label: "Plumbers",
     image:
-      "https://letterhub.com/wp-content/uploads/2018/06/printing-and-mailing-services-for-plumbers.jpg",
+      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589480921/lgfafpy3morzt0tyvvry.jpg",
     translation: "السباكين"
   },
   {
     label: "Designers",
     image:
-      "https://www.lyfemarketing.com/blog/wp-content/uploads/2018/02/Web-Trends.jpg",
+      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589480934/fgaz8bbikayruhjw1h7u.jpg",
     translation: "المصممون"
   },
   {
     label: "Legal Consultations",
     image:
-      "https://lh3.googleusercontent.com/proxy/vAei5Y69SeKgIUO_xNB_1JOtvTfUZ7C4g89yefefv4nAXoh-p0v3Xng_pRiLfjxs2ZPGQz4Bh3BuhNEshJG4nc8ztVhLGjOXPsYjEnEHPHrMd7XPPJaQQWTqeyz3qA",
+      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589481054/ic9zdkmhvivfobugtenn.jpg",
     translation: "الاستشارات القانونية"
   },
   {
     label: "Barbers",
     image:
-      "https://media.beam.usnews.com/d7/18/446edaba4d22a0da5d6f382c5e54/hairdresser.jpg",
+      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589481069/wqtkel18ftyqtrsau4hi.jpg",
     translation: "الحلاقون"
   },
   {
     label: "Hair Dressers",
     image:
-      "https://internewscast.com/wp-content/uploads/2020/03/hairdressers-blast-scott-morrisons-ridiculous-30-minute-per-customer-hair-salon-limit.jpg",
+      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589481082/dmm9h2fusvaayzvo4y3f.jpg",
     translation: "تسريحات الشعر"
   },
   {
     label: "Dry Cleans",
     image:
-      "https://www.thespruce.com/thmb/CK_4AWQNQMZEqhD7rZlQrM646NM=/3000x2000/filters:fill(auto,1)/worker-laundry-ironed-clothes-iron-dry-542303516-5abf0cbcba617700372b3b75.jpg",
+      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589481094/b7zfy1wanqlfrq1kr59e.jpg",
     translation: "تنظيف جاف"
   },
   {
     label: "Tailor",
     image:
-      "https://static1.fashionbeans.com/wp-content/uploads/2013/07/diytailoring.jpg",
+      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589481110/r0rj4unynpexwimlvuwd.jpg",
     translation: "خياط"
   },
   {
     label: "House Keepers",
     image:
-      "https://img.freepik.com/free-vector/cleaners-with-cleaning-products-housekeeping-service_18591-52055.jpg?size=626&ext=jpg",
+      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589481123/hrgqblgpibyirazojbus.jpg",
     translation: "التدبير المنزلي"
   },
   {
     label: "Translators",
     image:
-      "https://quicksilvertranslate.com/wp-content/uploads/translators.jpg",
+      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589481134/qmmdjutv8h7elh3y03tb.jpg",
     translation: "المترجمون"
   },
   {
     label: "Gas",
     image:
-      "https://noorjonews.com/wp-content/uploads/2019/07/Screen-Shot-2017-12-23-at-8.41.49-AM.png",
+      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589481148/f6uhla2ggk3zhh7nrxh7.png",
     translation: "غاز"
   },
   {
     label: "Pickup Trucks",
     image:
-      "https://lh3.googleusercontent.com/proxy/iwl3SYSjgLAk_XT9_4853xD0FYVQB6ej-TIIxXpykAYL43A_6t9jZG4y61CC_6jc99Ts8S73B9lo_d8ulYZOs8CdXAhjHgtbnCu1c0te-NG0n1wLG_7HX1DtMHh-",
+      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589481208/neehi4iy3tqhtgpkmctw.png",
     translation: "شاحنات بيك اب"
   },
   {
     label: "Deisel Trucks",
     image:
-      "https://www.safetysignsandnotices.co.uk/image/cache/catalog/old_products/ds778-500x300.gif",
+      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589481222/oz4apewtdmntap67hgt4.gif",
     translation: "شاحنات الديزل"
   },
   {
     label: "Water Trucks",
     image:
-      "https://www.freepnglogos.com/uploads/tank/water-tankers-water-truck-water-tank-trucks-amthor-3.png",
+      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589481233/ipb5fnnfjbwwr912htpv.png",
     translation: "شاحنات المياه"
   },
   {
     label: "Transportaions Services",
     image:
-      "https://apexcargoservices.com/wp-content/uploads/2018/08/Freight-Forwarding.png",
+      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589481245/zzcote9itfract50dc2p.png",
     translation: "خدمات النقل"
-  },
+  }
 ];

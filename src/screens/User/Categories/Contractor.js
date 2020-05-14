@@ -11,7 +11,6 @@ import {
   Linking
 } from "react-native";
 import ContractorHeader from "./Components/contractorHeader";
-import { Divider } from "react-native-elements";
 import * as Animated from "react-native-animatable";
 import {
   getContractor,
@@ -19,7 +18,7 @@ import {
   addContractorReview,
   deleteContractorReview
 } from "../../../Api/api";
-import { ListItem } from "react-native-elements";
+import { ListItem, Divider } from "react-native-elements";
 import RNSecureKeyStore from "react-native-secure-key-store";
 import moment from "moment";
 import {
