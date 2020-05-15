@@ -6,6 +6,7 @@ import { createDrawerNavigator } from "react-navigation-drawer";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import { Icon } from "react-native-elements";
 import ContractorDrawer from "../Routes/ContractorDrawer";
+import RNSecureKeyStore from "react-native-secure-key-store";
 
 import ContractorHome from "../screens/Contractor/Home";
 import Terms from "../screens/Terms";
@@ -25,7 +26,7 @@ const ContractorBottomTab = createMaterialBottomTabNavigator(
     competators: {
       screen: Competators,
       navigationOptions: {
-        tabBarLabel: "Contractors",
+        tabBarLabel: 'Contractors',
         tabBarIcon: <Icon name="people" />
       }
     }

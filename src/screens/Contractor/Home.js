@@ -34,7 +34,7 @@ function ContractorHome(props) {
   const [loadingIndicator, setLoadingIndocator] = useState(false);
 
   useEffect(() => {
-    setLoadingIndocator(true)
+    setLoadingIndocator(true);
     RNSecureKeyStore.get("contractor_id").then(async res => {
       fetchContractor(res);
       fetchContractorReviews(res);
@@ -55,7 +55,7 @@ function ContractorHome(props) {
           timeIn: data.timeIn,
           timeOut: data.timeOut
         });
-        setLoadingIndocator(false)
+        setLoadingIndocator(false);
       })
       .catch(err => setLoadingIndocator(false));
   };
@@ -64,7 +64,7 @@ function ContractorHome(props) {
     await getContractorReviews(id)
       .then(({ data }) => {
         setReviews(data);
-        setLoadingIndocator(false)
+        setLoadingIndocator(false);
       })
       .catch(err => setLoadingIndocator(false));
   };
@@ -78,7 +78,7 @@ function ContractorHome(props) {
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <Header title="My Profile" navigation={props.navigation}/>
+      <Header title="My Profile" navigation={props.navigation} />
       <View
         style={{
           marginVertical: hp("2%"),
@@ -105,11 +105,14 @@ function ContractorHome(props) {
         <Text style={{ fontSize: 15, marginVertical: hp("1%") }}>Bio....</Text>
         <Text style={{ fontSize: 10 }}>Joined {contractor.joinedAt}</Text>
       </View>
-      <Divider style={{ backgroundColor: "black", marginHorizontal: 10 }} />
+      <Text style={{ marginLeft: 10 }}>
+        What people think of your service!
+      </Text>
+      <Divider style={{ backgroundColor: "grey", marginHorizontal: 10 }} />
       <Animated.View animation="zoomIn" iterationCount={1} style={{ flex: 1 }}>
-        {reviews && reviews ? (
+        {reviews && reviews.length >= 1 ? (
           <ScrollView
-            style={{ marginBottom: 50, marginHorizontal: 25 }}
+            style={{ marginHorizontal: 25 }}
             showsVerticalScrollIndicator={false}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -130,29 +133,33 @@ function ContractorHome(props) {
               })}
           </ScrollView>
         ) : (
-          <View
+          <ScrollView
             style={{
-              alignItems: "center",
-              justifyContent: "center",
               marginVertical: hp("3%"),
               marginHorizontal: wp("10%")
             }}
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
           >
-            <Image
-              style={{ width: wp("30%"), height: 100 }}
-              source={require("../../Assets/noreviews.jpg")}
-            />
-            <Text
-              style={{
-                fontSize: 15,
-                marginHorizontal: wp("2%"),
-                color: "grey",
-                textAlign: "center"
-              }}
-            >
-              You dont have any reviews yet!
-            </Text>
-          </View>
+            <View style={{ alignItems: "center", justifyContent: "center" }}>
+              <Image
+                style={{ width: wp("30%"), height: 100 }}
+                source={require("../../Assets/noreviews.jpg")}
+              />
+              <Text
+                style={{
+                  fontSize: 15,
+                  marginHorizontal: wp("2%"),
+                  color: "grey",
+                  textAlign: "center"
+                }}
+              >
+                You dont have any reviews yet!
+              </Text>
+            </View>
+          </ScrollView>
         )}
         <DotIndicator color="black" animating={loadingIndicator} />
       </Animated.View>
