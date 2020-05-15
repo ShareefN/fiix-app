@@ -37,8 +37,13 @@ function CategoryContractors(props) {
     setLoadingIndocator(true);
     await getContractors(category, id)
       .then(({ data }) => {
-        setContractorsList(data);
-        setLoadingIndocator(false);
+        if (!data) {
+          setContractorsList(null);
+          setLoadingIndocator(false);
+        } else {
+          setContractorsList(data);
+          setLoadingIndocator(false);
+        }
       })
       .catch(err => setLoadingIndocator(false));
   };
@@ -67,6 +72,12 @@ function CategoryContractors(props) {
               contractorsList.map((elm, index) => {
                 return (
                   <ListItem
+                    onPress={() =>
+                      props.navigation.navigate("contractor", {
+                        contractorId: elm.id,
+                        contractorName: elm.name
+                      })
+                    }
                     leftAvatar={{
                       source: {
                         uri: elm.profileImage

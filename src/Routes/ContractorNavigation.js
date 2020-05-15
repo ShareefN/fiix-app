@@ -6,16 +6,24 @@ import { createDrawerNavigator } from "react-navigation-drawer";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import { Icon } from "react-native-elements";
 import ContractorDrawer from "../Routes/ContractorDrawer";
-import RNSecureKeyStore from "react-native-secure-key-store";
 
 import ContractorHome from "../screens/Contractor/Home";
-import Terms from "../screens/Terms";
 import Competators from "../screens/Contractor/Contractors";
+import Contractor from "../screens/Contractor/Contractor/Contractor";
+import TodoList from '../screens/Contractor/TodoList';
+import Terms from "../screens/Terms";
 
 const WIDTH = Dimensions.get("window").width;
 
 const ContractorBottomTab = createMaterialBottomTabNavigator(
   {
+    list: {
+      screen: TodoList,
+      navigationOptions: {
+        tabBarLabel: "FiiX List",
+        tabBarIcon: <Icon name="class" />
+      }
+    },
     home: {
       screen: ContractorHome,
       navigationOptions: {
@@ -26,7 +34,7 @@ const ContractorBottomTab = createMaterialBottomTabNavigator(
     competators: {
       screen: Competators,
       navigationOptions: {
-        tabBarLabel: 'Contractors',
+        tabBarLabel: "Contractors",
         tabBarIcon: <Icon name="people" />
       }
     }
@@ -34,7 +42,7 @@ const ContractorBottomTab = createMaterialBottomTabNavigator(
   {
     initialRouteName: "home",
     activeTintColor: "black",
-    order: ["home", "competators"],
+    order: ["list", "home", "competators"],
     shifting: true,
     sceneAnimationEnabled: true,
     barStyle: { backgroundColor: "white" }
@@ -49,6 +57,12 @@ const MainStackNavigator = createStackNavigator(
   {
     contractorHome: {
       screen: ContractorBottomTabs
+    },
+    contractor: {
+      screen: Contractor,
+      navigationOptions: {
+        headerShown: false
+      }
     },
     terms: {
       screen: Terms,

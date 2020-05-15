@@ -70,5 +70,9 @@ export const updateBio = (contractorId, bio) => {
 };
 
 export const getContractors = (category, contractorId) => {
-  return Axios.get(`/contractors/${category}/${contractorId}`)
-}
+  return Axios.get(`/contractors/${category}/${contractorId}`);
+};
+
+export const getCompetitor = contractorId => {
+  return Axios.get(`/contractors/${contractorId}`);
+};
