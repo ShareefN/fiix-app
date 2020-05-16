@@ -58,7 +58,7 @@ public class MainApplication extends Application implements ReactApplication {
 //  protected List<ReactPackage> getPackages() {
 //    return Arrays.<ReactPackage>asList(
 //        new MainReactPackage(),
-            new RNImgToBase64Package(),
+            // new RNImgToBase64Package()
             // new ImagePickerPackage(),
             // new RNDateTimePickerPackage(),
             // new RNSecureKeyStorePackage();

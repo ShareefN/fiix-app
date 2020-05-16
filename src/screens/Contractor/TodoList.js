@@ -18,7 +18,7 @@ import {
   updateReminder,
   deleteReminders,
   getReminders
-} from '../../Api/api';
+} from '../../Api/contractorApi';
 import { DotIndicator } from "react-native-indicators";
 
 function wait(timeout) {

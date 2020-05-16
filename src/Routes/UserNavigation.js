@@ -21,7 +21,7 @@ import Application2 from "../screens/User/Application/Application2";
 import Applicaton3 from "../screens/User/Application/Application3";
 import ApplicationSuccess from "../screens/User/Application/ApplicationSuccess";
 import ApplicationStatus from "../screens/User/Application/ApplicationStatus";
-import Prohibited from "../screens/User/Prohibited";
+import Prohibited from "../screens/Prohibited";
 
 const WIDTH = Dimensions.get("window").width;
 

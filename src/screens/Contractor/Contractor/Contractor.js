@@ -83,7 +83,9 @@ function Contractor(props) {
           {competitor && competitor.name} {"\u2B25"}{" "}
           {competitor && competitor.location}
         </Text>
-        <Text style={{ fontSize: 15, marginVertical: hp("1%") }}>Bio....</Text>
+        <Text style={{ fontSize: 15, marginVertical: hp("1%") }}>
+          {competitor && competitor.bio}
+        </Text>
       </View>
       <Divider style={{ backgroundColor: "grey", marginHorizontal: 10 }} />
       <Animated.View animation="zoomIn" iterationCount={1} style={{ flex: 1 }}>

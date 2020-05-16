@@ -162,7 +162,7 @@ function Settings(props) {
         isDialogVisible={dialogVisible}
         title={"Deactivate Account"}
         message={
-          "By confirming your account will be deactivated and you can no longer login unless you contact FiiX support"
+          "Please confirm by entering password"
         }
         submitInput={inputText => {
           setUser({ ...user, password: inputText });

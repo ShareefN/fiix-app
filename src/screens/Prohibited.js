@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
 import { Header } from "react-native-elements";
-import { userLogout } from "../../Api/api";
+import { userLogout } from "../Api/api";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp

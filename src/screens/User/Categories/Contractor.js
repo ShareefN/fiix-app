@@ -137,6 +137,9 @@ function Contractor(props) {
             {contractor.name} {"\u2B25"} {contractor.location}
           </Text>
           <Text style={{ fontSize: 15 }}>
+            {contractor.bio}
+          </Text>
+          <Text style={{ fontSize: 15 }}>
             {contractor.timeIn} - {contractor.timeOut}
           </Text>
           <Text style={{ fontSize: 10 }}>

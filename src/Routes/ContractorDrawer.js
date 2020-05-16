@@ -91,7 +91,7 @@ function ContractorDrawer(props) {
         </View>
       </View>
       <View style={{ marginVertical: hp("4%"), marginLeft: wp("5%") }}>
-        {navItem("", "Settings")}
+        {navItem("settings", "Settings")}
         {navItem("", "My Assets")}
         {navItem("", "Something Wrong?")}
         {navItem("terms", "Terms & Conditions")}

@@ -10,7 +10,9 @@ import ContractorDrawer from "../Routes/ContractorDrawer";
 import ContractorHome from "../screens/Contractor/Home";
 import Competators from "../screens/Contractor/Contractors";
 import Contractor from "../screens/Contractor/Contractor/Contractor";
-import TodoList from '../screens/Contractor/TodoList';
+import TodoList from "../screens/Contractor/TodoList";
+import Settings from "../screens/Contractor/Settings/settings";
+import UpdatePassword from "../screens/Contractor/Settings/updatePassword";
 import Terms from "../screens/Terms";
 
 const WIDTH = Dimensions.get("window").width;
@@ -60,6 +62,18 @@ const MainStackNavigator = createStackNavigator(
     },
     contractor: {
       screen: Contractor,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
+    settings: {
+      screen: Settings,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
+    updatePassword: {
+      screen: UpdatePassword,
       navigationOptions: {
         headerShown: false
       }

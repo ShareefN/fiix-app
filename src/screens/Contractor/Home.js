@@ -102,12 +102,12 @@ function ContractorHome(props) {
         <Text style={{ marginTop: 10, fontSize: 20 }}>
           {contractor.name} {"\u2B25"} {contractor.location}
         </Text>
-        <Text style={{ fontSize: 15, marginVertical: hp("1%") }}>Bio....</Text>
+        <Text style={{ fontSize: 15, marginVertical: hp("1%") }}>
+          {contractor.bio ? contractor.bio : "Bio...."}
+        </Text>
         <Text style={{ fontSize: 10 }}>Joined {contractor.joinedAt}</Text>
       </View>
-      <Text style={{ marginLeft: 10 }}>
-        What people think of your service!
-      </Text>
+      <Text style={{ marginLeft: 10 }}>What people think of your service!</Text>
       <Divider style={{ backgroundColor: "grey", marginHorizontal: 10 }} />
       <Animated.View animation="zoomIn" iterationCount={1} style={{ flex: 1 }}>
         {reviews && reviews.length >= 1 ? (
