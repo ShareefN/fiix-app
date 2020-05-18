@@ -14,6 +14,7 @@ import TodoList from "../screens/Contractor/TodoList";
 import Settings from "../screens/Contractor/Settings/settings";
 import UpdatePassword from "../screens/Contractor/Settings/updatePassword";
 import Terms from "../screens/Terms";
+import Prohibited from "../screens/Prohibited";
 
 const WIDTH = Dimensions.get("window").width;
 
@@ -83,6 +84,12 @@ const MainStackNavigator = createStackNavigator(
       navigationOptions: {
         title: "Terms and Conditions",
         headerBackTitle: null
+      }
+    },
+    prohibited: {
+      screen: Prohibited,
+      navigationOptions: {
+        headerShown: false
       }
     }
   },

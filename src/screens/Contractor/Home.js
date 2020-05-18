@@ -45,16 +45,23 @@ function ContractorHome(props) {
   const fetchContractor = async id => {
     await getContractor(id)
       .then(({ data }) => {
-        setContractor({
-          ...contractor,
-          name: data.name,
-          bio: data.bio,
-          joinedAt: moment(data.createdAt).format("MMMM-D-YYYY"),
-          location: data.location,
-          profileImage: data.profileImage,
-          timeIn: data.timeIn,
-          timeOut: data.timeOut
-        });
+        if (data.status !== "active") {
+          props.navigation.navigate('prohibited', {
+            reason: data.notes,
+            from: 'contractor'
+          })
+        } else {
+          setContractor({
+            ...contractor,
+            name: data.name,
+            bio: data.bio,
+            joinedAt: moment(data.createdAt).format("MMMM-D-YYYY"),
+            location: data.location,
+            profileImage: data.profileImage,
+            timeIn: data.timeIn,
+            timeOut: data.timeOut
+          });
+        }
         setLoadingIndocator(false);
       })
       .catch(err => setLoadingIndocator(false));

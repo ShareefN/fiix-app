@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
 import { Header } from "react-native-elements";
 import { userLogout } from "../Api/api";
+import { contractorLogout } from "../Api/contractorApi";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
@@ -11,7 +12,11 @@ import RNRestart from "react-native-restart";
 
 function Prohibited(props) {
   const handleLogout = async () => {
-    await userLogout();
+    if (props.navigation.getParam("from") === "contractor") {
+      await contractorLogout();
+    } else {
+      await userLogout();
+    }
     RNRestart.Restart();
   };
 
@@ -54,7 +59,7 @@ function Prohibited(props) {
           borderRadius: 15,
           alignItems: "center",
           justifyContent: "center",
-          marginTop: hp('10%')
+          marginTop: hp("10%")
         }}
       >
         <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
