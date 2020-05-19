@@ -99,7 +99,6 @@ function MenuDrawer(props) {
         user.applicationStatus === "rejected"
           ? navItem("applicationStatus", "Application Status")
           : navItem("application1", "Apply With FiiX")}
-        {navItem("", "Favorites")}
         {navItem("settings", "Settings")}
         {navItem("feedback", "Something Wrong?")}
         {navItem("terms", "Terms & Conditions")}

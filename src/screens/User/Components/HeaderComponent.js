@@ -17,7 +17,7 @@ function HeaderComponent(props) {
         style: { color: "black", fontSize: 30 }
       }}
       rightComponent={
-        <RightComponent title={props.title} value={props.value} />
+        <RightComponent title={props.title} value={props.value} navigation={props.navigation}/>
       }
     />
   );

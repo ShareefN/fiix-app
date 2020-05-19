@@ -93,7 +93,7 @@ function ContractorDrawer(props) {
       <View style={{ marginVertical: hp("4%"), marginLeft: wp("5%") }}>
         {navItem("settings", "Settings")}
         {navItem("", "My Assets")}
-        {navItem("", "Something Wrong?")}
+        {navItem("feedback", "Something Wrong?")}
         {navItem("terms", "Terms & Conditions")}
         <TouchableOpacity
           onPress={() => handleLogout()}

@@ -9,7 +9,7 @@ import {
 function Application1(props) {
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <Header title="Make $$ With FiiX" navigation={props.navigation} />
+      <Header title="Application" navigation={props.navigation} />
       <View
         style={{
           flex: 1,
@@ -21,30 +21,33 @@ function Application1(props) {
         <Text
           style={{
             textAlign: "center",
-            fontSize: 16
+            fontSize: 16,
+            letterSpacing: 1.5
           }}
         >
-          Complete this 2 step application today and expect a call from FiiX if you
-          are aligable to become part of the team!
+          Design Your Day with FiiX, Make it productive and beneficial for you
+          and everyone around who is waiting for your service!
         </Text>
         <Text> ──────────────────</Text>
         <Text
           style={{
             textAlign: "center",
-            fontSize: 16
+            fontSize: 16,
+            letterSpacing: 1.5
           }}
         >
-          Make sure you send a new copy of your Non-criminal document, along
-          with and image of you ID or Password to finish you application.
+          To be among the FiiX team, you should have a fresh copy of A
+          Non-criminal document and / or A valid Passport / ID identification
         </Text>
         <Text> ──────────────────</Text>
         <Text
           style={{
             textAlign: "center",
-            fontSize: 16
+            fontSize: 20,
+            letterSpacing: 1.5
           }}
         >
-          You only have one chance! So make it count.
+          Intested? Apply Now!
         </Text>
       </View>
       <TouchableOpacity
@@ -59,8 +62,15 @@ function Application1(props) {
           marginVertical: hp("7%")
         }}
       >
-        <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
-          Start Application
+        <Text
+          style={{
+            fontSize: 20,
+            fontWeight: "bold",
+            color: "white",
+            letterSpacing: 7
+          }}
+        >
+          Let's Go
         </Text>
       </TouchableOpacity>
     </View>

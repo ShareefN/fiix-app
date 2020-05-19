@@ -3,7 +3,7 @@ import { View, ScrollView, RefreshControl, Text, Image } from "react-native";
 import Header from "./Components/Header";
 import { getContractors } from "../../Api/contractorApi";
 import RNSecureKeyStore from "react-native-secure-key-store";
-import { Divider, ListItem } from "react-native-elements";
+import { ListItem } from "react-native-elements";
 import * as Animated from "react-native-animatable";
 import { DotIndicator } from "react-native-indicators";
 import {
@@ -24,28 +24,27 @@ function CategoryContractors(props) {
   const [loadingIndicator, setLoadingIndocator] = useState(false);
 
   useEffect(() => {
-    RNSecureKeyStore.get("category").then(res => {
-      setCategory(res);
-    });
-
     RNSecureKeyStore.get("contractor_id").then(res => {
       contractors(res);
     });
   }, []);
 
-  const contractors = async id => {
+  const contractors = id => {
     setLoadingIndocator(true);
-    await getContractors(category, id)
-      .then(({ data }) => {
-        if (!data) {
-          setContractorsList(null);
-          setLoadingIndocator(false);
-        } else {
-          setContractorsList(data);
-          setLoadingIndocator(false);
-        }
-      })
-      .catch(err => setLoadingIndocator(false));
+    RNSecureKeyStore.get("category").then(async res => {
+      setCategory(res);
+      await getContractors(res, id)
+        .then(({ data }) => {
+          if (!data) {
+            setContractorsList(null);
+            setLoadingIndocator(false);
+          } else {
+            setContractorsList(data);
+            setLoadingIndocator(false);
+          }
+        })
+        .catch(err => setLoadingIndocator(false));
+    });
   };
 
   const onRefresh = useCallback(() => {

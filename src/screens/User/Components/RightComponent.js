@@ -14,7 +14,22 @@ function RightComponent(props) {
             <Text style={{ ...styles.modalText, fontSize: 25 }}>
               {data[props.value].title}
             </Text>
-            <Text style={styles.modalText}>{data[props.value].content}</Text>
+            <Text style={styles.modalText}>
+              {data[props.value].content}{" "}
+              {data[props.value].title === "List of Categories" ? (
+                <Text
+                  style={{ fontWeight: "bold", letterSpacing: 1 }}
+                  onPress={() => {
+                    props.navigation.navigate("feedback");
+                    setModalVisible(false);
+                  }}
+                >
+                  HERE
+                </Text>
+              ) : (
+                ""
+              )}
+            </Text>
 
             <TouchableOpacity
               style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
@@ -71,6 +86,7 @@ const styles = StyleSheet.create({
   },
   modalText: {
     marginBottom: 15,
+    letterSpacing: 1,
     textAlign: "center"
   }
 });

@@ -160,10 +160,8 @@ function Settings(props) {
       </TouchableOpacity>
       <DialogInput
         isDialogVisible={dialogVisible}
-        title={"Deactivate Account"}
-        message={
-          "Please confirm by entering password"
-        }
+        title={"We're sad to see you go"}
+        message={"Please confirm by entering password"}
         submitInput={inputText => {
           setUser({ ...user, password: inputText });
           handleDeactivateAccount();

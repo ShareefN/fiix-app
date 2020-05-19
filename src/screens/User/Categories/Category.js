@@ -114,7 +114,8 @@ function Category(props) {
             />
             <Text
               style={{
-                fontSize: 35,
+                fontSize: 25,
+                letterSpacing: 2,
                 color: "orange",
                 marginHorizontal: 25,
                 marginVertical: hp("1%")
@@ -125,14 +126,21 @@ function Category(props) {
             <Text
               style={{
                 fontSize: 15,
+                marginTop: wp("5%"),
                 marginHorizontal: wp("5%"),
                 color: "grey",
+                letterSpacing: 1,
                 textAlign: "center"
               }}
             >
-              Unfortunately there's no contractors for this category yet! If you
-              know someone that is intrested in making money with FiiX please
-              let them know
+              Fiix dons't have any {category} yet! If you have experience in
+              this field,{" "}
+              <Text
+                style={{ fontWeight: "bold" }}
+                onPress={() => props.navigation.navigate("application2")}
+              >
+                Apply!
+              </Text>
             </Text>
           </View>
         ) : (
@@ -154,7 +162,7 @@ function Category(props) {
             <ModalSelector
               style={{ marginHorizontal: wp("5%"), marginVertical: hp("2%") }}
               data={locations}
-              cancelButtonAccessibilityLabel={'Cancel Button'}
+              cancelButtonAccessibilityLabel={"Cancel Button"}
               value={location}
               initValue="Filter by location"
               onChange={value => {
@@ -210,7 +218,7 @@ function Category(props) {
             </ScrollView>
           </>
         )}
-        <DotIndicator color="black" animating={loadingIndicator}/>
+        <DotIndicator color="black" animating={loadingIndicator} />
       </Animated.View>
     </View>
   );

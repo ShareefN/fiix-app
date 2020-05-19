@@ -136,9 +136,7 @@ function Contractor(props) {
           <Text style={{ marginTop: 10, fontSize: 20 }}>
             {contractor.name} {"\u2B25"} {contractor.location}
           </Text>
-          <Text style={{ fontSize: 15 }}>
-            {contractor.bio}
-          </Text>
+          <Text style={{ fontSize: 15 }}>{contractor.bio}</Text>
           <Text style={{ fontSize: 15 }}>
             {contractor.timeIn} - {contractor.timeOut}
           </Text>
@@ -189,11 +187,11 @@ function Contractor(props) {
                 fontSize: 15,
                 marginHorizontal: wp("2%"),
                 color: "grey",
-                textAlign: "center"
+                textAlign: "center",
+                letterSpacing: 2
               }}
             >
-              {contractorName} dosn't have any reviews yet! Share one and let
-              people know about your experince with {contractorName}
+              {contractorName} dosn't have any reviews yet!
             </Text>
           </View>
         ) : (

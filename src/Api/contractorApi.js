@@ -114,3 +114,7 @@ export const getReminders = (type, typeId) => {
 export const deleteReminders = (type, typeId, reminderId) => {
   return Axios.delete(`/reminders/reminder/${reminderId}/${type}/${typeId}`);
 };
+
+export const postFeedback = (contractorId, report) => {
+  return Axios.post(`/contractors/report/${contractorId}`, { report });
+};

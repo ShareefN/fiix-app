@@ -13,7 +13,7 @@ function ContractorHeader(props) {
         text: props.contractor.name,
         style: { color: "black", fontSize: 20 }
       }}
-      rightComponent={<RightComponent post={props.post} contractor={props.contractor}/>}
+      // rightComponent={<RightComponent post={props.post} contractor={props.contractor}/>}
     />
   );
 }

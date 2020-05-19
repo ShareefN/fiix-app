@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Alert } from "react-native";
-import Header from "./Categories/Components/Header";
+import Header from "./Settings/Header";
 import { Input } from "react-native-elements";
-import { postFeedback } from "../../Api/api";
+import { postFeedback } from "../../Api/contractorApi";
 import RNSecureKeyStore from "react-native-secure-key-store";
 import Dialog from "react-native-dialog";
 import {
@@ -17,10 +17,10 @@ function Feedback(props) {
   const [loadingIndicator, setLoadingIndocator] = useState(false);
 
   const handleSubmit = () => {
-    RNSecureKeyStore.get("user_id").then(async res => {
-      if (feedback.length <= 3) {
-        Alert.alert("Feedback too short!");
-      } else {
+    if (feedback.length <= 3) {
+      Alert.alert("Feedback too short!");
+    } else {
+      RNSecureKeyStore.get("contractor_id").then(async res => {
         setLoadingIndocator(true);
         await postFeedback(res, feedback)
           .then(() => {
@@ -28,8 +28,8 @@ function Feedback(props) {
             setDialogVisible(true);
           })
           .catch(err => setLoadingIndocator(false));
-      }
-    });
+      });
+    }
   };
 
   return (
@@ -74,7 +74,7 @@ function Feedback(props) {
           label="Close"
           onPress={() => {
             setDialogVisible(false), setFeedback("");
-            props.navigation.navigate("userHome");
+            props.navigation.navigate("contractorHome");
           }}
         />
       </Dialog.Container>

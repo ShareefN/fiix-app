@@ -1,16 +1,18 @@
 const categories = {
   title: "List of Categories",
-  content: "Select your favorite category and choose your favorite contractor"
+  content:
+    "Found what your looking for? If not please share with us any suggestions on categories you'd like to see in the future."
 };
 
 const reviews = {
-  title: "Reviews",
-  content: "This is where people share their opion on this application"
+  title: "Our Community",
+  content:
+    "Part of FiiX is building a community where people can express there thoughts around the services they receive from the team. Please feel free to share whats on your mind with others!"
 };
 
 const list = {
   title: "Your FiiX List",
-  content: "Never forget another chore, start by writting them down here!"
+  content: "Never forget another chore, start by noting them down here!"
 };
 
 const data = {

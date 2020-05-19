@@ -9,7 +9,7 @@ function CategoryHeader(props) {
       leftComponent={<LeftComponent nav={props.navigation} />}
       centerComponent={{
         text: props.title,
-        style: { color: "black", fontSize: 20 }
+        style: { color: "black", fontSize: 20, letterSpacing: 5 }
       }}
     />
   );
