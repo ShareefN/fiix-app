@@ -5,7 +5,9 @@ import {
   ScrollView,
   RefreshControl,
   StyleSheet,
-  Alert
+  Alert,
+  Text,
+  Image
 } from "react-native";
 import Header from "../Components/HeaderComponent";
 import { Divider, ListItem } from "react-native-elements";
@@ -14,6 +16,10 @@ import RNSecureKeyStore from "react-native-secure-key-store";
 import * as Animated from "react-native-animatable";
 import { FAB } from "react-native-paper";
 import { DotIndicator } from "react-native-indicators";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp
+} from "react-native-responsive-screen";
 
 function wait(timeout) {
   return new Promise(resolve => {
@@ -106,28 +112,56 @@ function Reviews(props) {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
         >
-          <View style={{ marginHorizontal: 10, marginBottom: 50 }}>
-            {reviews &&
-              reviews.map((elm, index) => {
-                return (
-                  <ListItem
-                    key={index}
-                    title={elm.username}
-                    titleStyle={{ fontWeight: "bold" }}
-                    subtitleStyle={{ marginTop: 10, color: "black" }}
-                    subtitle={elm.review}
-                    bottomDivider
-                    rightIcon={{
-                      name: elm.userId.toString() === userId ? "delete" : null,
-                      color: "grey",
-                      onPress: () => {
-                        removeReview(elm.id);
-                      }
-                    }}
-                  />
-                );
-              })}
-          </View>
+          {reviews && reviews.length >= 1 ? (
+            <View style={{ marginHorizontal: 10, marginBottom: 50 }}>
+              {reviews &&
+                reviews.map((elm, index) => {
+                  return (
+                    <ListItem
+                      key={index}
+                      title={elm.username}
+                      titleStyle={{ fontWeight: "bold" }}
+                      subtitleStyle={{ marginTop: 10, color: "black" }}
+                      subtitle={elm.review}
+                      bottomDivider
+                      rightIcon={{
+                        name:
+                          elm.userId.toString() === userId ? "delete" : null,
+                        color: "grey",
+                        onPress: () => {
+                          removeReview(elm.id);
+                        }
+                      }}
+                    />
+                  );
+                })}
+            </View>
+          ) : (
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                marginVertical: hp("3%"),
+                marginHorizontal: wp("10%")
+              }}
+            >
+              <Image
+                style={{ width: wp("30%"), height: 100 }}
+                source={require("../../../Assets/noreviews.jpg")}
+              />
+              <Text
+                style={{
+                  fontSize: 15,
+                  marginHorizontal: wp("2%"),
+                  color: "grey",
+                  textAlign: "center",
+                  letterSpacing: 2
+                }}
+              >
+                No reviews so far!
+              </Text>
+            </View>
+          )}
         </ScrollView>
         <DotIndicator color="black" animating={loadingIndicator} />
       </Animated.View>

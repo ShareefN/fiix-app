@@ -56,7 +56,19 @@ function Settings(props) {
           setLoading(false);
           setSuccessDialog(true);
         })
-        .catch(err => setLoading(false));
+        .catch(err =>
+          Alert.alert(
+            "Error Updating Profile",
+            "Please try again later!",
+            [
+              {
+                text: "Ok",
+                onPress: () => setLoading(false)
+              }
+            ],
+            { cancelable: false }
+          )
+        );
     });
   };
 
@@ -69,7 +81,17 @@ function Settings(props) {
           RNRestart.Restart();
         })
         .catch(err => {
-          setLoading(false), Alert.alert("Invalid password");
+          Alert.alert(
+            "Error deactivating account",
+            "Invalid old password",
+            [
+              {
+                text: "Ok",
+                onPress: () => setLoading(false)
+              }
+            ],
+            { cancelable: false }
+          );;
         });
     });
   };

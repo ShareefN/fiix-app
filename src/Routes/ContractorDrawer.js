@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import RNSecureKeyStore from "react-native-secure-key-store";
 import { contractorLogout, getContractor } from "../Api/contractorApi";
 import {
@@ -90,7 +90,10 @@ function ContractorDrawer(props) {
           </Text>
         </View>
       </View>
-      <View style={{ marginVertical: hp("4%"), marginLeft: wp("5%") }}>
+      <ScrollView
+        style={{ marginVertical: hp("4%"), marginLeft: wp("5%") }}
+        showsVerticalScrollIndicator={false}
+      >
         {navItem("settings", "Settings")}
         {navItem("", "My Assets")}
         {navItem("feedback", "Something Wrong?")}
@@ -107,7 +110,7 @@ function ContractorDrawer(props) {
             Logout
           </Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
       <View style={{ flex: 1, justifyContent: "flex-end" }}>
         <View
           style={{

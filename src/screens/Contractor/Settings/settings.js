@@ -21,6 +21,7 @@ import {
 } from "../../../Api/contractorApi";
 import moment from "moment";
 import { locations } from "../../User/Application/Components/locations";
+import { DotIndicator } from "react-native-indicators";
 
 function ContractorSettings(props) {
   const [loading, setLoading] = useState(false);
@@ -34,8 +35,10 @@ function ContractorSettings(props) {
     timeIn: null,
     timeOut: null
   });
+  const [loadingIndicator, setLoadingIndocator] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     me();
   }, []);
 
@@ -50,15 +53,16 @@ function ContractorSettings(props) {
             timeIn: data.timeIn,
             timeOut: data.timeOut
           });
+          setLoading(false);
         })
-        .catch(err => console.log(err));
+        .catch(err => setLoading(false));
     });
   };
 
   const handleTimeIn = date => {
     setContractor({
       ...contractor,
-      timeIn: date
+      timeIn: moment(date).format('HH:MM A')
     });
     setTimeInDialog(false);
   };
@@ -66,14 +70,13 @@ function ContractorSettings(props) {
   const handleTimeOut = date => {
     setContractor({
       ...contractor,
-      timeOut: date
+      timeOut: moment(date).format('HH:MM A')
     });
     setTimeOutDialog(false);
   };
 
   const hanleUpdateContractor = () => {
     setLoading(true);
-
     if (
       (contractor.bio && contractor.bio.length <= 3) ||
       contractor.bio.length >= 99
@@ -86,7 +89,19 @@ function ContractorSettings(props) {
             setLoading(false);
             setSuccessDialog(true);
           })
-          .catch(err => setLoading(false));
+          .catch(err => {
+            Alert.alert(
+              "Error Updating Profile",
+              "Please try again later!",
+              [
+                {
+                  text: "Ok",
+                  onPress: () => setLoading(false)
+                }
+              ],
+              { cancelable: false }
+            );
+          });
       });
     }
   };
@@ -100,11 +115,14 @@ function ContractorSettings(props) {
         await contractorLogout();
         RNRestart.Restart();
       })
-      .catch(err => Alert.alert('Invalid Password'));
+      .catch(err => Alert.alert("Invalid Password"));
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <View
+      style={{ flex: 1, backgroundColor: "white" }}
+      pointerEvents={loadingIndicator ? "none" : "auto"}
+    >
       <Header title="Settings" navigation={props.navigation} />
       <View
         style={{
@@ -159,9 +177,7 @@ function ContractorSettings(props) {
               <Text style={{ fontSize: 20 }}>Set Time In</Text>
             </TouchableOpacity>
             <Text style={{ fontSize: 15 }}>
-              {contractor.timeIn
-                ? moment(contractor.timeIn).format("hh:mm A")
-                : "--"}
+              {contractor.timeIn ? contractor.timeIn : "--"}
             </Text>
           </View>
           <DateTimePickerModal
@@ -176,9 +192,7 @@ function ContractorSettings(props) {
               <Text style={{ fontSize: 20 }}>Set Time Out</Text>
             </TouchableOpacity>
             <Text style={{ fontSize: 15 }}>
-              {contractor.timeOut
-                ? moment(contractor.timeOut).format("hh:mm A")
-                : "--"}
+              {contractor.timeOut ? contractor.timeOut : "--"}
             </Text>
           </View>
           <DateTimePickerModal
@@ -241,6 +255,7 @@ function ContractorSettings(props) {
         <Dialog.Button label="close" onPress={() => setSuccessDialog(false)} />
       </Dialog.Container>
       <Loading visible={loading} color="black" size="large" />
+      <DotIndicator color="black" animating={loadingIndicator} />
     </View>
   );
 }

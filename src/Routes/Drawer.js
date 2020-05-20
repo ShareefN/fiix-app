@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import RNSecureKeyStore from "react-native-secure-key-store";
 import { userLogout, getUser } from "../Api/api";
 import {
@@ -94,7 +94,10 @@ function MenuDrawer(props) {
           </Text>
         </View>
       </View>
-      <View style={{ marginVertical: hp("4%"), marginLeft: wp("5%") }}>
+      <ScrollView
+        style={{ marginVertical: hp("4%"), marginLeft: wp("5%") }}
+        showsVerticalScrollIndicator={false}
+      >
         {user.applicationStatus === "applied" ||
         user.applicationStatus === "rejected"
           ? navItem("applicationStatus", "Application Status")
@@ -114,7 +117,7 @@ function MenuDrawer(props) {
             Logout
           </Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
       <View style={{ flex: 1, justifyContent: "flex-end" }}>
         <View
           style={{

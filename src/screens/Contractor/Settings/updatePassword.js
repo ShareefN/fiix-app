@@ -43,7 +43,7 @@ function UpdatePassword(props) {
           })
           .catch(err => {
             setLoadingIndocator(false);
-            Alert.alert("Invalid password");
+            Alert.alert("Invalid old password");
             setContractorPassword({ ...contractorPassword, oldPassword: "" });
           });
       });

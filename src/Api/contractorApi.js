@@ -70,8 +70,8 @@ export const updateContractor = (contractorId, values) => {
   return Axios.put(`/contractors/update/contractor/${contractorId}`, {
     bio: values.bio,
     location: values.location,
-    timeIn: moment(values.timeIn).format("hh:mm A"),
-    timeOut: moment(values.timeOut).format("hh:mm A")
+    timeIn: values.timeIn,
+    timeOut: values.timeOut
   });
 };
 

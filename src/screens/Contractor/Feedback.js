@@ -4,7 +4,6 @@ import Header from "./Settings/Header";
 import { Input } from "react-native-elements";
 import { postFeedback } from "../../Api/contractorApi";
 import RNSecureKeyStore from "react-native-secure-key-store";
-import Dialog from "react-native-dialog";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
@@ -13,7 +12,6 @@ import { DotIndicator } from "react-native-indicators";
 
 function Feedback(props) {
   const [feedback, setFeedback] = useState("");
-  const [dialogVisible, setDialogVisible] = useState(false);
   const [loadingIndicator, setLoadingIndocator] = useState(false);
 
   const handleSubmit = () => {
@@ -24,10 +22,36 @@ function Feedback(props) {
         setLoadingIndocator(true);
         await postFeedback(res, feedback)
           .then(() => {
-            setLoadingIndocator(false);
-            setDialogVisible(true);
+            Alert.alert(
+              "Success!",
+              "Thanks for reaching out",
+              [
+                {
+                  text: "Ok",
+                  onPress: () => {
+                    setLoadingIndocator(false),
+                      props.navigation.navigate("contractorHome");
+                  }
+                }
+              ],
+              { cancelable: false }
+            );
           })
-          .catch(err => setLoadingIndocator(false));
+          .catch(err =>
+            Alert.alert(
+              "Error sending feeback",
+              "Please try again later.",
+              [
+                {
+                  text: "Ok",
+                  onPress: () => {
+                    setLoadingIndocator(false);
+                  }
+                }
+              ],
+              { cancelable: false }
+            )
+          );
       });
     }
   };
@@ -63,21 +87,6 @@ function Feedback(props) {
           </Text>
         </TouchableOpacity>
       </View>
-      <Dialog.Container visible={dialogVisible}>
-        <Dialog.Title>Your feedback is sent!</Dialog.Title>
-        <Dialog.Description>
-          The FiiX team appreciates your time in reaching out, rest assured that
-          your matter is of great importance to us and we will be reaching out
-          with the best possible soltion.
-        </Dialog.Description>
-        <Dialog.Button
-          label="Close"
-          onPress={() => {
-            setDialogVisible(false), setFeedback("");
-            props.navigation.navigate("contractorHome");
-          }}
-        />
-      </Dialog.Container>
       <DotIndicator color="black" animating={loadingIndicator} />
     </View>
   );

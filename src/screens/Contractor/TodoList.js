@@ -5,9 +5,11 @@ import {
   StyleSheet,
   Alert,
   TextInput,
-  ScrollView
+  ScrollView,
+  Image,
+  Text
 } from "react-native";
-import Header from './Components/Header';
+import Header from "./Components/Header";
 import * as Animated from "react-native-animatable";
 import { FAB } from "react-native-paper";
 import { Divider } from "react-native-elements";
@@ -18,8 +20,12 @@ import {
   updateReminder,
   deleteReminders,
   getReminders
-} from '../../Api/contractorApi';
+} from "../../Api/contractorApi";
 import { DotIndicator } from "react-native-indicators";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp
+} from "react-native-responsive-screen";
 
 function wait(timeout) {
   return new Promise(resolve => {
@@ -120,39 +126,66 @@ function ContractorTodoList(props) {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
         >
-          <View style={{ marginVertical: 10, marginHorizontal: 20 }}>
-            {list &&
-              list.map((elm, index) => {
-                return (
-                  <ListItem
-                    key={index}
-                    title={elm.item}
-                    titleStyle={{
-                      fontSize: 18,
-                      color: elm.status === "new" ? "black" : "grey"
-                    }}
-                    subtitle={elm.review}
-                    bottomDivider
-                    rightIcon={{
-                      name: "delete",
-                      color: "grey",
-                      onPress: () => {
-                        deleteItem(elm.id);
-                      }
-                    }}
-                    leftIcon={{
-                      name: elm.status === "new" ? "crop-din" : "done",
-                      color: elm.status === "new" ? "black" : "green",
-                      onPress: () => {
-                        elm.status === "new"
-                          ? update(elm.id, "done")
-                          : update(elm.id, "new");
-                      }
-                    }}
-                  />
-                );
-              })}
-          </View>
+          {list && list.length >= 1 ? (
+            <View style={{ marginVertical: 10, marginHorizontal: 20 }}>
+              {list &&
+                list.map((elm, index) => {
+                  return (
+                    <ListItem
+                      key={index}
+                      title={elm.item}
+                      titleStyle={{
+                        fontSize: 18,
+                        color: elm.status === "new" ? "black" : "grey"
+                      }}
+                      subtitle={elm.review}
+                      bottomDivider
+                      rightIcon={{
+                        name: "delete",
+                        color: "grey",
+                        onPress: () => {
+                          deleteItem(elm.id);
+                        }
+                      }}
+                      leftIcon={{
+                        name: elm.status === "new" ? "crop-din" : "done",
+                        color: elm.status === "new" ? "black" : "green",
+                        onPress: () => {
+                          elm.status === "new"
+                            ? update(elm.id, "done")
+                            : update(elm.id, "new");
+                        }
+                      }}
+                    />
+                  );
+                })}
+            </View>
+          ) : (
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                marginVertical: hp("3%"),
+                marginHorizontal: wp("10%")
+              }}
+            >
+              <Image
+                style={{ width: wp("30%"), height: 100 }}
+                source={require("../../Assets/noreviews.jpg")}
+              />
+              <Text
+                style={{
+                  fontSize: 15,
+                  marginHorizontal: wp("2%"),
+                  color: "grey",
+                  textAlign: "center",
+                  letterSpacing: 2
+                }}
+              >
+                You don't any reminders so far!
+              </Text>
+            </View>
+          )}
         </ScrollView>
         <DotIndicator color="black" animating={loadingIndicator} />
       </Animated.View>

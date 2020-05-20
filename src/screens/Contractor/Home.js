@@ -4,7 +4,7 @@ import { getContractor, getContractorReviews } from "../../Api/contractorApi";
 import RNSecureKeyStore from "react-native-secure-key-store";
 import moment from "moment";
 import Header from "./Components/Header";
-import { Divider, ListItem } from "react-native-elements";
+import { ListItem } from "react-native-elements";
 import * as Animated from "react-native-animatable";
 import {
   widthPercentageToDP as wp,
@@ -112,10 +112,12 @@ function ContractorHome(props) {
         <Text style={{ fontSize: 15, marginVertical: hp("1%") }}>
           {contractor.bio ? contractor.bio : "Bio...."}
         </Text>
+        <Text style={{ fontSize: 15 }}>
+          {contractor.timeIn} - {contractor.timeOut}
+        </Text>
         <Text style={{ fontSize: 10 }}>Joined {contractor.joinedAt}</Text>
       </View>
-      <Text style={{ marginLeft: 10 }}>What people think of your service!</Text>
-      <Divider style={{ backgroundColor: "grey", marginHorizontal: 10 }} />
+      <Text style={{ marginLeft: 20, fontSize: 20, letterSpacing: 3 }}>My Reviews</Text>
       <Animated.View animation="zoomIn" iterationCount={1} style={{ flex: 1 }}>
         {reviews && reviews.length >= 1 ? (
           <ScrollView
