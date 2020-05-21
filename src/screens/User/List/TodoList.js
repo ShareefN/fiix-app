@@ -60,11 +60,13 @@ function TodoList(props) {
       Alert.alert("Item too short!");
     } else {
       setLoadingIndocator(true);
-      RNSecureKeyStore.get("user_id").then(async res => {
-        await postReminder("user", res, item);
-        setItem(null);
-        fetchList();
-      });
+      RNSecureKeyStore.get("user_id")
+        .then(async res => {
+          await postReminder("user", res, item);
+          setItem(null);
+          fetchList();
+        })
+        .catch(err => setLoadingIndocator(false));
     }
   };
 

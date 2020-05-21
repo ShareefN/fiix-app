@@ -64,7 +64,7 @@ function ContractorTodoList(props) {
         await postReminder("contractor", res, item);
         setItem(null);
         fetchList();
-      });
+      }).catch(err => setLoadingIndocator(false))
     }
   };
 
