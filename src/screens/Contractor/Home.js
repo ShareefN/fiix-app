@@ -11,6 +11,8 @@ import {
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
 import { DotIndicator } from "react-native-indicators";
+import AdBanner from "../../Admobs/Banners";
+import AdLargeBanner from "../../Admobs/LargeBanners";
 
 function wait(timeout) {
   return new Promise(resolve => {
@@ -46,10 +48,10 @@ function ContractorHome(props) {
     await getContractor(id)
       .then(({ data }) => {
         if (data.status !== "active") {
-          props.navigation.navigate('prohibited', {
+          props.navigation.navigate("prohibited", {
             reason: data.notes,
-            from: 'contractor'
-          })
+            from: "contractor"
+          });
         } else {
           setContractor({
             ...contractor,
@@ -117,7 +119,12 @@ function ContractorHome(props) {
         </Text>
         <Text style={{ fontSize: 10 }}>Joined {contractor.joinedAt}</Text>
       </View>
-      <Text style={{ marginLeft: 20, fontSize: 20, letterSpacing: 3 }}>My Reviews</Text>
+      <View>
+        <AdBanner id={"ca-app-pub-6510981239392097/4537933354"} />
+      </View>
+      <Text style={{ marginLeft: 20, fontSize: 20, letterSpacing: 3 }}>
+        My Reviews
+      </Text>
       <Animated.View animation="zoomIn" iterationCount={1} style={{ flex: 1 }}>
         {reviews && reviews.length >= 1 ? (
           <ScrollView
@@ -167,6 +174,9 @@ function ContractorHome(props) {
               >
                 You dont have any reviews yet!
               </Text>
+            </View>
+            <View style={{marginTop: 40}}>
+              <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
             </View>
           </ScrollView>
         )}

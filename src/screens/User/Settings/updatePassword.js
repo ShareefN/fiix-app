@@ -10,6 +10,7 @@ import {
 } from "react-native-responsive-screen";
 import { DotIndicator } from "react-native-indicators";
 import RNRestart from "react-native-restart";
+import AdLargeBanner from "../../../Admobs/LargeBanners";
 
 function UpdatePassword(props) {
   const [loadingIndicator, setLoadingIndocator] = useState(false);
@@ -102,6 +103,9 @@ function UpdatePassword(props) {
             Update Password
           </Text>
         </TouchableOpacity>
+        <View style={{ alignItems: "center", justifyContent: "center" }}>
+          <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+        </View>
       </View>
       <DotIndicator color="black" animating={loadingIndicator} />
     </View>

@@ -6,7 +6,6 @@ import android.net.Uri;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import fr.snapp.imagebase64.RNImgToBase64Package;
 import com.imagepicker.ImagePickerPackage;
 import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 import com.reactlibrary.securekeystore.RNSecureKeyStorePackage;
@@ -53,22 +52,6 @@ public class MainApplication extends Application implements ReactApplication {
       packages.add(new ModuleRegistryAdapter(mModuleRegistryProvider));
       return packages;
     }
-
-//     @Override
-//  protected List<ReactPackage> getPackages() {
-//    return Arrays.<ReactPackage>asList(
-//        new MainReactPackage(),
-            // new RNImgToBase64Package()
-            // new ImagePickerPackage(),
-            // new RNDateTimePickerPackage(),
-            // new RNSecureKeyStorePackage();
-            // new SQLitePluginPackage();
-//             new RNDeviceInfo(),
-//          new VectorIconsPackage(),
-//          new RNSecureKeyStorePackage(),
-//        new ModuleRegistryAdapter(mModuleRegistryProvider)
-//    );
-//  }
 
     @Override
     protected String getJSMainModuleName() {

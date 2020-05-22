@@ -8,6 +8,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
+import AdLargeBanner from "../../../Admobs/LargeBanners";
 
 function ApplciationStatus(props) {
   const [user, setUser] = useState({
@@ -50,6 +51,9 @@ function ApplciationStatus(props) {
               Application is under proccessing, it might take from 24 - 48 hours
               to share your results
             </Text>
+            <View style={{ alignItems: "center", justifyContent: "center" }}>
+              <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+            </View>
           </>
         ) : (
           <>
@@ -90,6 +94,9 @@ function ApplciationStatus(props) {
                 Contact FiiX for revision
               </Text>
             </TouchableOpacity>
+            <View style={{ alignItems: "center", justifyContent: "center" }}>
+              <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+            </View>
           </>
         )}
       </View>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Alert } from "react-native";
 import { Input } from "react-native-elements";
 import RNSecureKeyStore from "react-native-secure-key-store";
-import Header from './Header';
+import Header from "./Header";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
@@ -10,6 +10,7 @@ import {
 import { DotIndicator } from "react-native-indicators";
 import { updatePassword, contractorLogout } from "../../../Api/contractorApi";
 import RNRestart from "react-native-restart";
+import AdLargeBanner from "../../../Admobs/LargeBanners";
 
 function UpdatePassword(props) {
   const [loadingIndicator, setLoadingIndocator] = useState(false);
@@ -26,7 +27,7 @@ function UpdatePassword(props) {
         ...contractorPassword,
         newPassword: "",
         oldPassword: "",
-        confirmPassword: '',
+        confirmPassword: ""
       });
     } else {
       setLoadingIndocator(true);
@@ -55,10 +56,7 @@ function UpdatePassword(props) {
       style={{ backgroundColor: "white", flex: 1 }}
       pointerEvents={loadingIndicator ? "none" : "auto"}
     >
-      <Header
-        title="Change Password"
-        navigation={props.navigation}
-      />
+      <Header title="Change Password" navigation={props.navigation} />
       <View style={{ marginHorizontal: 20 }}>
         <Input
           placeholder="Old Password"
@@ -87,7 +85,10 @@ function UpdatePassword(props) {
           value={contractorPassword.confirmPassword}
           containerStyle={{ height: hp("4%"), marginVertical: 30 }}
           onChangeText={value =>
-            setContractorPassword({ ...contractorPassword, confirmPassword: value })
+            setContractorPassword({
+              ...contractorPassword,
+              confirmPassword: value
+            })
           }
         />
         <TouchableOpacity
@@ -106,6 +107,9 @@ function UpdatePassword(props) {
             Update Password
           </Text>
         </TouchableOpacity>
+        <View style={{alignItems: 'center', justifyContent: 'center', marginTop: 10}}>
+          <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+        </View>
       </View>
       <DotIndicator color="black" animating={loadingIndicator} />
     </View>

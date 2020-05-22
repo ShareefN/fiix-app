@@ -20,6 +20,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
+import Adbanner from "../../../Admobs/Banners";
 
 function wait(timeout) {
   return new Promise(resolve => {
@@ -104,6 +105,9 @@ function Reviews(props) {
           onPress={() => submitReview()}
         />
       </View>
+      <View style={{ width: wp("50%") }}>
+        <Adbanner id={"ca-app-pub-6510981239392097/3109780549"} />
+      </View>
       <Divider style={{ backgroundColor: "black", marginHorizontal: 10 }} />
       <Animated.View animation="zoomIn" iterationCount={1} style={{ flex: 1 }}>
         <ScrollView
@@ -137,30 +141,32 @@ function Reviews(props) {
                 })}
             </View>
           ) : (
-            <View
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-                marginVertical: hp("3%"),
-                marginHorizontal: wp("10%")
-              }}
-            >
-              <Image
-                style={{ width: wp("30%"), height: 100 }}
-                source={require("../../../Assets/noreviews.jpg")}
-              />
-              <Text
+            <>
+              <View
                 style={{
-                  fontSize: 15,
-                  marginHorizontal: wp("2%"),
-                  color: "grey",
-                  textAlign: "center",
-                  letterSpacing: 2
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginVertical: hp("3%"),
+                  marginHorizontal: wp("10%")
                 }}
               >
-                No reviews so far!
-              </Text>
-            </View>
+                <Image
+                  style={{ width: wp("30%"), height: 100 }}
+                  source={require("../../../Assets/noreviews.jpg")}
+                />
+                <Text
+                  style={{
+                    fontSize: 15,
+                    marginHorizontal: wp("2%"),
+                    color: "grey",
+                    textAlign: "center",
+                    letterSpacing: 2
+                  }}
+                >
+                  No reviews so far!
+                </Text>
+              </View>
+            </>
           )}
         </ScrollView>
         <DotIndicator color="black" animating={loadingIndicator} />

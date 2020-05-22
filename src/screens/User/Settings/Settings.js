@@ -17,6 +17,7 @@ import {
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
 import RNRestart from "react-native-restart";
+import AdLargeBanner from "../../../Admobs/LargeBanners";
 
 function Settings(props) {
   const [loading, setLoading] = useState(false);
@@ -91,7 +92,7 @@ function Settings(props) {
               }
             ],
             { cancelable: false }
-          );;
+          );
         });
     });
   };
@@ -144,9 +145,12 @@ function Settings(props) {
           maxLength={10}
           keyboardType="numeric"
           value={user.number}
-          containerStyle={{ height: hp("4%"), marginVertical: 25 }}
+          containerStyle={{ height: hp("4%"), marginTop: 25 }}
           onChangeText={value => setUser({ ...user, number: value })}
         />
+      </View>
+      <View style={{ alignItems: "center", justifyContent: "center" }}>
+        <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
       </View>
       <TouchableOpacity
         onPress={() => props.navigation.navigate("updatePassword")}

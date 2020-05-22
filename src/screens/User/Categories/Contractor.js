@@ -27,6 +27,8 @@ import {
 } from "react-native-responsive-screen";
 import { FAB } from "react-native-paper";
 import { DotIndicator } from "react-native-indicators";
+import Adbanner from "../../../Admobs/Banners";
+import AdLargeBanner from "../../../Admobs/LargeBanners";
 
 function wait(timeout) {
   return new Promise(resolve => {
@@ -136,7 +138,9 @@ function Contractor(props) {
           <Text style={{ marginTop: 10, fontSize: 20 }}>
             {contractor.name} {"\u2B25"} {contractor.location}
           </Text>
-          <Text style={{ fontSize: 15 }}>{contractor.bio}</Text>
+          <Text style={{ fontSize: 15, marginVertical: hp("1%") }}>
+            {contractor.bio}
+          </Text>
           <Text style={{ fontSize: 15 }}>
             {contractor.timeIn} - {contractor.timeOut}
           </Text>
@@ -170,62 +174,80 @@ function Contractor(props) {
         </View>
         <Divider style={{ backgroundColor: "black", marginHorizontal: 25 }} />
         {!contractorReviews ? (
-          <View
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              marginVertical: hp("3%"),
-              marginHorizontal: wp("10%")
-            }}
-          >
-            <Image
-              style={{ width: wp("30%"), height: 100 }}
-              source={require("../../../Assets/noreviews.jpg")}
-            />
-            <Text
-              style={{
-                fontSize: 15,
-                marginHorizontal: wp("2%"),
-                color: "grey",
-                textAlign: "center",
-                letterSpacing: 2
-              }}
+          <>
+            <ScrollView
+              style={{ marginBottom: 50 }}
+              showsVerticalScrollIndicator={false}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
             >
-              {contractorName} dosn't have any reviews yet!
-            </Text>
-          </View>
+              <View
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginVertical: hp("3%"),
+                  marginHorizontal: wp("10%")
+                }}
+              >
+                <Image
+                  style={{ width: wp("30%"), height: 100 }}
+                  source={require("../../../Assets/noreviews.jpg")}
+                />
+                <Text
+                  style={{
+                    fontSize: 15,
+                    marginHorizontal: wp("2%"),
+                    color: "grey",
+                    textAlign: "center",
+                    letterSpacing: 2
+                  }}
+                >
+                  {contractorName} dosn't have any reviews yet!
+                </Text>
+              </View>
+              <View style={{ alignItems: "center", justifyContent: "center" }}>
+                <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+              </View>
+            </ScrollView>
+          </>
         ) : (
-          <ScrollView
-            style={{ marginBottom: 50 }}
-            showsVerticalScrollIndicator={false}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-          >
-            {contractorReviews &&
-              contractorReviews.map((elm, index) => {
-                return (
-                  <ListItem
-                    key={index}
-                    title={elm.username}
-                    titleStyle={{ fontWeight: "bold" }}
-                    subtitleStyle={{ marginTop: 5, color: "black" }}
-                    subtitle={elm.review}
-                    bottomDivider
-                    rightIcon={{
-                      name:
-                        elm.userId.toString() === userId.toString()
-                          ? "delete"
-                          : null,
-                      color: "grey",
-                      onPress: () => {
-                        deleteReview(elm.id);
-                      }
-                    }}
-                  />
-                );
-              })}
-          </ScrollView>
+          <>
+            <View style={{ width: wp("50%") }}>
+              <Adbanner id={"ca-app-pub-6510981239392097/3053940223"} />
+            </View>
+            <ScrollView
+              style={{ marginBottom: 50 }}
+              showsVerticalScrollIndicator={false}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
+            >
+              {contractorReviews &&
+                contractorReviews.map((elm, index) => {
+                  return (
+                    <ListItem
+                      key={index}
+                      title={elm.username}
+                      titleStyle={{ fontWeight: "bold" }}
+                      subtitleStyle={{ marginTop: 5, color: "black" }}
+                      subtitle={elm.review}
+                      bottomDivider
+                      rightIcon={{
+                        name:
+                          elm.userId.toString() === userId.toString()
+                            ? "delete"
+                            : null,
+                        color: "grey",
+                        onPress: () => {
+                          deleteReview(elm.id);
+                        }
+                      }}
+                    />
+                  );
+                })}
+            </ScrollView>
+          </>
         )}
         <DotIndicator color="black" animating={loadingIndicator} />
       </Animated.View>

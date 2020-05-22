@@ -8,7 +8,6 @@ console.disableYellowBox = true;
 
 export default function App() {
   const [route, setRoute] = useState(null);
-
   useEffect(() => {
     RNSecureKeyStore.get("user_token").then(res => setRoute("user"));
     RNSecureKeyStore.get("contractor_token").then(res =>

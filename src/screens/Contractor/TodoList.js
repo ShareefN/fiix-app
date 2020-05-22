@@ -26,6 +26,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
+import AdBanner from "../../Admobs/Banners";
+import AdLargeBanner from "../../Admobs/LargeBanners";
 
 function wait(timeout) {
   return new Promise(resolve => {
@@ -60,11 +62,13 @@ function ContractorTodoList(props) {
       Alert.alert("Item too short!");
     } else {
       setLoadingIndocator(true);
-      RNSecureKeyStore.get("contractor_id").then(async res => {
-        await postReminder("contractor", res, item);
-        setItem(null);
-        fetchList();
-      }).catch(err => setLoadingIndocator(false))
+      RNSecureKeyStore.get("contractor_id")
+        .then(async res => {
+          await postReminder("contractor", res, item);
+          setItem(null);
+          fetchList();
+        })
+        .catch(err => setLoadingIndocator(false));
     }
   };
 
@@ -117,6 +121,9 @@ function ContractorTodoList(props) {
           small
           onPress={() => postItem()}
         />
+      </View>
+      <View style={{ marginVertical: 10 }}>
+        <AdBanner id={"ca-app-pub-6510981239392097/4537933354"} />
       </View>
       <Divider style={{ backgroundColor: "black", marginHorizontal: 10 }} />
       <Animated.View animation="zoomIn" iterationCount={1} style={{ flex: 1 }}>
@@ -184,6 +191,9 @@ function ContractorTodoList(props) {
               >
                 You don't any reminders so far!
               </Text>
+              <View style={{marginTop: 40}}>
+                <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+              </View>
             </View>
           )}
         </ScrollView>

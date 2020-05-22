@@ -9,6 +9,7 @@ import {
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
 import { DotIndicator } from "react-native-indicators";
+import AdLargeBanner from "../../Admobs/LargeBanners";
 
 function Feedback(props) {
   const [feedback, setFeedback] = useState("");
@@ -86,6 +87,9 @@ function Feedback(props) {
             Submit
           </Text>
         </TouchableOpacity>
+        <View style={{ alignItems: "center", justifyContent: "center" }}>
+          <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+        </View>
       </View>
       <DotIndicator color="black" animating={loadingIndicator} />
     </View>

@@ -22,6 +22,7 @@ import {
 import moment from "moment";
 import { locations } from "../../User/Application/Components/locations";
 import { DotIndicator } from "react-native-indicators";
+import AdLargeBanner from "../../../Admobs/LargeBanners";
 
 function ContractorSettings(props) {
   const [loading, setLoading] = useState(false);
@@ -62,7 +63,7 @@ function ContractorSettings(props) {
   const handleTimeIn = date => {
     setContractor({
       ...contractor,
-      timeIn: moment(date).format('HH:MM A')
+      timeIn: moment(date).format("HH:MM A")
     });
     setTimeInDialog(false);
   };
@@ -70,7 +71,7 @@ function ContractorSettings(props) {
   const handleTimeOut = date => {
     setContractor({
       ...contractor,
-      timeOut: moment(date).format('HH:MM A')
+      timeOut: moment(date).format("HH:MM A")
     });
     setTimeOutDialog(false);
   };
@@ -235,6 +236,9 @@ function ContractorSettings(props) {
             Deactivate account
           </Text>
         </TouchableOpacity>
+        <View style={{alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
+          <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+        </View>
         <DialogInput
           isDialogVisible={dialogVisible}
           title={"Deactivate Account"}
