@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-native";
-import {
-  RewardedAd,
-  RewardedAdEventType
-} from "@react-native-firebase/admob";
+import { RewardedAd, RewardedAdEventType } from "@react-native-firebase/admob";
 
 const adId = "ca-app-pub-6510981239392097/4229197199";
 
@@ -40,14 +37,7 @@ function Admobs() {
     return null;
   }
 
-  return (
-    <Button
-      title="Show Rewarded Ad"
-      onPress={() => {
-    rewarded.show()
-      }}
-    />
-  );
+  return rewarded.show();
 }
 
 export default Admobs;

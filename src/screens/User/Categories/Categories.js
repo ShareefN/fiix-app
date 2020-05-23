@@ -52,42 +52,45 @@ function Categories(props) {
           style={{ flexDirection: "column" }}
           numColumns={2}
           ItemSeparatorComponent={() => (
-            <View style={{ width: wp("50%")}}>
+            <View>
               <Adbanner id={"ca-app-pub-6510981239392097/4806005598"} />
             </View>
           )}
           showsVerticalScrollIndicator={false}
           data={categories}
           renderItem={({ item }) => (
-            <TouchableOpacity
-              style={{
-                flexDirection: "column",
-                alignItems: "center",
-                marginVertical: 15
-              }}
-              onPress={() =>
-                props.navigation.navigate("category", {
-                  category: item.label
-                })
-              }
-            >
-              <Image
+            <View style={{flex: 1,  justifyContent: 'center'}}>
+              <TouchableOpacity
                 style={{
-                  flex: 1,
-                  width: wp("40%"),
-                  height: 150,
-                  borderRadius: 10,
-                  marginHorizontal: wp("2%")
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginVertical: 15
                 }}
-                source={{
-                  uri: item.image
-                }}
-              />
-              <Text style={{ marginTop: 10, fontSize: 15, fontWeight: "bold" }}>
-                {item.label}
-              </Text>
-              <Text>{item.translation}</Text>
-            </TouchableOpacity>
+                onPress={() =>
+                  props.navigation.navigate("category", {
+                    category: item.label
+                  })
+                }
+              >
+                <Image
+                  style={{
+                    flex: 1,
+                    width: wp("40%"),
+                    height: 150,
+                    borderRadius: 10,
+                    marginHorizontal: wp("2%")
+                  }}
+                  source={item.image}
+                />
+                <Text
+                  style={{ marginTop: 10, fontSize: 15, fontWeight: "bold" }}
+                >
+                  {item.label}
+                </Text>
+                <Text>{item.translation}</Text>
+              </TouchableOpacity>
+            </View>
           )}
           keyExtractor={item => item.translation}
         />

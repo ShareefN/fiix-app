@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, ScrollView, Text, Image, RefreshControl } from "react-native";
+import { View, ScrollView, Text, Image, RefreshControl, Platform } from "react-native";
 import Header from "./Header";
 import {
   getCompetitor,

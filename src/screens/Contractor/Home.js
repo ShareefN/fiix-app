@@ -175,7 +175,7 @@ function ContractorHome(props) {
                 You dont have any reviews yet!
               </Text>
             </View>
-            <View style={{marginTop: 40}}>
+            <View style={{ marginTop: 40 }}>
               <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
             </View>
           </ScrollView>
