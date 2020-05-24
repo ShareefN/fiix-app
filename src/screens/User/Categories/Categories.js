@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { Text, FlatList, TouchableOpacity, Image, View } from "react-native";
+import {
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Image,
+  View,
+  Platform
+} from "react-native";
 import Header from "../Components/HeaderComponent";
 import { categories } from "./Components/categories";
 import { getUser, userLogout } from "../../../Api/api";
@@ -53,13 +60,17 @@ function Categories(props) {
           numColumns={2}
           ItemSeparatorComponent={() => (
             <View>
-              <Adbanner id={"ca-app-pub-6510981239392097/4806005598"} />
+              {Platform.OS === "ios" ? (
+                <Adbanner id={"ca-app-pub-6510981239392097/4806005598"} />
+              ) : (
+                <Adbanner id={"ca-app-pub-6510981239392097/3375296437"} />
+              )}
             </View>
           )}
           showsVerticalScrollIndicator={false}
           data={categories}
           renderItem={({ item }) => (
-            <View style={{flex: 1,  justifyContent: 'center'}}>
+            <View style={{ flex: 1, justifyContent: "center" }}>
               <TouchableOpacity
                 style={{
                   flexDirection: "column",

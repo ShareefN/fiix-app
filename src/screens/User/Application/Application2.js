@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, Text, Alert } from "react-native";
+import { View, TouchableOpacity, Text, Alert, Platform } from "react-native";
 import { Input } from "react-native-elements";
 import Header from "../Categories/Components/Header";
 import {
@@ -165,7 +165,11 @@ function Application2(props) {
           </Text>
         </TouchableOpacity>
         <View style={{ alignItems: "center", justifyContent: "center" }}>
-          <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+          {Platform.OS === "ios" ? (
+            <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+          ) : (
+            <AdLargeBanner id={"ca-app-pub-6510981239392097/8436638159"} />
+          )}
         </View>
       </View>
     </View>

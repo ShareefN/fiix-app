@@ -7,7 +7,8 @@ import {
   StyleSheet,
   Alert,
   Text,
-  Image
+  Image,
+  Platform
 } from "react-native";
 import Header from "../Components/HeaderComponent";
 import { Divider, ListItem } from "react-native-elements";
@@ -106,7 +107,11 @@ function Reviews(props) {
         />
       </View>
       <View style={{ width: wp("50%") }}>
-        <Adbanner id={"ca-app-pub-6510981239392097/3109780549"} />
+        {Platform.OS === "ios" ? (
+          <Adbanner id={"ca-app-pub-6510981239392097/3109780549"} />
+        ) : (
+          <Adbanner id={"ca-app-pub-6510981239392097/7286922608"} />
+        )}
       </View>
       <Divider style={{ backgroundColor: "black", marginHorizontal: 10 }} />
       <Animated.View animation="zoomIn" iterationCount={1} style={{ flex: 1 }}>

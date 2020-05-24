@@ -1,5 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, Text, Image, ScrollView, RefreshControl } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  RefreshControl,
+  Platform
+} from "react-native";
 import { getContractor, getContractorReviews } from "../../Api/contractorApi";
 import RNSecureKeyStore from "react-native-secure-key-store";
 import moment from "moment";
@@ -120,7 +127,11 @@ function ContractorHome(props) {
         <Text style={{ fontSize: 10 }}>Joined {contractor.joinedAt}</Text>
       </View>
       <View>
-        <AdBanner id={"ca-app-pub-6510981239392097/4537933354"} />
+        {Platform.OS === "ios" ? (
+          <AdBanner id={"ca-app-pub-6510981239392097/4537933354"} />
+        ) : (
+          <AdBanner id={"ca-app-pub-6510981239392097/7850314794"} />
+        )}
       </View>
       <Text style={{ marginLeft: 20, fontSize: 20, letterSpacing: 3 }}>
         My Reviews
@@ -176,7 +187,11 @@ function ContractorHome(props) {
               </Text>
             </View>
             <View style={{ marginTop: 40 }}>
-              <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+              {Platform.OS === "ios" ? (
+                <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+              ) : (
+                <AdLargeBanner id={"ca-app-pub-6510981239392097/4845905175"} />
+              )}
             </View>
           </ScrollView>
         )}

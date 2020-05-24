@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Alert } from "react-native";
+import { View, Text, TouchableOpacity, Alert, Platform } from "react-native";
 import { Input } from "react-native-elements";
 import RNSecureKeyStore from "react-native-secure-key-store";
 import Header from "./Header";
@@ -107,8 +107,18 @@ function UpdatePassword(props) {
             Update Password
           </Text>
         </TouchableOpacity>
-        <View style={{alignItems: 'center', justifyContent: 'center', marginTop: 10}}>
-          <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: 10
+          }}
+        >
+          {Platform.OS === "ios" ? (
+            <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+          ) : (
+            <AdLargeBanner id={"ca-app-pub-6510981239392097/9056612925"} />
+          )}
         </View>
       </View>
       <DotIndicator color="black" animating={loadingIndicator} />

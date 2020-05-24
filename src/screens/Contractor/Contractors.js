@@ -1,5 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, ScrollView, RefreshControl, Text, Image } from "react-native";
+import {
+  View,
+  ScrollView,
+  RefreshControl,
+  Text,
+  Image,
+  Platform
+} from "react-native";
 import Header from "./Components/Header";
 import { getContractors } from "../../Api/contractorApi";
 import RNSecureKeyStore from "react-native-secure-key-store";
@@ -61,7 +68,11 @@ function CategoryContractors(props) {
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <Header title={category && category} />
       <View>
-        <AdBanner id={"ca-app-pub-6510981239392097/4537933354"} />
+        {Platform.OS === "ios" ? (
+          <AdBanner id={"ca-app-pub-6510981239392097/4537933354"} />
+        ) : (
+          <AdBanner id={"ca-app-pub-6510981239392097/3375296437"} />
+        )}
       </View>
       <Animated.View animation="zoomIn" iterationCount={1} style={{ flex: 1 }}>
         {contractorsList && contractorsList.length >= 1 ? (
@@ -123,8 +134,16 @@ function CategoryContractors(props) {
               >
                 Your the only contractor for this category
               </Text>
-              <View style={{marginTop: 40}}>
-                <AdLargeBanner id={"ca-app-pub-6510981239392097/3109780549"} />
+              <View style={{ marginTop: 40 }}>
+                {Platform.OS === "ios" ? (
+                  <AdLargeBanner
+                    id={"ca-app-pub-6510981239392097/3109780549"}
+                  />
+                ) : (
+                  <AdLargeBanner
+                    id={"ca-app-pub-6510981239392097/9354968152"}
+                  />
+                )}
               </View>
             </View>
           </ScrollView>

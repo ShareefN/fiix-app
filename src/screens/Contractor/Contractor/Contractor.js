@@ -1,5 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, ScrollView, Text, Image, RefreshControl, Platform } from "react-native";
+import {
+  View,
+  ScrollView,
+  Text,
+  Image,
+  RefreshControl,
+  Platform
+} from "react-native";
 import Header from "./Header";
 import {
   getCompetitor,
@@ -89,8 +96,11 @@ function Contractor(props) {
           {competitor && competitor.bio}
         </Text>
       </View>
-      <AdBanner id={"ca-app-pub-6510981239392097/4537933354"} />
-
+      {Platform.OS === "ios" ? (
+        <AdBanner id={"ca-app-pub-6510981239392097/4537933354"} />
+      ) : (
+        <AdBanner id={"ca-app-pub-6510981239392097/7850314794"} />
+      )}
       <Divider style={{ backgroundColor: "grey", marginHorizontal: 10 }} />
       <Animated.View animation="zoomIn" iterationCount={1} style={{ flex: 1 }}>
         {reviews && reviews.length >= 1 ? (
@@ -143,7 +153,15 @@ function Contractor(props) {
                 reviews yet!
               </Text>
               <View style={{ marginTop: 40 }}>
-                <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+                {Platform.OS === "ios" ? (
+                  <AdLargeBanner
+                    id={"ca-app-pub-6510981239392097/1908185990"}
+                  />
+                ) : (
+                  <AdLargeBanner
+                    id={"ca-app-pub-6510981239392097/4845905175"}
+                  />
+                )}
               </View>
             </View>
           </ScrollView>

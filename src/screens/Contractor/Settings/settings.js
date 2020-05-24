@@ -1,27 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Alert } from "react-native";
+import { View, Text, TouchableOpacity, Alert, Platform } from "react-native";
 import Header from "./Header";
 import RNSecureKeyStore from "react-native-secure-key-store";
 import { Input } from "react-native-elements";
 import ModalSelector from "react-native-modal-selector";
 import Dialog from "react-native-dialog";
-import DialogInput from "react-native-dialog-input";
 import Loading from "react-native-loading-spinner-overlay";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
-import RNRestart from "react-native-restart";
-import {
-  getContractor,
-  updateContractor,
-  deactivateAccount,
-  contractorLogout
-} from "../../../Api/contractorApi";
+import { getContractor, updateContractor } from "../../../Api/contractorApi";
 import moment from "moment";
 import { locations } from "../../User/Application/Components/locations";
-import { DotIndicator } from "react-native-indicators";
 import AdLargeBanner from "../../../Admobs/LargeBanners";
 
 function ContractorSettings(props) {
@@ -29,14 +21,12 @@ function ContractorSettings(props) {
   const [timeInDialog, setTimeInDialog] = useState(false);
   const [timeOutDialog, setTimeOutDialog] = useState(false);
   const [successDialog, setSuccessDialog] = useState(false);
-  const [dialogVisible, setDialogVisible] = useState(false);
   const [contractor, setContractor] = useState({
     location: null,
     bio: null,
     timeIn: null,
     timeOut: null
   });
-  const [loadingIndicator, setLoadingIndocator] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -107,22 +97,10 @@ function ContractorSettings(props) {
     }
   };
 
-  const handleDeactivate = password => {
-    RNSecureKeyStore.get("contractor_id")
-      .then(async res => {
-        await deactivateAccount(res, password);
-      })
-      .then(async () => {
-        await contractorLogout();
-        RNRestart.Restart();
-      })
-      .catch(err => Alert.alert("Invalid Password"));
-  };
-
   return (
     <View
       style={{ flex: 1, backgroundColor: "white" }}
-      pointerEvents={loadingIndicator ? "none" : "auto"}
+      pointerEvents={loading ? "none" : "auto"}
     >
       <Header title="Settings" navigation={props.navigation} />
       <View
@@ -221,7 +199,7 @@ function ContractorSettings(props) {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => setDialogVisible(true)}
+          onPress={() => props.navigation.navigate("deactivate")}
           style={{
             backgroundColor: "red",
             height: hp("7%"),
@@ -236,20 +214,19 @@ function ContractorSettings(props) {
             Deactivate account
           </Text>
         </TouchableOpacity>
-        <View style={{alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
-          <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: 20
+          }}
+        >
+          {Platform.OS === "ios" ? (
+            <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+          ) : (
+            <AdLargeBanner id={"ca-app-pub-6510981239392097/9056612925"} />
+          )}
         </View>
-        <DialogInput
-          isDialogVisible={dialogVisible}
-          title={"Deactivate Account"}
-          message={"Please confirm by entering password"}
-          submitInput={inputText => {
-            handleDeactivate(inputText);
-          }}
-          closeDialog={() => {
-            setDialogVisible(false);
-          }}
-        ></DialogInput>
       </View>
       <Dialog.Container visible={successDialog}>
         <Dialog.Title>Success</Dialog.Title>
@@ -259,7 +236,6 @@ function ContractorSettings(props) {
         <Dialog.Button label="close" onPress={() => setSuccessDialog(false)} />
       </Dialog.Container>
       <Loading visible={loading} color="black" size="large" />
-      <DotIndicator color="black" animating={loadingIndicator} />
     </View>
   );
 }

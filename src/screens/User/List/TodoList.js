@@ -7,7 +7,8 @@ import {
   TextInput,
   ScrollView,
   Text,
-  Image
+  Image,
+  Platform
 } from "react-native";
 import Header from "../Components/HeaderComponent";
 import * as Animated from "react-native-animatable";
@@ -122,7 +123,11 @@ function TodoList(props) {
         />
       </View>
       <View style={{ width: wp("50%") }}>
-        <Adbanner id={"ca-app-pub-6510981239392097/4537933354"} />
+        {Platform.OS === "ios" ? (
+          <Adbanner id={"ca-app-pub-6510981239392097/4537933354"} />
+        ) : (
+          <Adbanner id={"ca-app-pub-6510981239392097/3922392663"} />
+        )}
       </View>
       <Divider style={{ backgroundColor: "black", marginHorizontal: 10 }} />
       <Animated.View animation="zoomIn" iterationCount={1} style={{ flex: 1 }}>

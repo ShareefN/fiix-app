@@ -13,6 +13,7 @@ import Contractor from "../screens/Contractor/Contractor/Contractor";
 import TodoList from "../screens/Contractor/TodoList";
 import Settings from "../screens/Contractor/Settings/settings";
 import UpdatePassword from "../screens/Contractor/Settings/updatePassword";
+import Deactivate from '../screens/Contractor/Settings/deactivate';
 import Feedback from "../screens/Contractor/Feedback";
 import Terms from "../screens/Terms";
 import Prohibited from "../screens/Prohibited";
@@ -76,6 +77,12 @@ const MainStackNavigator = createStackNavigator(
     },
     updatePassword: {
       screen: UpdatePassword,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
+    deactivate: {
+      screen: Deactivate,
       navigationOptions: {
         headerShown: false
       }

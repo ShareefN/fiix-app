@@ -22,7 +22,7 @@ import {
   uploadIdentity
 } from "../../../Api/api";
 import { DotIndicator } from "react-native-indicators";
-import AdLargeBanner from '../../../Admobs/LargeBanners';
+import AdLargeBanner from "../../../Admobs/LargeBanners";
 
 const options = {
   title: "Select Avatar",
@@ -179,7 +179,11 @@ function Application3(props) {
         </Text>
       </TouchableOpacity>
       <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+        {Platform.OS === "ios" ? (
+          <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+        ) : (
+          <AdLargeBanner id={"ca-app-pub-6510981239392097/8436638159"} />
+        )}
       </View>
       <DotIndicator color="black" animating={loadingIndicator} />
     </View>

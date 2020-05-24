@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, TouchableOpacity, Text, Image } from "react-native";
+import { View, TouchableOpacity, Text, Platform } from "react-native";
 import Header from "../Categories/Components/Header";
 import RNSecureKeyStore from "react-native-secure-key-store";
 import { getUser } from "../../../Api/api";
@@ -52,7 +52,11 @@ function ApplciationStatus(props) {
               to share your results
             </Text>
             <View style={{ alignItems: "center", justifyContent: "center" }}>
-              <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+              {Platform.OS === "ios" ? (
+                <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+              ) : (
+                <AdLargeBanner id={"ca-app-pub-6510981239392097/8436638159"} />
+              )}
             </View>
           </>
         ) : (

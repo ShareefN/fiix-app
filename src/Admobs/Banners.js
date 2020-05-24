@@ -1,12 +1,6 @@
 import React, { useEffect } from "react";
 import admob, { MaxAdContentRating } from "@react-native-firebase/admob";
-import {
-  InterstitialAd,
-  RewardedAd,
-  BannerAd,
-  TestIds
-} from "@react-native-firebase/admob";
-import { BannerAdSize } from "@react-native-firebase/admob";
+import { BannerAd, BannerAdSize } from "@react-native-firebase/admob";
 
 function Admobs(props) {
   useEffect(() => {
@@ -27,12 +21,7 @@ function Admobs(props) {
       });
   }, []);
 
-  return (
-    <BannerAd
-      unitId={props.id}
-      size={BannerAdSize.SMART_BANNER}
-    />
-  );
+  return <BannerAd unitId={props.id} size={BannerAdSize.SMART_BANNER} />;
 }
 
 export default Admobs;

@@ -8,7 +8,8 @@ import {
   TextInput,
   StyleSheet,
   Alert,
-  Linking
+  Linking,
+  Platform
 } from "react-native";
 import ContractorHeader from "./Components/contractorHeader";
 import * as Animated from "react-native-animatable";
@@ -207,14 +208,26 @@ function Contractor(props) {
                 </Text>
               </View>
               <View style={{ alignItems: "center", justifyContent: "center" }}>
-                <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+                {Platform.OS === "ios" ? (
+                  <AdLargeBanner
+                    id={"ca-app-pub-6510981239392097/1908185990"}
+                  />
+                ) : (
+                  <AdLargeBanner
+                    id={"ca-app-pub-6510981239392097/4845905175"}
+                  />
+                )}
               </View>
             </ScrollView>
           </>
         ) : (
           <>
             <View style={{ width: wp("50%") }}>
-              <Adbanner id={"ca-app-pub-6510981239392097/3053940223"} />
+              {Platform.OS === "ios" ? (
+                <Adbanner id={"ca-app-pub-6510981239392097/3053940223"} />
+              ) : (
+                <Adbanner id={"ca-app-pub-6510981239392097/3336354719"} />
+              )}
             </View>
             <ScrollView
               style={{ marginBottom: 50 }}

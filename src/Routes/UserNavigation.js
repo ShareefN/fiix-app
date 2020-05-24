@@ -8,11 +8,12 @@ import { Icon } from "react-native-elements";
 
 import Terms from "../screens/Terms";
 import Categories from "../screens/User/Categories/Categories";
-import TodoList from '../screens/User/List/TodoList';
+import TodoList from "../screens/User/List/TodoList";
 import Reviews from "../screens/User/Reviews/Reviews";
 import Category from "../screens/User/Categories/Category";
 import Contractor from "../screens/User/Categories/Contractor";
 import Settings from "../screens/User/Settings/Settings";
+import DeactivateAccount from "../screens/User/Settings/Deactivate";
 import MenuDrawer from "./Drawer";
 import UpdatePassword from "../screens/User/Settings/updatePassword";
 import Feedback from "../screens/User/Feedback";
@@ -88,6 +89,12 @@ const MainStackNavigator = createStackNavigator(
     },
     updatePassword: {
       screen: UpdatePassword,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
+    deactivate: {
+      screen: DeactivateAccount,
       navigationOptions: {
         headerShown: false
       }

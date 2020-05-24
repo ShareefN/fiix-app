@@ -5,7 +5,8 @@ import {
   RefreshControl,
   TouchableOpacity,
   Text,
-  Image
+  Image,
+  Platform
 } from "react-native";
 import { ListItem, SearchBar } from "react-native-elements";
 import { fetchContractors, fetchContractorsByLocation } from "../../../Api/api";
@@ -103,7 +104,7 @@ function Category(props) {
         {!contractors ? (
           <>
             <ScrollView
-              style={{ marginHorizontal: 10}}
+              style={{ marginHorizontal: 10 }}
               showsVerticalScrollIndicator={false}
               refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -153,8 +154,22 @@ function Category(props) {
                   </Text>
                 </Text>
               </View>
-              <View style={{ alignItems: "center", justifyContent: "center", marginTop: 20 }}>
-                <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+              <View
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginTop: 20
+                }}
+              >
+                {Platform.OS === "ios" ? (
+                  <AdLargeBanner
+                    id={"ca-app-pub-6510981239392097/1908185990"}
+                  />
+                ) : (
+                  <AdLargeBanner
+                    id={"ca-app-pub-6510981239392097/9354968152"}
+                  />
+                )}
               </View>
             </ScrollView>
           </>
@@ -185,7 +200,11 @@ function Category(props) {
               }}
             />
             <View style={{ width: wp("50%") }}>
-              <AdBanner id={"ca-app-pub-6510981239392097/3053940223"} />
+              {Platform.OS === "ios" ? (
+                <AdBanner id={"ca-app-pub-6510981239392097/3053940223"} />
+              ) : (
+                <AdBanner id={"ca-app-pub-6510981239392097/7850314794"} />
+              )}
             </View>
             <TouchableOpacity
               onPress={() => getContractors()}
