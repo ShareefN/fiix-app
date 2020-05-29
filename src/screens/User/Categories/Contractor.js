@@ -265,25 +265,10 @@ function Contractor(props) {
         <DotIndicator color="black" animating={loadingIndicator} />
       </Animated.View>
       <FAB
-        onPress={() =>
-          Linking.openURL(`whatsapp://send?phone=${contractor.number}`)
-        }
-        icon="chat"
-        color="white"
-        small
-        style={{
-          position: "absolute",
-          backgroundColor: "black",
-          margin: 16,
-          left: 0,
-          bottom: 0
-        }}
-      />
-      <FAB
         onPress={() => Linking.openURL(`tel:${contractor.number}`)}
         icon="phone"
         color="white"
-        small
+        large
         style={{
           position: "absolute",
           margin: 16,
