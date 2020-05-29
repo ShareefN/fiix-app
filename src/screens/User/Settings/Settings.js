@@ -1,32 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, TouchableOpacity, Alert } from "react-native";
+import { Text, View, TouchableOpacity, Alert, Platform } from "react-native";
 import Header from "../Categories/Components/Header";
 import {
   getUser,
-  updateUser,
-  userDeactivateAccount,
-  userLogout
+  updateUser
 } from "../../../Api/api";
 import RNSecureKeyStore from "react-native-secure-key-store";
 import { Input } from "react-native-elements";
 import Dialog from "react-native-dialog";
-import DialogInput from "react-native-dialog-input";
 import Loading from "react-native-loading-spinner-overlay";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
-import RNRestart from "react-native-restart";
+import AdLargeBanner from "../../../Admobs/LargeBanners";
 
 function Settings(props) {
   const [loading, setLoading] = useState(false);
   const [successDialog, setSuccessDialog] = useState(false);
-  const [dialogVisible, setDialogVisible] = useState(false);
   const [user, setUser] = useState({
     username: "",
     email: "",
     number: "",
-    password: ""
   });
 
   useEffect(() => {
@@ -49,51 +44,34 @@ function Settings(props) {
   };
 
   const handleUpdateUser = () => {
-    setLoading(true);
-    RNSecureKeyStore.get("user_id").then(async res => {
-      await updateUser(res, user)
-        .then(res => {
-          setLoading(false);
-          setSuccessDialog(true);
-        })
-        .catch(err =>
-          Alert.alert(
-            "Error Updating Profile",
-            "Please try again later!",
-            [
-              {
-                text: "Ok",
-                onPress: () => setLoading(false)
-              }
-            ],
-            { cancelable: false }
-          )
-        );
-    });
-  };
-
-  const handleDeactivateAccount = async () => {
-    setLoading(true);
-    RNSecureKeyStore.get("user_id").then(async res => {
-      await userDeactivateAccount(res, user.password)
-        .then(async res => {
-          await userLogout();
-          RNRestart.Restart();
-        })
-        .catch(err => {
-          Alert.alert(
-            "Error deactivating account",
-            "Invalid old password",
-            [
-              {
-                text: "Ok",
-                onPress: () => setLoading(false)
-              }
-            ],
-            { cancelable: false }
-          );;
-        });
-    });
+    const email = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!email.test(user.email)) {
+      Alert.alert("Invalid Email");
+    } else if (user.number.length !== 10) {
+      Alert.alert("Invalid Mobile Number");
+    } else {
+      setLoading(true);
+      RNSecureKeyStore.get("user_id").then(async res => {
+        await updateUser(res, user)
+          .then(res => {
+            setLoading(false);
+            setSuccessDialog(true);
+          })
+          .catch(err =>
+            Alert.alert(
+              "Error Updating Profile",
+              "Please try again later!",
+              [
+                {
+                  text: "Ok",
+                  onPress: () => setLoading(false)
+                }
+              ],
+              { cancelable: false }
+            )
+          );
+      });
+    }
   };
 
   return (
@@ -134,6 +112,7 @@ function Settings(props) {
         <Input
           placeholder="Email"
           label="Email"
+          autoCapitalize={false}
           value={user.email}
           containerStyle={{ height: hp("4%"), marginVertical: 25 }}
           onChangeText={value => setUser({ ...user, email: value })}
@@ -144,10 +123,11 @@ function Settings(props) {
           maxLength={10}
           keyboardType="numeric"
           value={user.number}
-          containerStyle={{ height: hp("4%"), marginVertical: 25 }}
+          containerStyle={{ height: hp("4%"), marginTop: 25 }}
           onChangeText={value => setUser({ ...user, number: value })}
         />
       </View>
+     
       <TouchableOpacity
         onPress={() => props.navigation.navigate("updatePassword")}
         style={{
@@ -165,7 +145,7 @@ function Settings(props) {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => setDialogVisible(true)}
+        onPress={() => props.navigation.navigate('deactivate')}
         style={{
           backgroundColor: "red",
           height: hp("7%"),
@@ -180,18 +160,13 @@ function Settings(props) {
           Deactivate account
         </Text>
       </TouchableOpacity>
-      <DialogInput
-        isDialogVisible={dialogVisible}
-        title={"We're sad to see you go"}
-        message={"Please confirm by entering password"}
-        submitInput={inputText => {
-          setUser({ ...user, password: inputText });
-          handleDeactivateAccount();
-        }}
-        closeDialog={() => {
-          setDialogVisible(false);
-        }}
-      ></DialogInput>
+      <View style={{ alignItems: "center", justifyContent: "center" }}>
+        {Platform.OS === "ios" ? (
+          <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+        ) : (
+          <AdLargeBanner id={"ca-app-pub-6510981239392097/9056612925"} />
+        )}
+      </View>
       <Dialog.Container visible={successDialog}>
         <Dialog.Title>Success</Dialog.Title>
         <Dialog.Description>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, Text, Alert } from "react-native";
+import { View, TouchableOpacity, Text, Alert, Platform } from "react-native";
 import { Input } from "react-native-elements";
 import Header from "../Categories/Components/Header";
 import {
@@ -11,6 +11,7 @@ import ModalSelector from "react-native-modal-selector";
 import { categories } from "../Categories/Components/categories";
 import { locations } from "./Components/locations";
 import moment from "moment";
+import AdLargeBanner from "../../../Admobs/LargeBanners";
 
 function Application2(props) {
   const [timeInDialog, setTimeInDialog] = useState(false);
@@ -163,6 +164,13 @@ function Application2(props) {
             Next
           </Text>
         </TouchableOpacity>
+        <View style={{ alignItems: "center", justifyContent: "center" }}>
+          {Platform.OS === "ios" ? (
+            <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+          ) : (
+            <AdLargeBanner id={"ca-app-pub-6510981239392097/8436638159"} />
+          )}
+        </View>
       </View>
     </View>
   );

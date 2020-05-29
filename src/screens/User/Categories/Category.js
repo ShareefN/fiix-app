@@ -5,7 +5,8 @@ import {
   RefreshControl,
   TouchableOpacity,
   Text,
-  Image
+  Image,
+  Platform
 } from "react-native";
 import { ListItem, SearchBar } from "react-native-elements";
 import { fetchContractors, fetchContractorsByLocation } from "../../../Api/api";
@@ -19,6 +20,8 @@ import {
 import { DotIndicator } from "react-native-indicators";
 import ModalSelector from "react-native-modal-selector";
 import { locations } from "../Application/Components/locations";
+import AdLargeBanner from "../../../Admobs/LargeBanners";
+import AdBanner from "../../../Admobs/Banners";
 
 function wait(timeout) {
   return new Promise(resolve => {
@@ -99,50 +102,77 @@ function Category(props) {
         useNativeDriver={true}
       >
         {!contractors ? (
-          <View
-            style={{
-              flex: 1,
-              alignItems: "center",
-              justifyContent: "center",
-              alignItems: "center",
-              justifyContent: "center"
-            }}
-          >
-            <Image
-              style={{ width: wp("40%"), height: 150 }}
-              source={require("../../../Assets/notfound.jpg")}
-            />
-            <Text
-              style={{
-                fontSize: 25,
-                letterSpacing: 2,
-                color: "orange",
-                marginHorizontal: 25,
-                marginVertical: hp("1%")
-              }}
+          <>
+            <ScrollView
+              style={{ marginHorizontal: 10 }}
+              showsVerticalScrollIndicator={false}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
             >
-              Hi {username}!
-            </Text>
-            <Text
-              style={{
-                fontSize: 15,
-                marginTop: wp("5%"),
-                marginHorizontal: wp("5%"),
-                color: "grey",
-                letterSpacing: 1,
-                textAlign: "center"
-              }}
-            >
-              Fiix dons't have any {category} yet! If you have experience in
-              this field,{" "}
-              <Text
-                style={{ fontWeight: "bold" }}
-                onPress={() => props.navigation.navigate("application2")}
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
               >
-                Apply!
-              </Text>
-            </Text>
-          </View>
+                <Image
+                  style={{ width: wp("40%"), height: 150 }}
+                  source={require("../../../Assets/notfound.jpg")}
+                />
+                <Text
+                  style={{
+                    fontSize: 25,
+                    letterSpacing: 2,
+                    color: "orange",
+                    marginHorizontal: 25,
+                    marginVertical: hp("1%")
+                  }}
+                >
+                  Hi {username}!
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 15,
+                    marginTop: wp("5%"),
+                    marginHorizontal: wp("5%"),
+                    color: "grey",
+                    letterSpacing: 1,
+                    textAlign: "center"
+                  }}
+                >
+                  Fiix dons't have any {category} yet! If you have experience in
+                  this field,{" "}
+                  <Text
+                    style={{ fontWeight: "bold" }}
+                    onPress={() => props.navigation.navigate("application2")}
+                  >
+                    Apply!
+                  </Text>
+                </Text>
+              </View>
+              <View
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginTop: 20
+                }}
+              >
+                {Platform.OS === "ios" ? (
+                  <AdLargeBanner
+                    id={"ca-app-pub-6510981239392097/1908185990"}
+                  />
+                ) : (
+                  <AdLargeBanner
+                    id={"ca-app-pub-6510981239392097/9354968152"}
+                  />
+                )}
+              </View>
+            </ScrollView>
+          </>
         ) : (
           <>
             <SearchBar
@@ -169,6 +199,13 @@ function Category(props) {
                 locationFilter(value);
               }}
             />
+            <View style={{ width: wp("50%") }}>
+              {Platform.OS === "ios" ? (
+                <AdBanner id={"ca-app-pub-6510981239392097/3053940223"} />
+              ) : (
+                <AdBanner id={"ca-app-pub-6510981239392097/7850314794"} />
+              )}
+            </View>
             <TouchableOpacity
               onPress={() => getContractors()}
               style={{

@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { Text, FlatList, TouchableOpacity, Image, View } from "react-native";
+import {
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Image,
+  View,
+  Platform
+} from "react-native";
 import Header from "../Components/HeaderComponent";
 import { categories } from "./Components/categories";
 import { getUser, userLogout } from "../../../Api/api";
@@ -9,6 +16,7 @@ import {
 } from "react-native-responsive-screen";
 import RNSecureKeyStore from "react-native-secure-key-store";
 import RNRestart from "react-native-restart";
+import Adbanner from "../../../Admobs/Banners";
 
 function Categories(props) {
   useEffect(() => {
@@ -51,42 +59,49 @@ function Categories(props) {
           style={{ flexDirection: "column" }}
           numColumns={2}
           ItemSeparatorComponent={() => (
-            <View style={{ alignItems: "center" }}>
-              <Text>Ad BANNER goes here!</Text>
+            <View>
+              {Platform.OS === "ios" ? (
+                <Adbanner id={"ca-app-pub-6510981239392097/4806005598"} />
+              ) : (
+                <Adbanner id={"ca-app-pub-6510981239392097/3375296437"} />
+              )}
             </View>
           )}
           showsVerticalScrollIndicator={false}
           data={categories}
           renderItem={({ item }) => (
-            <TouchableOpacity
-              style={{
-                flexDirection: "column",
-                alignItems: "center",
-                marginVertical: 15
-              }}
-              onPress={() =>
-                props.navigation.navigate("category", {
-                  category: item.label
-                })
-              }
-            >
-              <Image
+            <View style={{ flex: 1, justifyContent: "center" }}>
+              <TouchableOpacity
                 style={{
-                  flex: 1,
-                  width: wp("40%"),
-                  height: 150,
-                  borderRadius: 10,
-                  marginHorizontal: wp("2%")
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginVertical: 15
                 }}
-                source={{
-                  uri: item.image
-                }}
-              />
-              <Text style={{ marginTop: 10, fontSize: 15, fontWeight: "bold" }}>
-                {item.label}
-              </Text>
-              <Text>{item.translation}</Text>
-            </TouchableOpacity>
+                onPress={() =>
+                  props.navigation.navigate("category", {
+                    category: item.label
+                  })
+                }
+              >
+                <Image
+                  style={{
+                    flex: 1,
+                    width: wp("40%"),
+                    height: 150,
+                    borderRadius: 10,
+                    marginHorizontal: wp("2%")
+                  }}
+                  source={item.image}
+                />
+                <Text
+                  style={{ marginTop: 10, fontSize: 15, fontWeight: "bold" }}
+                >
+                  {item.label}
+                </Text>
+                <Text>{item.translation}</Text>
+              </TouchableOpacity>
+            </View>
           )}
           keyExtractor={item => item.translation}
         />

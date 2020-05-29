@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Alert } from "react-native";
+import { View, Text, TouchableOpacity, Alert, Platform } from "react-native";
 import Header from "./Settings/Header";
 import { Input } from "react-native-elements";
 import { postFeedback } from "../../Api/contractorApi";
@@ -9,6 +9,7 @@ import {
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
 import { DotIndicator } from "react-native-indicators";
+import AdLargeBanner from "../../Admobs/LargeBanners";
 
 function Feedback(props) {
   const [feedback, setFeedback] = useState("");
@@ -86,6 +87,19 @@ function Feedback(props) {
             Submit
           </Text>
         </TouchableOpacity>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: 10
+          }}
+        >
+          {Platform.OS === "ios" ? (
+            <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+          ) : (
+            <AdLargeBanner id={"ca-app-pub-6510981239392097/8436638159"} />
+          )}
+        </View>
       </View>
       <DotIndicator color="black" animating={loadingIndicator} />
     </View>

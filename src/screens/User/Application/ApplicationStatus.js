@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, TouchableOpacity, Text, Image } from "react-native";
+import { View, TouchableOpacity, Text, Platform } from "react-native";
 import Header from "../Categories/Components/Header";
 import RNSecureKeyStore from "react-native-secure-key-store";
 import { getUser } from "../../../Api/api";
@@ -8,6 +8,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
+import AdLargeBanner from "../../../Admobs/LargeBanners";
 
 function ApplciationStatus(props) {
   const [user, setUser] = useState({
@@ -50,6 +51,13 @@ function ApplciationStatus(props) {
               Application is under proccessing, it might take from 24 - 48 hours
               to share your results
             </Text>
+            <View style={{ alignItems: "center", justifyContent: "center" }}>
+              {Platform.OS === "ios" ? (
+                <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+              ) : (
+                <AdLargeBanner id={"ca-app-pub-6510981239392097/8436638159"} />
+              )}
+            </View>
           </>
         ) : (
           <>
@@ -90,6 +98,9 @@ function ApplciationStatus(props) {
                 Contact FiiX for revision
               </Text>
             </TouchableOpacity>
+            <View style={{ alignItems: "center", justifyContent: "center" }}>
+              <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+            </View>
           </>
         )}
       </View>

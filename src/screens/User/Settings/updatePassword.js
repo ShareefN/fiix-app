@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Alert } from "react-native";
+import { View, Text, TouchableOpacity, Alert, Platform } from "react-native";
 import Header from "../Categories/Components/Header";
 import { Input } from "react-native-elements";
 import { updateUserpassword, userLogout } from "../../../Api/api";
@@ -10,6 +10,7 @@ import {
 } from "react-native-responsive-screen";
 import { DotIndicator } from "react-native-indicators";
 import RNRestart from "react-native-restart";
+import AdLargeBanner from "../../../Admobs/LargeBanners";
 
 function UpdatePassword(props) {
   const [loadingIndicator, setLoadingIndocator] = useState(false);
@@ -102,6 +103,13 @@ function UpdatePassword(props) {
             Update Password
           </Text>
         </TouchableOpacity>
+        <View style={{ alignItems: "center", justifyContent: "center" }}>
+          {Platform.OS === "ios" ? (
+            <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+          ) : (
+            <AdLargeBanner id={"ca-app-pub-6510981239392097/9056612925"} />
+          )}
+        </View>
       </View>
       <DotIndicator color="black" animating={loadingIndicator} />
     </View>

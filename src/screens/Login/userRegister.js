@@ -31,22 +31,29 @@ function UserRegister(props) {
   });
 
   const register = () => {
-    if (
-      user.username === "" ||
-      user.email === "" ||
-      user.number === "" ||
-      user.password === ""
-    ) {
-      Alert.alert("Invalid request, please check inputs");
+    const email = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!email.test(user.email)) {
+      Alert.alert("Email is invalid");
+    } else if (user.number.length !== 10) {
+      Alert.alert("Invalid Mobile Number");
     } else {
-      setLoadingIndocator(true);
-      return userRegister(user)
-        .then(async ({ data }) => {
-          await storeUserToken(data.token);
-          await storeUserCredentials(data.User.username, data.User.id);
-          RNRestart.Restart();
-        })
-        .catch(err => setLoadingIndocator(false));
+      if (
+        user.username === "" ||
+        user.email === "" ||
+        user.number === "" ||
+        user.password === ""
+      ) {
+        Alert.alert("Invalid request, please check inputs");
+      } else {
+        setLoadingIndocator(true);
+        return userRegister(user)
+          .then(async ({ data }) => {
+            await storeUserToken(data.token);
+            await storeUserCredentials(data.User.username, data.User.id);
+            RNRestart.Restart();
+          })
+          .catch(err => setLoadingIndocator(false));
+      }
     }
   };
 

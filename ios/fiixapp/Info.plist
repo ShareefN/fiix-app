@@ -22,6 +22,8 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-6510981239392097~3496524511</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -31,9 +33,9 @@
 		<key>NSExceptionDomains</key>
 		<dict>
 			<key>https://fiix-app.herokuapp.com</key>
-			<string/>
+			<string></string>
 			<key>localhost</key>
-			<string/>
+			<string></string>
 		</dict>
 	</dict>
 	<key>NSCalendarsUsageDescription</key>
@@ -86,8 +88,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>

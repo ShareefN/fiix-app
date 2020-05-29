@@ -1,5 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, ScrollView, Text, Image, RefreshControl } from "react-native";
+import {
+  View,
+  ScrollView,
+  Text,
+  Image,
+  RefreshControl,
+  Platform
+} from "react-native";
 import Header from "./Header";
 import {
   getCompetitor,
@@ -12,6 +19,8 @@ import {
 import { Divider, ListItem } from "react-native-elements";
 import * as Animated from "react-native-animatable";
 import { DotIndicator } from "react-native-indicators";
+import AdBanner from "../../../Admobs/Banners";
+import AdLargeBanner from "../../../Admobs/LargeBanners";
 
 function wait(timeout) {
   return new Promise(resolve => {
@@ -87,6 +96,11 @@ function Contractor(props) {
           {competitor && competitor.bio}
         </Text>
       </View>
+      {Platform.OS === "ios" ? (
+        <AdBanner id={"ca-app-pub-6510981239392097/4537933354"} />
+      ) : (
+        <AdBanner id={"ca-app-pub-6510981239392097/7850314794"} />
+      )}
       <Divider style={{ backgroundColor: "grey", marginHorizontal: 10 }} />
       <Animated.View animation="zoomIn" iterationCount={1} style={{ flex: 1 }}>
         {reviews && reviews.length >= 1 ? (
@@ -138,6 +152,17 @@ function Contractor(props) {
                 {props.navigation.getParam("contractorName")} dosn't have any
                 reviews yet!
               </Text>
+              <View style={{ marginTop: 40 }}>
+                {Platform.OS === "ios" ? (
+                  <AdLargeBanner
+                    id={"ca-app-pub-6510981239392097/1908185990"}
+                  />
+                ) : (
+                  <AdLargeBanner
+                    id={"ca-app-pub-6510981239392097/4845905175"}
+                  />
+                )}
+              </View>
             </View>
           </ScrollView>
         )}

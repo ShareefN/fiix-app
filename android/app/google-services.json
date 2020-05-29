@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "145299510345",
+    "firebase_url": "https://fiix-application-6677a.firebaseio.com",
+    "project_id": "fiix-application-6677a",
+    "storage_bucket": "fiix-application-6677a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:145299510345:android:5edf9a422e3cecb84c9b98",
+        "android_client_info": {
+          "package_name": "com.fiixapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "145299510345-1dgddg8rg8jk20lon1a33si1bbnvo7qo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXNP55j2YAV26J_K0SFHjmEkuYh2yV1Dc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "145299510345-1dgddg8rg8jk20lon1a33si1bbnvo7qo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "145299510345-bdfv94v7jme1mdjteern7j9inhu51ift.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.fiixapp"
+              }
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-6510981239392097~9659709899"
+    }
+  ],
+  "configuration_version": "1"
+}

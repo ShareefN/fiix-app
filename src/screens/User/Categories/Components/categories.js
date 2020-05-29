@@ -2,115 +2,98 @@ export const categories = [
   {
     label: "Mechanics",
     image:
-      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589480852/bsvoxr0s2d5bqsqqbvsf.jpg",
+      // "https://autoserve1cdn-103d1.kxcdn.com/wp-content/uploads/2018/06/mechanic10.jpg",
+      require("./Assets/Mechanics.jpg"),
     translation: "ميكانيكي"
   },
   {
     label: "Electricians",
-    image:
-      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589480865/ujsdcwuqyuzlbw0zr0ug.jpg",
+    image: require("./Assets/Electicians.jpg"),
     translation: "اختصاصي بالكهرباء"
   },
   {
     label: "Hardware Electricians",
-    image:
-      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589480876/obdbjy5qfjp1klcineyv.jpg",
+    image: require("./Assets/Hardwars.jpg"),
     translation: "كهربائيين الأجهزة"
   },
   {
     label: "Carpenters",
-    image:
-      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589480894/bpp9d3xfs29ltxrvtm5r.jpg",
+    image: require("./Assets/Carpentures.jpg"),
     translation: "النجارين"
   },
   {
     label: "Agricultural Engineers",
-    image:
-      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589480907/fj2cchbkhvy3ctvjjtnt.jpg",
+    image: require("./Assets/Agriculturals.jpg"),
     translation: "المهندسين الزراعيين"
   },
   {
     label: "Plumbers",
-    image:
-      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589480921/lgfafpy3morzt0tyvvry.jpg",
+    image: require("./Assets/Plumbers.jpg"),
     translation: "السباكين"
   },
   {
     label: "Designers",
-    image:
-      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589480934/fgaz8bbikayruhjw1h7u.jpg",
+    image: require("./Assets/Designers.jpg"),
     translation: "المصممون"
   },
   {
     label: "Legal Consultations",
-    image:
-      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589481054/ic9zdkmhvivfobugtenn.jpg",
+    image: require("./Assets/Legals.jpg"),
     translation: "الاستشارات القانونية"
   },
   {
     label: "Barbers",
-    image:
-      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589481069/wqtkel18ftyqtrsau4hi.jpg",
+    image: require("./Assets/Barbers.jpg"),
     translation: "الحلاقون"
   },
   {
     label: "Hair Dressers",
-    image:
-      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589481082/dmm9h2fusvaayzvo4y3f.jpg",
+    image: require("./Assets/HairDressers.jpg"),
     translation: "تسريحات الشعر"
   },
   {
     label: "Dry Cleans",
-    image:
-      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589481094/b7zfy1wanqlfrq1kr59e.jpg",
+    image: require("./Assets/Drycleans.jpg"),
     translation: "تنظيف جاف"
   },
   {
     label: "Tailor",
-    image:
-      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589481110/r0rj4unynpexwimlvuwd.jpg",
+    image: require("./Assets/Tailors.jpg"),
     translation: "خياط"
   },
   {
     label: "House Keepers",
-    image:
-      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589481123/hrgqblgpibyirazojbus.jpg",
+    image: require("./Assets/HouseKeepers.jpg"),
     translation: "التدبير المنزلي"
   },
   {
     label: "Translators",
-    image:
-      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589481134/qmmdjutv8h7elh3y03tb.jpg",
+    image: require("./Assets/Translators.jpg"),
     translation: "المترجمون"
   },
   {
     label: "Gas",
-    image:
-      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589481148/f6uhla2ggk3zhh7nrxh7.png",
+    image: require("./Assets/Gas.jpg"),
     translation: "غاز"
   },
   {
     label: "Pickup Trucks",
-    image:
-      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589481208/neehi4iy3tqhtgpkmctw.png",
+    image: require("./Assets/Pickups.jpg"),
     translation: "شاحنات بيك اب"
   },
   {
     label: "Deisel Trucks",
-    image:
-      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589481222/oz4apewtdmntap67hgt4.gif",
+    image: require("./Assets/Deisels.jpg"),
     translation: "شاحنات الديزل"
   },
   {
     label: "Water Trucks",
-    image:
-      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589481233/ipb5fnnfjbwwr912htpv.png",
+    image: require("./Assets/Watertrucks.jpg"),
     translation: "شاحنات المياه"
   },
   {
     label: "Transportaions Services",
-    image:
-      "http://res.cloudinary.com/hyvpz7lbn/image/upload/v1589481245/zzcote9itfract50dc2p.png",
+    image: require("./Assets/Transportations.jpg"),
     translation: "خدمات النقل"
   }
 ];

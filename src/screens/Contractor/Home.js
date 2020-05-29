@@ -1,5 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, Text, Image, ScrollView, RefreshControl } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  RefreshControl,
+  Platform
+} from "react-native";
 import { getContractor, getContractorReviews } from "../../Api/contractorApi";
 import RNSecureKeyStore from "react-native-secure-key-store";
 import moment from "moment";
@@ -11,6 +18,8 @@ import {
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
 import { DotIndicator } from "react-native-indicators";
+import AdBanner from "../../Admobs/Banners";
+import AdLargeBanner from "../../Admobs/LargeBanners";
 
 function wait(timeout) {
   return new Promise(resolve => {
@@ -46,10 +55,10 @@ function ContractorHome(props) {
     await getContractor(id)
       .then(({ data }) => {
         if (data.status !== "active") {
-          props.navigation.navigate('prohibited', {
+          props.navigation.navigate("prohibited", {
             reason: data.notes,
-            from: 'contractor'
-          })
+            from: "contractor"
+          });
         } else {
           setContractor({
             ...contractor,
@@ -117,7 +126,16 @@ function ContractorHome(props) {
         </Text>
         <Text style={{ fontSize: 10 }}>Joined {contractor.joinedAt}</Text>
       </View>
-      <Text style={{ marginLeft: 20, fontSize: 20, letterSpacing: 3 }}>My Reviews</Text>
+      <View>
+        {Platform.OS === "ios" ? (
+          <AdBanner id={"ca-app-pub-6510981239392097/4537933354"} />
+        ) : (
+          <AdBanner id={"ca-app-pub-6510981239392097/7850314794"} />
+        )}
+      </View>
+      <Text style={{ marginLeft: 20, fontSize: 20, letterSpacing: 3 }}>
+        My Reviews
+      </Text>
       <Animated.View animation="zoomIn" iterationCount={1} style={{ flex: 1 }}>
         {reviews && reviews.length >= 1 ? (
           <ScrollView
@@ -167,6 +185,13 @@ function ContractorHome(props) {
               >
                 You dont have any reviews yet!
               </Text>
+            </View>
+            <View style={{ marginTop: 40 }}>
+              {Platform.OS === "ios" ? (
+                <AdLargeBanner id={"ca-app-pub-6510981239392097/1908185990"} />
+              ) : (
+                <AdLargeBanner id={"ca-app-pub-6510981239392097/4845905175"} />
+              )}
             </View>
           </ScrollView>
         )}
